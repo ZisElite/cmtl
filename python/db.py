@@ -4,6 +4,8 @@ import os
 root_path = os.getcwd()
 con = sqlite3.connect(os.path.join(root_path, "data.db"))
 
+
+
 def init():
     cur = con.cursor()
     cur.execute("""create table if not exists users
@@ -29,10 +31,22 @@ def init():
                             user_id integer references users (id) on delete cascade not null,
                             name string not null
                         )""")
+    cur.close()
+
+
+def get_all_users():
+    cur = con.cursor()
+    con.execute("select id from users")
+    users = cur.fetchall()
+    cur.close()
+    if users:
+        return users
+    return False
 
 def reset(tables):
     cur = con.cursor()
     for i in tables:
-        sql = "drop table if exists " + i
+        sql = "drop table if exists {}".format(i)
         cur.execute(sql)
+    cur.close()
     init()
