@@ -1,3 +1,4 @@
-res://Scripts/Control.gd
-res://Nodes/control.tscn
 res://Nodes/main.tscn
+res://menu theme.tres
+res://Scripts/exit.gd
+res://Scripts/new.gd

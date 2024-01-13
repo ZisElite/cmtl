@@ -1,7 +1,7 @@
-2a60927148abd1d33b818b535e306557
-::res://::1680461495
-icon.svg::CompressedTexture2D::2551804130726257496::1680460470::1680460476::1::::<><>::
-::res://Nodes/::1680461495
-control.tscn::PackedScene::4304288178267938840::1680461519::0::1::::<><>::res://Scripts/Control.gd
-::res://Scripts/::1680461369
-Control.gd::GDScript::-1::1680461498::0::1::::<>Control<>::
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1705102693
+icon.svg::CompressedTexture2D::2551804130726257496::1680456870::1680456876::1::::<><>::
+::res://Nodes/::1680458065
+main.tscn::PackedScene::4304288178267938840::1680458065::0::1::::<><>::res://Scripts/Control.gd
+::res://Scripts/::1680457898
+Control.gd::GDScript::-1::1680457898::0::1::::<>Control<>::
