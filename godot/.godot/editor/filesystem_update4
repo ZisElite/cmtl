@@ -1,4 +1,7 @@
-res://Nodes/main.tscn
-res://menu theme.tres
-res://Scripts/exit.gd
+res://Scenes/open library.tscn
+res://top labels.tres
+res://Scenes/main.tscn
+res://Scenes/new library.tscn
+res://Scenes/main menu.tscn
 res://Scripts/new.gd
+res://Scripts/open.gd

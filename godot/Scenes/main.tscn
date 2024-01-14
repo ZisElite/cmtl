@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dofje3xyn7dne"]
+
+[ext_resource type="Script" path="res://Scripts/Control.gd" id="1_xmm6q"]
+[ext_resource type="PackedScene" uid="uid://b2la86bb5gu37" path="res://Scenes/main menu.tscn" id="2_orct6"]
+[ext_resource type="PackedScene" uid="uid://bckxsuw6k70xo" path="res://Scenes/new library.tscn" id="3_7cocm"]
+[ext_resource type="PackedScene" uid="uid://4xushpiwxg2w" path="res://Scenes/open library.tscn" id="4_85s5m"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xmm6q")
+
+[node name="main menu" parent="." instance=ExtResource("2_orct6")]
+layout_mode = 1
+
+[node name="new library" parent="." instance=ExtResource("3_7cocm")]
+visible = false
+layout_mode = 1
+
+[node name="open library" parent="." instance=ExtResource("4_85s5m")]
+visible = false
+layout_mode = 1
