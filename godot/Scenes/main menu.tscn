@@ -1,10 +1,40 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2la86bb5gu37"]
+[gd_scene load_steps=7 format=3 uid="uid://b2la86bb5gu37"]
 
+[ext_resource type="Script" path="res://Scripts/main menu_manager.gd" id="1_b5ajg"]
 [ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://top labels.tres" id="2_2pok8"]
 [ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://menu theme.tres" id="2_p48bp"]
-[ext_resource type="Script" path="res://Scripts/new.gd" id="3_iiie8"]
-[ext_resource type="Script" path="res://Scripts/exit.gd" id="4_rm0im"]
-[ext_resource type="Script" path="res://Scripts/open.gd" id="4_xcua2"]
+
+[sub_resource type="GDScript" id="GDScript_xwihg"]
+script/source = "extends Button
+
+
+#func _ready():
+#	pressed.connect(get_parent().get_parent().get_parent().get_parent().get_parent()._new_library)
+"
+
+[sub_resource type="GDScript" id="GDScript_ci7qs"]
+script/source = "extends Button
+
+
+
+#func _ready():
+#	pressed.connect(get_parent().get_parent().get_parent().get_parent().get_parent()._open_library)
+"
+
+[sub_resource type="GDScript" id="GDScript_6hqk0"]
+script/source = "extends Button
+
+
+func _ready():
+	pressed.connect(self._button_pressed)
+
+func _button_pressed():
+	get_tree().quit()
+	
+#func _input(event):
+#	if event is InputEventKey and OS.get_keycode_string(event.keycode) == \"Escape\":
+#		get_tree().quit()
+"
 
 [node name="main menu" type="Control"]
 layout_mode = 3
@@ -13,14 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="background" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_b5ajg")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -63,7 +86,7 @@ custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = ExtResource("2_p48bp")
 text = "New library"
-script = ExtResource("3_iiie8")
+script = SubResource("GDScript_xwihg")
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
@@ -75,7 +98,7 @@ custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = ExtResource("2_p48bp")
 text = "Open library"
-script = ExtResource("4_xcua2")
+script = SubResource("GDScript_ci7qs")
 
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
@@ -87,7 +110,7 @@ custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
 theme = ExtResource("2_p48bp")
 text = "exit"
-script = ExtResource("4_rm0im")
+script = SubResource("GDScript_6hqk0")
 
 [node name="HSeparator3" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)

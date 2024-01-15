@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://4xushpiwxg2w"]
 
-[ext_resource type="Script" path="res://Scripts/Control.gd" id="1_jrh41"]
+[ext_resource type="Script" path="res://Scripts/open library_manager.gd" id="1_mt8dx"]
 [ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://top labels.tres" id="2_5bwbx"]
 [ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://menu theme.tres" id="3_tciqu"]
 
@@ -11,15 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jrh41")
-
-[node name="background" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_mt8dx")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -79,11 +71,11 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Open" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="confirm" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 theme = ExtResource("3_tciqu")
-text = "Open
+text = "confirm
 "
 
 [node name="VSeparator" type="VSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]

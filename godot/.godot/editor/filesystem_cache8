@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1705272858
+::res://::1705335458
 font.tres::SystemFont::7620303811281253680::1705103179::0::1::::<><>::
 icon.svg::CompressedTexture2D::2551804130726257496::1680456870::1680456876::1::::<><>::
 menu theme.tres::Theme::4718432340222379608::1705103250::0::1::::<><>::uid://dgtlj40ebr44k
@@ -13,12 +13,13 @@ plugin.cfg::TextFile::-1::1705177714::0::1::::<><>::
 ::res://addons/godot-sqlite/bin/::1705177714
 ::res://addons/godot-sqlite/bin/libgdsqlite.macos.template_debug.framework/::1705177714
 ::res://addons/godot-sqlite/bin/libgdsqlite.macos.template_release.framework/::1705177714
-::res://Scenes/::1705272858
-main menu.tscn::PackedScene::4304288178267938840::1705179608::0::1::::<><>::uid://d064cbwfl1ber
-main.tscn::PackedScene::8152782854185962970::1705272894::0::1::::<><>::res://Scripts/Control.gd<>uid://b2la86bb5gu37::::res://Scenes/main menu.tscn<>uid://bckxsuw6k70xo::::res://Scenes/new library.tscn
-new library.tscn::PackedScene::2548871869509529344::1705273076::0::1::::<><>::res://Scripts/Control.gd<>uid://d064cbwfl1ber::::res://top labels.tres<>uid://b8hv5kksxk64c::::res://menu theme.tres
-open library.tscn::PackedScene::2084204029221243292::1705273084::0::1::::<><>::res://Scripts/Control.gd<>uid://d064cbwfl1ber::::res://top labels.tres<>uid://b8hv5kksxk64c::::res://menu theme.tres
-::res://Scripts/::1705177797
+::res://Scenes/::1705274281
+main menu.tscn::PackedScene::4304288178267938840::1705274281::0::1::::<><>::uid://d064cbwfl1ber::::res://top labels.tres<>uid://b8hv5kksxk64c::::res://menu theme.tres<>res://Scripts/new.gd<>res://Scripts/exit.gd<>res://Scripts/open.gd
+main.tscn::PackedScene::8152782854185962970::1705274130::0::1::::<><>::res://Scripts/Control.gd<>uid://b2la86bb5gu37::::res://Scenes/main menu.tscn<>uid://bckxsuw6k70xo::::res://Scenes/new library.tscn<>uid://4xushpiwxg2w::::res://Scenes/open library.tscn
+new library.tscn::PackedScene::2548871869509529344::1705274097::0::1::::<><>::res://Scripts/Control.gd<>uid://d064cbwfl1ber::::res://top labels.tres<>uid://b8hv5kksxk64c::::res://menu theme.tres
+open library.tscn::PackedScene::2084204029221243292::1705274123::0::1::::<><>::res://Scripts/Control.gd<>uid://d064cbwfl1ber::::res://top labels.tres<>uid://b8hv5kksxk64c::::res://menu theme.tres
+::res://Scripts/::1705274269
 Control.gd::GDScript::-1::1680457898::0::1::::<>Control<>::
 exit.gd::GDScript::-1::1705103518::0::1::::<>Button<>::
-new.gd::GDScript::-1::1705104392::0::1::::<>Button<>::
+new.gd::GDScript::-1::1705274245::0::1::::<>Button<>::
+open.gd::GDScript::-1::1705274269::0::1::::<>Button<>::
