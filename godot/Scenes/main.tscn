@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dofje3xyn7dne"]
+[gd_scene load_steps=6 format=3 uid="uid://dofje3xyn7dne"]
 
 [ext_resource type="Script" path="res://Scripts/Control.gd" id="1_xmm6q"]
 [ext_resource type="PackedScene" uid="uid://b2la86bb5gu37" path="res://Scenes/main menu.tscn" id="2_orct6"]
 [ext_resource type="PackedScene" uid="uid://bckxsuw6k70xo" path="res://Scenes/new library.tscn" id="3_7cocm"]
 [ext_resource type="PackedScene" uid="uid://4xushpiwxg2w" path="res://Scenes/open library.tscn" id="4_85s5m"]
+[ext_resource type="PackedScene" uid="uid://b1v8db5vo3ev5" path="res://Scenes/library view.tscn" id="5_f3of3"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -30,5 +31,9 @@ visible = false
 layout_mode = 1
 
 [node name="open library" parent="." instance=ExtResource("4_85s5m")]
+visible = false
+layout_mode = 1
+
+[node name="library view" parent="." instance=ExtResource("5_f3of3")]
 visible = false
 layout_mode = 1
