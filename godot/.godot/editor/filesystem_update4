@@ -1,11 +1,12 @@
-res://Scenes/library view.tscn
+res://Scenes/main.tscn
 res://top labels.tres
 res://menu labels.tres
-res://Scenes/main.tscn
-res://Scripts/Control.gd
-res://Scripts/new library_manager.gd
-res://Scripts/open library_manager.gd
+res://Scripts/SQLite_manager.gd
 res://Scenes/main menu.tscn
 res://Scenes/new library.tscn
 res://Scenes/open library.tscn
+res://Scenes/library view.tscn
 res://Scenes/entry.tscn
+res://Scenes/library.tscn
+res://Scripts/new library_manager.gd
+res://Scripts/Control.gd

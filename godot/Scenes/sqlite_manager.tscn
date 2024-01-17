@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctvrd8v6bweud"]
+
+[ext_resource type="Script" path="res://Scripts/SQLite_manager.gd" id="1_fx1i6"]
+
+[node name="SQLite manager" type="Node"]
+script = ExtResource("1_fx1i6")

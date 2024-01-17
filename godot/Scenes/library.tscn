@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dpvwr035are1g"]
+
+[node name="entry" type="VBoxContainer"]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.043
+offset_bottom = 0.039999
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="name" type="Label" parent="."]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
