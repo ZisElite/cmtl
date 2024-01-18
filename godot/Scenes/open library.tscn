@@ -72,10 +72,21 @@ layout_mode = 2
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 theme = ExtResource("3_wb6it")
-text = "confirm
+text = "Confirm
 "
 
 [node name="VSeparator" type="VSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="delete" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(150, 35)
+layout_mode = 2
+theme = ExtResource("3_wb6it")
+text = "Delete"
+
+[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2

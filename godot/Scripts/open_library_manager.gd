@@ -1,8 +1,10 @@
 extends Control
 
 signal confirm_selected
+signal delete_lib
 
 var confirm
+var delete
 var cancel
 var scroll
 var lib
@@ -11,11 +13,14 @@ var selected = null
 
 func _ready():
 	confirm = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/confirm")
+	delete = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/delete")
 	cancel = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/cancel")
 	scroll = get_node("ScrollContainer/HBoxContainer/VBoxContainer/libraries container/libraries")
 	lib = preload("res://Scenes/library.tscn")
 	confirm.pressed.connect(self._check_pressed)
 	confirm_selected.connect(get_parent()._view_library)
+	delete.pressed.connect(self._send_for_deletion)
+	delete_lib.connect(get_parent()._remove_lib)
 	cancel.pressed.connect(get_parent()._main_menu)
 	visibility_changed.connect(self._clear_buttons)
 
@@ -41,3 +46,13 @@ func _clear_buttons():
 func _check_pressed():
 	if selected:
 		confirm_selected.emit()
+
+func _send_for_deletion():
+	if selected:
+		delete_lib.emit(selected)
+
+func remove_lib(lib):
+	var temp = scroll.get_node(lib)
+	remove_child(temp)
+	temp.queue_free()
+	selected = null

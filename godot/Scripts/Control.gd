@@ -44,6 +44,10 @@ func _check_new(lib):
 		sqlite.create_new_library(lib)
 		_view_library()
 
+func _remove_lib(lib):
+	sqlite.remove_lib(lib)
+	open_lib.remove_lib(lib)
+
 func _input(event):
 	if event is InputEventKey and OS.get_keycode_string(event.keycode) == "Escape":
 		get_tree().quit()

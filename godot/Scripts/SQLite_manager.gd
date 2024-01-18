@@ -1,7 +1,7 @@
 extends Node
 
 var db : SQLite
-var dir
+var dir : DirAccess
 var libs_path
 func _ready():
 	libs_path = "user://libraries/"
@@ -49,3 +49,6 @@ func create_new_library(lib):
 func open_library(lib):
 	db.path = libs_path+lib+".db"
 	db.open_db()
+
+func remove_lib(lib):
+	dir.remove(lib+".db")
