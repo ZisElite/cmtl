@@ -8,3 +8,5 @@ res://Scenes/entry.tscn
 res://Scenes/library.tscn
 res://Scripts/Control.gd
 res://Scripts/SQLite_manager.gd
+res://Scripts/library_view_manager.gd
+res://Scripts/paths_manager.gd
