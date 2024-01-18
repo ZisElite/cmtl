@@ -1,5 +1,6 @@
 extends Control
 
+signal confirm_selected
 
 var confirm
 var cancel
@@ -13,7 +14,8 @@ func _ready():
 	cancel = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/cancel")
 	scroll = get_node("ScrollContainer/HBoxContainer/VBoxContainer/libraries container/libraries")
 	lib = preload("res://Scenes/library.tscn")
-	confirm.pressed.connect(get_parent()._view_library)
+	confirm.pressed.connect(self._check_pressed)
+	confirm_selected.connect(get_parent()._view_library)
 	cancel.pressed.connect(get_parent()._main_menu)
 	visibility_changed.connect(self._clear_buttons)
 
@@ -35,3 +37,7 @@ func _clear_buttons():
 	if selected:
 		scroll.get_node(selected + "/name").button_pressed = false
 		selected = null
+
+func _check_pressed():
+	if selected:
+		confirm_selected.emit()
