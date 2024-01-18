@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2la86bb5gu37"]
+[gd_scene load_steps=7 format=3 uid="uid://d2v4ljix08bkx"]
 
-[ext_resource type="Script" path="res://Scripts/main menu_manager.gd" id="1_b5ajg"]
-[ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://top labels.tres" id="2_2pok8"]
-[ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://menu theme.tres" id="2_p48bp"]
+[ext_resource type="Script" path="res://Scripts/main_menu_manager.gd" id="1_fmfnn"]
+[ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://resources/top labels.tres" id="2_k5tl0"]
+[ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://resources/menu theme.tres" id="3_gw6u4"]
 
 [sub_resource type="GDScript" id="GDScript_xwihg"]
 script/source = "extends Button
@@ -43,7 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_b5ajg")
+script = ExtResource("1_fmfnn")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -72,7 +72,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Main menu"
-label_settings = ExtResource("2_2pok8")
+label_settings = ExtResource("2_k5tl0")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -84,7 +84,7 @@ layout_mode = 2
 [node name="new" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
-theme = ExtResource("2_p48bp")
+theme = ExtResource("3_gw6u4")
 text = "New library"
 script = SubResource("GDScript_xwihg")
 
@@ -96,7 +96,7 @@ layout_mode = 2
 [node name="open" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
-theme = ExtResource("2_p48bp")
+theme = ExtResource("3_gw6u4")
 text = "Open library"
 script = SubResource("GDScript_ci7qs")
 
@@ -108,7 +108,7 @@ layout_mode = 2
 [node name="exit" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 35)
 layout_mode = 2
-theme = ExtResource("2_p48bp")
+theme = ExtResource("3_gw6u4")
 text = "exit"
 script = SubResource("GDScript_6hqk0")
 

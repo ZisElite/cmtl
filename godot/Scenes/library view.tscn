@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1v8db5vo3ev5"]
 
-[ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://top labels.tres" id="1_h8yc7"]
-[ext_resource type="LabelSettings" uid="uid://b3gwiyw2qo8n2" path="res://menu labels.tres" id="2_p3yok"]
-[ext_resource type="PackedScene" uid="uid://dntmxvgnj5g5f" path="res://Scenes/entry.tscn" id="3_551t7"]
+[ext_resource type="Script" path="res://Scripts/library_view_manager.gd" id="1_1ynmf"]
+[ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://resources/top labels.tres" id="2_ut12b"]
+[ext_resource type="LabelSettings" uid="uid://b3gwiyw2qo8n2" path="res://resources/menu labels.tres" id="3_ra8tp"]
 
 [node name="library view" type="Control"]
 layout_mode = 3
@@ -11,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_1ynmf")
 
 [node name="master container" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -32,7 +33,7 @@ size_flags_horizontal = 3
 [node name="window title" type="Label" parent="master container/library view"]
 layout_mode = 2
 text = "Library viewer"
-label_settings = ExtResource("1_h8yc7")
+label_settings = ExtResource("2_ut12b")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -49,7 +50,7 @@ layout_mode = 2
 [node name="tags label" type="Label" parent="master container/library view/data container/tags-path container/top tags container"]
 layout_mode = 2
 text = "Tags"
-label_settings = ExtResource("2_p3yok")
+label_settings = ExtResource("3_ra8tp")
 
 [node name="VSeparator" type="VSeparator" parent="master container/library view/data container/tags-path container/top tags container"]
 self_modulate = Color(1, 1, 1, 0)
@@ -89,7 +90,7 @@ layout_mode = 2
 [node name="paths label" type="Label" parent="master container/library view/data container/tags-path container/top tags container2"]
 layout_mode = 2
 text = "Paths"
-label_settings = ExtResource("2_p3yok")
+label_settings = ExtResource("3_ra8tp")
 
 [node name="VSeparator" type="VSeparator" parent="master container/library view/data container/tags-path container/top tags container2"]
 self_modulate = Color(1, 1, 1, 0)
@@ -135,12 +136,6 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="HSeparator" type="HSeparator" parent="master container/library view/data container/VBoxContainer/table/rows"]
-layout_mode = 2
-
-[node name="entry" parent="master container/library view/data container/VBoxContainer/table/rows" instance=ExtResource("3_551t7")]
-layout_mode = 2
 
 [node name="buttons separator" type="HSeparator" parent="master container/library view/data container/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)

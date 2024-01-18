@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bckxsuw6k70xo"]
 
-[ext_resource type="Script" path="res://Scripts/new library_manager.gd" id="1_14sw1"]
-[ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://top labels.tres" id="2_5bwbx"]
-[ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://menu theme.tres" id="3_tciqu"]
+[ext_resource type="Script" path="res://Scripts/new_library_manager.gd" id="1_olarf"]
+[ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://resources/top labels.tres" id="2_6c3tq"]
+[ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://resources/menu theme.tres" id="3_2a7u1"]
 
 [node name="new library" type="Control"]
 layout_mode = 3
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_14sw1")
+script = ExtResource("1_olarf")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -40,7 +40,7 @@ custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "New Library"
-label_settings = ExtResource("2_5bwbx")
+label_settings = ExtResource("2_6c3tq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -52,7 +52,7 @@ layout_mode = 2
 [node name="name" type="TextEdit" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 35)
 layout_mode = 2
-theme = ExtResource("3_tciqu")
+theme = ExtResource("3_2a7u1")
 placeholder_text = "Library name..."
 context_menu_enabled = false
 shortcut_keys_enabled = false
@@ -69,7 +69,7 @@ layout_mode = 2
 [node name="confirm" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
-theme = ExtResource("3_tciqu")
+theme = ExtResource("3_2a7u1")
 text = "Confirm"
 
 [node name="VSeparator" type="VSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -80,7 +80,7 @@ layout_mode = 2
 [node name="cancel" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
-theme = ExtResource("3_tciqu")
+theme = ExtResource("3_2a7u1")
 text = "Cancel"
 
 [node name="HSeparator3" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]

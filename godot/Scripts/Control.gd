@@ -1,7 +1,5 @@
 extends Control
 
-signal confirm_new
-
 var main
 var new_lib
 var open_lib
@@ -14,7 +12,8 @@ func _ready():
 	open_lib = get_node("open library")
 	view_lib = get_node("library view")
 	sqlite = get_node("SQLite manager")
-	confirm_new.connect(new_lib._confirm_new)
+	var files = sqlite.get_libs()
+	open_lib.populate_list(files)
 
 func _main_menu():
 	main.visible = true
@@ -41,7 +40,9 @@ func _view_library():
 	view_lib.visible = true
 	
 func _check_new(lib):
-	confirm_new.emit(sqlite.check_new(lib))
+	if sqlite.check_new(lib):
+		sqlite.create_new_library(lib)
+		_view_library()
 
 func _input(event):
 	if event is InputEventKey and OS.get_keycode_string(event.keycode) == "Escape":

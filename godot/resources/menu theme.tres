@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://b8hv5kksxk64c"]
 
-[ext_resource type="SystemFont" uid="uid://dgtlj40ebr44k" path="res://font.tres" id="1_8s4is"]
+[ext_resource type="SystemFont" uid="uid://dgtlj40ebr44k" path="res://resources/font.tres" id="1_8s4is"]
 
 [resource]
 default_font = ExtResource("1_8s4is")

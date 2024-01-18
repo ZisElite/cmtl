@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://dpvwr035are1g"]
+[gd_scene load_steps=2 format=3 uid="uid://dpvwr035are1g"]
+
+[ext_resource type="ButtonGroup" uid="uid://rr0fd0vns0ks" path="res://resources/radio_libraries.tres" id="1_14564"]
 
 [node name="entry" type="VBoxContainer"]
 anchors_preset = -1
@@ -9,13 +11,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="name" type="Label" parent="."]
+[node name="name" type="Button" parent="."]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 1
-vertical_alignment = 1
-autowrap_mode = 3
+size_flags_vertical = 3
+button_group = ExtResource("1_14564")
+alignment = 0
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
