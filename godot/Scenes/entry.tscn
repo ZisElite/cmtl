@@ -9,22 +9,33 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="container" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="name" type="Label" parent="HBoxContainer"]
+[node name="name" type="Label" parent="container"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="container"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="name2" type="Label" parent="HBoxContainer"]
+[node name="path" type="Label" parent="container"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+vertical_alignment = 1
+
+[node name="VSeparator2" type="VSeparator" parent="container"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="format" type="Label" parent="container"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3

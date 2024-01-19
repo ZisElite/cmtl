@@ -28,13 +28,13 @@ func create_new_library(lib):
 	var table = {
 		"id" : {"data_type" : "int", "primary_key" : true, "not_null" : true, "auto_increment" : true},
 		"path" : {"data_type": "text", "not_null": true},
-		"file" : {"data_type" : "bool", "not_null": true}
+		"file" : {"data_type" : "boolean", "not_null": true}
 	}
 	db.create_table("paths", table)
 	
 	table = {
 		"id" : {"data_type" : "int", "primary_key" : true, "not_null" : true, "auto_increment" : true},
-		"path" : {"data_type": "text", "not_null": true},
+		"path_id" : {"data_type": "int", "not_null": true},
 		"name" : {"data_type" : "text", "not_null": true},
 		"format" : {"data_type" : "text"}
 	}
@@ -52,3 +52,7 @@ func open_library(lib):
 
 func remove_lib(lib):
 	dir.remove(lib+".db")
+
+func read_table(table):
+	db.query("select * from "+table)
+	return db.query_result

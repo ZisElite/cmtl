@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddfvu2p4x62o5"]
+
+[ext_resource type="ButtonGroup" uid="uid://bebsparox65my" path="res://resources/tags.tres" id="1_lwbpk"]
+
+[node name="tag" type="VBoxContainer"]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.043
+offset_bottom = 0.039999
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="name" type="CheckButton" parent="."]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+button_group = ExtResource("1_lwbpk")
+text = "test"
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2

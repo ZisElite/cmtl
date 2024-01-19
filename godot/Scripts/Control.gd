@@ -33,7 +33,8 @@ func _open_library():
 	open_lib.visible = true
 	view_lib.visible = false
 
-func _view_library():
+func _view_library(lib):
+	view_lib.setup(lib)
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = false
@@ -42,7 +43,7 @@ func _view_library():
 func _check_new(lib):
 	if sqlite.check_new(lib):
 		sqlite.create_new_library(lib)
-		_view_library()
+		_view_library(lib)
 
 func _remove_lib(lib):
 	sqlite.remove_lib(lib)

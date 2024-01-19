@@ -7,7 +7,7 @@ var confirm
 var delete
 var cancel
 var scroll
-var lib
+var lib_pre
 
 var selected = null
 
@@ -16,7 +16,7 @@ func _ready():
 	delete = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/delete")
 	cancel = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/cancel")
 	scroll = get_node("ScrollContainer/HBoxContainer/VBoxContainer/libraries container/libraries")
-	lib = preload("res://Scenes/library.tscn")
+	lib_pre = preload("res://Scenes/library.tscn")
 	confirm.pressed.connect(self._check_pressed)
 	confirm_selected.connect(get_parent()._view_library)
 	delete.pressed.connect(self._send_for_deletion)
@@ -28,7 +28,7 @@ func populate_list(files):
 	for file in files:
 		if file.get_extension() == "db":
 			var nam = file.substr(0, file.length() - 3)
-			var temp = lib.instantiate()
+			var temp = lib_pre.instantiate()
 			temp.name = nam
 			temp.get_node("name").text = nam
 			temp.get_node("name").pressed.connect(self._select.bind(nam))
@@ -45,7 +45,7 @@ func _clear_buttons():
 
 func _check_pressed():
 	if selected:
-		confirm_selected.emit()
+		confirm_selected.emit(selected)
 
 func _send_for_deletion():
 	if selected:

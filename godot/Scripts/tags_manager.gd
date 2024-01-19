@@ -1,11 +1,20 @@
 extends VBoxContainer
 
+var container
+var add
+var remove
 
-# Called when the node enters the scene tree for the first time.
+var tag_pre
+
 func _ready():
-	pass # Replace with function body.
+	container = get_node("tags scroll/tags")
+	add = get_node("top tags container/add tag")
+	remove = get_node("top tags container/remove tag")
+	tag_pre = preload("res://Scenes/tag.tscn")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func populate_tags(tags):
+	for tag in tags:
+		var temp = tag_pre.instantiate()
+		temp.name = str(tag["id"])
+		temp.get_node("name").text = tag["name"]
+		container.add_child(temp)
