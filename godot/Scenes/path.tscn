@@ -18,5 +18,5 @@ toggle_mode = true
 button_group = ExtResource("1_80sti")
 alignment = 0
 
-[node name="HSeparator" type="HSeparator" parent="."]
+[node name="type" type="HSeparator" parent="."]
 layout_mode = 2

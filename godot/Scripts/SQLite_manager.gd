@@ -56,3 +56,10 @@ func remove_lib(lib):
 func read_table(table):
 	db.query("select * from "+table)
 	return db.query_result
+
+func add_path(path, type):
+	var row = {"path" : path, "file" : type}
+	print(db.insert_row("paths", row))
+
+func remove_path(path_id):
+	print(db.delete_rows("paths", "id = " + path_id))
