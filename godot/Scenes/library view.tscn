@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b1v8db5vo3ev5"]
+[gd_scene load_steps=8 format=3 uid="uid://b1v8db5vo3ev5"]
 
 [ext_resource type="Script" path="res://Scripts/library_view_manager.gd" id="1_1ynmf"]
 [ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://resources/top labels.tres" id="2_ut12b"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/tags_manager.gd" id="4_ff56t"]
 [ext_resource type="Script" path="res://Scripts/paths_manager.gd" id="5_qvomi"]
 [ext_resource type="Script" path="res://Scripts/entries_manager.gd" id="6_pevw0"]
+[ext_resource type="Script" path="res://Scripts/accept_dialogue_clear.gd" id="7_phvvj"]
 
 [node name="library view" type="Control"]
 layout_mode = 3
@@ -186,3 +187,29 @@ size = Vector2i(600, 400)
 ok_button_text = "Open"
 file_mode = 3
 access = 2
+
+[node name="new_tag dialogue" type="ConfirmationDialog" parent="."]
+title = "New tag"
+initial_position = 2
+size = Vector2i(400, 88)
+script = ExtResource("7_phvvj")
+
+[node name="tag" type="LineEdit" parent="new_tag dialogue"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 39.0
+placeholder_text = "Tag name..."
+
+[node name="remove tag dialogue" type="ConfirmationDialog" parent="."]
+title = "Remove tag"
+initial_position = 2
+size = Vector2i(400, 88)
+script = ExtResource("7_phvvj")
+
+[node name="tag" type="LineEdit" parent="remove tag dialogue"]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 392.0
+offset_bottom = 39.0
+placeholder_text = "Tag name..."

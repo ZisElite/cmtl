@@ -57,9 +57,26 @@ func read_table(table):
 	db.query("select * from "+table)
 	return db.query_result
 
+#-------------------------------------
+
 func add_path(path, type):
 	var row = {"path" : path, "file" : type}
 	print(db.insert_row("paths", row))
 
 func remove_path(path_id):
 	print(db.delete_rows("paths", "id = " + path_id))
+
+#-------------------------------------
+
+func add_new_tag(tag_name):
+	var table = {"name" : tag_name}
+	if db.insert_row("tags", table):
+		db.query("select * from tags where name = \"" + tag_name + "\"")
+		return db.query_result[0]
+
+func remove_tag(tag_name):
+	var id = null
+	if db.query("select id from tags where name = \"" + tag_name + "\""):
+		id = db.query_result[0]["id"]
+		db.delete_rows("tags", "name = \"" + tag_name + "\"")
+	return id

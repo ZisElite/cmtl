@@ -1,5 +1,5 @@
 res://Scenes/library view.tscn
-res://Scripts/paths_manager.gd
+res://Scripts/tags_manager.gd
 res://Scripts/library_view_manager.gd
 res://Scenes/main.tscn
 res://Scenes/main menu.tscn
@@ -10,3 +10,4 @@ res://Scenes/library.tscn
 res://Scenes/path.tscn
 res://Scenes/tag.tscn
 res://Scripts/SQLite_manager.gd
+res://Scripts/accept_dialogue_clear.gd

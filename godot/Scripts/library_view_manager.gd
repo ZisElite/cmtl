@@ -7,6 +7,8 @@ var paths_node
 var controller
 var sqlite
 var new_files
+var new_tag
+var remove_tag
 
 var entry_pre
 
@@ -27,9 +29,16 @@ func _ready():
 	new_files = get_node("new_files")
 	new_files.file_selected.connect(self._add_path.bind(true))
 	new_files.dir_selected.connect(self._add_path.bind(false))
+	new_tag = get_node("new_tag dialogue")
+	new_tag.register_text_enter(new_tag.get_node("new tag"))
+	new_tag.confirmed.connect(self._new_tag_confirmed)
+	remove_tag = get_node("remove tag dialogue")
+	remove_tag.register_text_enter(remove_tag.get_node("remove tag"))
+	remove_tag.confirmed.connect(self._remove_tag_confirmed)
 	entry_pre = preload("res://Scenes/entry.tscn")
 	
 	paths_node.connect_buttons_to_master(self)
+	tags_node.connect_buttons_to_master(self)
 
 func setup(lib):
 	sqlite.open_library(lib)
@@ -40,6 +49,8 @@ func setup(lib):
 	tags_node.populate_tags(result)
 	result = sqlite.read_table("files")
 	populate_files(result)
+	
+#-------------------------------------
 
 func populate_files(files):
 	print(files)
@@ -50,6 +61,8 @@ func populate_files(files):
 		temp.get_node("container/path").text = str(file["path_id"])
 		temp.get_node("container/format").text = file["format"]
 		rows_node.add_child(temp)
+
+#-------------------------------------
 
 func _open_files_dialogue():
 	new_files.visible = true
@@ -73,3 +86,27 @@ func _scan_paths():
 		if temp:
 			files.append_array(temp)
 	print(files)
+	
+#-------------------------------------
+
+func _add_tag():
+	new_tag.visible = true
+
+func _new_tag_confirmed():
+	var new_tag_name = new_tag.get_node("tag").text
+	if new_tag_name:
+		var result = sqlite.add_new_tag(new_tag_name)
+		if result:
+			print(result)
+			tags_node.add_tag(result)
+			
+
+func _remove_tag():
+	remove_tag.visible = true
+
+func _remove_tag_confirmed():
+	var remove_tag_name = remove_tag.get_node("tag").text
+	if remove_tag_name:
+		var id = sqlite.remove_tag(remove_tag_name)
+		if id:
+			tags_node.remove_tag(id)
