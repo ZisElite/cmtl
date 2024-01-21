@@ -66,8 +66,10 @@ func scan_for_files(path):
 	var dir = DirAccess.open(path)
 	var dirs = dir.get_directories()
 	for dire in dirs:
-		var result = scan_for_files(path + dire)
-		found.append_array(result)
+		print(dire)
+		var result = scan_for_files(path + "/" + dire)
+		if result:
+			found.append_array(result)
 	var files = dir.get_files()
 	for file in files:
 		if file.get_extension() in formats:

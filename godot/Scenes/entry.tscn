@@ -13,21 +13,19 @@ size_flags_horizontal = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="name" type="Label" parent="container"]
-custom_minimum_size = Vector2(250, 0)
+[node name="name" type="CheckButton" parent="container"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-size_flags_vertical = 1
-vertical_alignment = 1
-autowrap_mode = 3
+size_flags_horizontal = 0
+text_overrun_behavior = 3
 
 [node name="VSeparator" type="VSeparator" parent="container"]
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
 [node name="path" type="Label" parent="container"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 1
 vertical_alignment = 1
 

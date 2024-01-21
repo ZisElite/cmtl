@@ -1,3 +1,4 @@
+CheckButton
 HBoxContainer
 VBoxContainer
 Label
@@ -7,7 +8,6 @@ ConfirmationDialog
 LineEdit
 PopupPanel
 Popup
-CheckButton
 FileDialog
 VSplitContainer
 HSplitContainer

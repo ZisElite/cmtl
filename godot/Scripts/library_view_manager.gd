@@ -1,10 +1,14 @@
 extends Control
 
+signal update_loading_text
+signal toggle_loading
+
 var rows_node
 var tags_node
 var paths_node
 
 var controller
+var loading
 var sqlite
 var new_files
 var new_tag
@@ -25,6 +29,9 @@ func _ready():
 	tags_node = get_node("master container/library view/data container/tags-path container/tags overall")
 	paths_node = get_node("master container/library view/data container/tags-path container/paths overall")
 	controller = get_parent()
+	loading = controller.get_node("loading")
+	update_loading_text.connect(loading._update_text)
+	toggle_loading.connect(loading._toggle_visible)
 	sqlite = controller.get_node("SQLite manager")
 	new_files = get_node("new_files")
 	new_files.file_selected.connect(self._add_path.bind(true))
@@ -83,16 +90,20 @@ func _remove_path(selected):
 	paths_list.erase(selected.get_node("name").text)
 
 func _scan_paths():
-	var files = []
 	var paths = paths_node.get_path_nodes()
+	var leng = paths.size()
+	var i = 1
+	update_loading_text.emit(paths[0].get_node("name").text, str(i) + "/" + str(leng))
+	toggle_loading.emit(true)
 	for path in paths:
 		var temp = paths_node.scan_for_files(path.get_node("name").text)
+		update_loading_text.emit(path.get_node("name").text, str(i) + "/" + str(leng))
 		for file in temp:
 			var path_id = path.name
 			var result =  sqlite.add_file(file, path_id)
 			if result:
-				files.append(result)
-	populate_files(files)
+				populate_files(result)
+	toggle_loading.emit(false)
 	
 #-------------------------------------
 
