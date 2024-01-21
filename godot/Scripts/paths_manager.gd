@@ -22,6 +22,9 @@ func _ready():
 	scan = get_node("top tags container2/scan")
 	path_pre = preload("res://Scenes/path.tscn")
 
+func get_path_nodes():
+	return container.get_children()
+
 func populate_paths(paths, initial=false):
 	var paths_list =[]
 	for path in paths:
@@ -39,6 +42,7 @@ func populate_paths(paths, initial=false):
 func add_single_path(path):
 	var temp = path_pre.instantiate()
 	temp.get_node("name").text = path
+	temp.get_node("name").pressed.connect(self._select_path.bind(temp))
 	container.add_child(temp)
 
 func connect_buttons_to_master(master):
@@ -51,22 +55,23 @@ func _select_path(button):
 	selected = button
 	print(button.name)
 
-func scan_dir(path):
+func scan_for_files(path):
 	if FileAccess.file_exists(path):
 		if path.get_extension() in formats:
-			return [path]
+			var temp = path.split("/")
+			return [temp[temp.size()-1]]
 	if !DirAccess.dir_exists_absolute(path):
 		return null
 	var found = []
 	var dir = DirAccess.open(path)
 	var dirs = dir.get_directories()
 	for dire in dirs:
-		var result = scan_dir(path + dire)
+		var result = scan_for_files(path + dire)
 		found.append_array(result)
 	var files = dir.get_files()
 	for file in files:
 		if file.get_extension() in formats:
-			found.append(path + "/" + file)
+			found.append(file)
 	return (found)
 
 

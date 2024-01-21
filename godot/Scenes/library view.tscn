@@ -188,13 +188,13 @@ ok_button_text = "Open"
 file_mode = 3
 access = 2
 
-[node name="new_tag dialogue" type="ConfirmationDialog" parent="."]
+[node name="new tag dialogue" type="ConfirmationDialog" parent="."]
 title = "New tag"
 initial_position = 2
 size = Vector2i(400, 88)
 script = ExtResource("7_phvvj")
 
-[node name="tag" type="LineEdit" parent="new_tag dialogue"]
+[node name="tag" type="LineEdit" parent="new tag dialogue"]
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 392.0

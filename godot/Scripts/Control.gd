@@ -43,6 +43,7 @@ func _view_library(lib):
 func _check_new(lib):
 	if sqlite.check_new(lib):
 		sqlite.create_new_library(lib)
+		open_lib.add_single_lib(lib)
 		_view_library(lib)
 
 func _remove_lib(lib):

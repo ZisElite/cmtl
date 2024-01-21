@@ -29,11 +29,11 @@ func _ready():
 	new_files = get_node("new_files")
 	new_files.file_selected.connect(self._add_path.bind(true))
 	new_files.dir_selected.connect(self._add_path.bind(false))
-	new_tag = get_node("new_tag dialogue")
-	new_tag.register_text_enter(new_tag.get_node("new tag"))
+	new_tag = get_node("new tag dialogue")
+	new_tag.register_text_enter(new_tag.get_node("tag"))
 	new_tag.confirmed.connect(self._new_tag_confirmed)
 	remove_tag = get_node("remove tag dialogue")
-	remove_tag.register_text_enter(remove_tag.get_node("remove tag"))
+	remove_tag.register_text_enter(remove_tag.get_node("tag"))
 	remove_tag.confirmed.connect(self._remove_tag_confirmed)
 	entry_pre = preload("res://Scenes/entry.tscn")
 	
@@ -55,12 +55,15 @@ func setup(lib):
 func populate_files(files):
 	print(files)
 	for file in files:
-		var temp = entry_pre.instantiate()
-		temp.name = str(file["id"])
-		temp.get_node("container/name").text = file["name"]
-		temp.get_node("container/path").text = str(file["path_id"])
-		temp.get_node("container/format").text = file["format"]
-		rows_node.add_child(temp)
+		add_single_file(file)
+
+func add_single_file(file):
+	var temp = entry_pre.instantiate()
+	temp.name = str(file["id"])
+	temp.get_node("container/name").text = file["name"]
+	temp.get_node("container/path").text = str(file["path_id"])
+	temp.get_node("container/format").text = file["format"]
+	rows_node.add_child(temp)
 
 #-------------------------------------
 
@@ -81,11 +84,15 @@ func _remove_path(selected):
 
 func _scan_paths():
 	var files = []
-	for path in paths_list:
-		var temp = paths_node.scan_dir(path)
-		if temp:
-			files.append_array(temp)
-	print(files)
+	var paths = paths_node.get_path_nodes()
+	for path in paths:
+		var temp = paths_node.scan_for_files(path.get_node("name").text)
+		for file in temp:
+			var path_id = path.name
+			var result =  sqlite.add_file(file, path_id)
+			if result:
+				files.append(result)
+	populate_files(files)
 	
 #-------------------------------------
 
@@ -94,6 +101,7 @@ func _add_tag():
 
 func _new_tag_confirmed():
 	var new_tag_name = new_tag.get_node("tag").text
+	print(new_tag_name)
 	if new_tag_name:
 		var result = sqlite.add_new_tag(new_tag_name)
 		if result:

@@ -28,11 +28,14 @@ func populate_list(files):
 	for file in files:
 		if file.get_extension() == "db":
 			var nam = file.substr(0, file.length() - 3)
-			var temp = lib_pre.instantiate()
-			temp.name = nam
-			temp.get_node("name").text = nam
-			temp.get_node("name").pressed.connect(self._select.bind(nam))
-			scroll.add_child(temp)
+			add_single_lib(nam)
+
+func add_single_lib(title):
+	var temp = lib_pre.instantiate()
+	temp.name = title
+	temp.get_node("name").text = title
+	temp.get_node("name").pressed.connect(self._select.bind(title))
+	scroll.add_child(temp)
 
 func _select(nam):
 	selected = nam
