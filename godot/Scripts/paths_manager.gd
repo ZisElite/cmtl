@@ -6,8 +6,10 @@ var container
 var add
 var remove
 var scan
+var master
 
 var path_pre
+var group
 
 var selected = null
 var formats = ["3gp", "aa", "aax", "act", "aiff", "alac", "amr", "ape", "au", "awb", "dss", "dvf",
@@ -21,6 +23,7 @@ func _ready():
 	remove = get_node("top tags container2/remove path")
 	scan = get_node("top tags container2/scan")
 	path_pre = preload("res://Scenes/path.tscn")
+	group = preload("res://resources/paths.tres")
 
 func get_path_nodes():
 	return container.get_children()
@@ -28,32 +31,36 @@ func get_path_nodes():
 func populate_paths(paths, initial=false):
 	var paths_list =[]
 	for path in paths:
-		var temp = path_pre.instantiate()
-		temp.name = str(path["id"])
-		temp.get_node("name").text = path["path"]
-		temp.get_node("name").pressed.connect(self._select_path.bind(temp))
-		temp.get_node("type").name = str(path["file"])
-		container.add_child(temp)
+		add_single_path(path)
 		if initial:
 			paths_list.append(path["path"])
 	if initial:
 		return paths_list
 
-func add_single_path(path):
+func add_single_path(path, ret=false):
 	var temp = path_pre.instantiate()
-	temp.get_node("name").text = path
+	temp.name = str(path["id"])
+	temp.get_node("name").text = path["path"]
 	temp.get_node("name").pressed.connect(self._select_path.bind(temp))
+	temp.get_node("type").name = str(path["file"])
+	temp.get_node("name").button_group = group
 	container.add_child(temp)
+	if ret:
+		return temp
 
-func connect_buttons_to_master(master):
+func connect_buttons_to_master(node):
+	master = node
 	add.pressed.connect(master._open_files_dialogue)
 	remove.pressed.connect(self._remove_path)
 	remove_path.connect(master._remove_path)
 	scan.pressed.connect(master._scan_paths)
 
 func _select_path(button):
-	selected = button
-	print(button.name)
+	if button.get_node("name").button_pressed:
+		selected = button
+	else:
+		selected = null
+	print(selected)
 
 func scan_for_files(path):
 	if FileAccess.file_exists(path):
@@ -74,6 +81,7 @@ func scan_for_files(path):
 	for file in files:
 		if file.get_extension() in formats:
 			found.append(file)
+	print("found ", found)
 	return (found)
 
 

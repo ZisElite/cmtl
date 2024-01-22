@@ -3,21 +3,24 @@ extends Control
 signal update_loading_text
 signal toggle_loading
 
-var rows_node
+var entries_node
 var tags_node
 var paths_node
-
 var controller
 var loading
 var sqlite
 var new_files
 var new_tag
 var remove_tag
+var apply_filter
+var clear_filter
 
 var entry_pre
 
 var paths_list = null
 var tags_list = null
+var active_tag = null
+var active_path = null
 
 var formats = ["3gp", "aa", "aax", "act", "aiff", "alac", "amr", "ape", "au", "awb", "dss", "dvf",
 "flac", "gsm", "iklax", "ivs", "m4b", "m4p", "mmf", "movpkg", "mp3", "mpc", "msv", "nmf", "ogg",
@@ -25,9 +28,9 @@ var formats = ["3gp", "aa", "aax", "act", "aiff", "alac", "amr", "ape", "au", "a
 "webm", "8svx", "cda"]
 
 func _ready():
-	rows_node = get_node("master container/library view/data container/VBoxContainer/table/entries")
-	tags_node = get_node("master container/library view/data container/tags-path container/tags overall")
-	paths_node = get_node("master container/library view/data container/tags-path container/paths overall")
+	entries_node = get_node("master container/library view/data container/VBoxContainer/table")
+	tags_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/tags overall")
+	paths_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/paths overall")
 	controller = get_parent()
 	loading = controller.get_node("loading")
 	update_loading_text.connect(loading._update_text)
@@ -46,8 +49,14 @@ func _ready():
 	
 	paths_node.connect_buttons_to_master(self)
 	tags_node.connect_buttons_to_master(self)
+	
+	apply_filter = get_node("master container/library view/data container/VBoxContainer2/HBoxContainer/apply")
+	clear_filter = get_node("master container/library view/data container/VBoxContainer2/HBoxContainer/clear")
+	apply_filter.pressed.connect(self._apply_filters)
+	clear_filter.pressed.connect(self._clear_filters)
 
 func setup(lib):
+	entries_node.reset_container()
 	sqlite.open_library(lib)
 	var result = sqlite.read_table("paths")
 	paths_list = paths_node.populate_paths(result, true)
@@ -55,23 +64,8 @@ func setup(lib):
 	result = sqlite.read_table("tags")
 	tags_node.populate_tags(result)
 	result = sqlite.read_table("files")
-	populate_files(result)
+	entries_node.populate_files(result)
 	
-#-------------------------------------
-
-func populate_files(files):
-	print(files)
-	for file in files:
-		add_single_file(file)
-
-func add_single_file(file):
-	var temp = entry_pre.instantiate()
-	temp.name = str(file["id"])
-	temp.get_node("container/name").text = file["name"]
-	temp.get_node("container/path").text = str(file["path_id"])
-	temp.get_node("container/format").text = file["format"]
-	rows_node.add_child(temp)
-
 #-------------------------------------
 
 func _open_files_dialogue():
@@ -81,9 +75,10 @@ func _add_path(path, type):
 	if path not in paths_list:
 		if type and path.get_extension() not in formats:
 			return
-		sqlite.add_path(path, type)
-		paths_node.add_single_path(path)
+		var result = sqlite.add_path(path, type)
+		var temp = paths_node.add_single_path(result[0], true)
 		paths_list.append(path)
+		scan_single_path(temp)
 		
 func _remove_path(selected):
 	sqlite.remove_path(selected.name)
@@ -96,15 +91,19 @@ func _scan_paths():
 	update_loading_text.emit(paths[0].get_node("name").text, str(i) + "/" + str(leng))
 	toggle_loading.emit(true)
 	for path in paths:
-		var temp = paths_node.scan_for_files(path.get_node("name").text)
 		update_loading_text.emit(path.get_node("name").text, str(i) + "/" + str(leng))
-		for file in temp:
-			var path_id = path.name
-			var result =  sqlite.add_file(file, path_id)
-			if result:
-				populate_files(result)
+		scan_single_path(path)
+		i += 1
 	toggle_loading.emit(false)
-	
+
+func scan_single_path(path):
+	var temp = paths_node.scan_for_files(path.get_node("name").text)
+	for file in temp:
+		var path_id = path.name
+		var result =  sqlite.add_file(file, path_id)
+		if result:
+			print("sca nresult", result)
+			entries_node.add_single_file(result)
 #-------------------------------------
 
 func _add_tag():
@@ -129,3 +128,13 @@ func _remove_tag_confirmed():
 		var id = sqlite.remove_tag(remove_tag_name)
 		if id:
 			tags_node.remove_tag(id)
+
+#-------------------------------------
+
+func _apply_filters():
+	var path = paths_node.selected
+	var tag = tags_node.selected
+	sqlite.retrieve_files(tag, path)
+	
+func _clear_filters():
+	pass

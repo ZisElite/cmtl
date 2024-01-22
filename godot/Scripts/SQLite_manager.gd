@@ -62,7 +62,10 @@ func read_table(table):
 
 func add_path(path, type):
 	var row = {"path" : path, "file" : type}
-	print(db.insert_row("paths", row))
+	db.insert_row("paths", row)
+	db.query("select * from paths where path = \"" + path +  "\"")
+	if db.query_result:
+		return db.query_result
 
 func remove_path(path_id):
 	print(db.delete_rows("paths", "id = " + path_id))
@@ -97,3 +100,12 @@ func add_file(file, path_id):
 	if db.insert_row("files", table):
 		db.query("select * from files where name = \"" + nam + "\"")
 		return db.query_result[0]
+
+func retrieve_files(tag_id=null, path_id=null):
+	var query = "select * from files where "
+	if tag_id:
+		query += "id = " + tag_id.name
+	if path_id:
+		query += "path_id =" + path_id.name
+	db.query(query)
+	return db.query_result

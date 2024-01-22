@@ -1,6 +1,8 @@
-CheckButton
+VSeparator
+Button
 HBoxContainer
 VBoxContainer
+CheckButton
 Label
 CenterContainer
 PanelContainer
@@ -12,12 +14,10 @@ FileDialog
 VSplitContainer
 HSplitContainer
 ItemList
-Button
 Node
 Control
 HSeparator
 Container
-VSeparator
 Panel
 ScrollContainer
 TextEdit

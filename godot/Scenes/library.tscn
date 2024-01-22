@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dpvwr035are1g"]
 
-[ext_resource type="ButtonGroup" uid="uid://rr0fd0vns0ks" path="res://resources/radio_libraries.tres" id="1_14564"]
+[ext_resource type="ButtonGroup" uid="uid://rr0fd0vns0ks" path="res://resources/libraries.tres" id="1_8c0fn"]
 
 [node name="library" type="VBoxContainer"]
 anchors_preset = -1
@@ -17,7 +17,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 toggle_mode = true
-button_group = ExtResource("1_14564")
+button_group = ExtResource("1_8c0fn")
 alignment = 0
 
 [node name="HSeparator" type="HSeparator" parent="."]
