@@ -25,26 +25,26 @@ func check_new(lib):
 func create_new_library(lib):
 	db.path = libs_path+lib+".db"
 	db.open_db()
-	var table = {
-		"id" : {"data_type" : "int", "primary_key" : true, "not_null" : true, "auto_increment" : true},
-		"path" : {"data_type": "text", "not_null": true, "unique" : true},
-		"file" : {"data_type" : "boolean", "not_null": true}
-	}
-	db.create_table("paths", table)
+	var query = "CREATE TABLE paths (
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	path TEXT NOT NULL UNIQUE,
+	file BOOLEAN NOT NULL
+	)"
+	db.query(query)
 	
-	table = {
-		"id" : {"data_type" : "int", "primary_key" : true, "not_null" : true, "auto_increment" : true},
-		"path_id" : {"data_type": "int", "not_null": true, "foreign_key" : "paths.id"},
-		"name" : {"data_type" : "text", "not_null": true, "unique" : true},
-		"format" : {"data_type" : "text"}
-	}
-	db.create_table("files", table)
+	query = "CREATE TABLE files (
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	path_id INTEGER NOT NULL REFERENCES paths (id) ON DELETE CASCADE,
+	name TEXT UNIQUE NOT NULL,
+	format TEXT
+	)"
+	db.query(query)
 	
-	table = {
-		"id" : {"data_type" : "int", "primary_key" : true, "not_null" : true, "auto_increment" : true},
-		"name" : {"data_type": "text", "not_null": true, "unique" : true}
-	}
-	db.create_table("tags", table)
+	query = "CREATE TABLE tags (
+	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+	name TEXT NOT NULL UNIQUE
+	)"
+	db.query(query)
 
 func open_library(lib):
 	db.path = libs_path+lib+".db"
@@ -80,10 +80,10 @@ func add_new_tag(tag_name):
 		return db.query_result[0]
 
 func create_tag_table(title):
-	var table = {
-		"file_id" : {"data_type" : "int", "not_null" : true, "unique" : true, "foreign_key" : "files.id"}
-	}
-	db.create_table(title, table)
+	var query = "CREATE TABLE " + title +" (
+	file_id INTEGER UNIQUE NOT NULL REFERENCES files (id) ON DELETE CASCADE
+	)"
+	db.query(query)
 
 func remove_tag(tag_name):
 	var id = null
