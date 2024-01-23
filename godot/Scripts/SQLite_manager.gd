@@ -101,11 +101,20 @@ func add_file(file, path_id):
 		db.query("select * from files where name = \"" + nam + "\"")
 		return db.query_result[0]
 
-func retrieve_files(tag_id=null, path_id=null):
-	var query = "select * from files where "
-	if tag_id:
-		query += "id = " + tag_id.name
-	if path_id:
-		query += "path_id =" + path_id.name
+func retrieve_files(tag=null, path_id=null):
+	var query = "select files.* from files "
+	if tag and path_id:
+		query += ",paths, " + tag.get_node("name").text + " where  files.path_id = " + \
+		path_id.name + " and files.id = " + tag.get_node("name").text + ".file_id and files.path_id = paths.id"
+	elif tag:
+		query += ", " + tag.get_node("name").text + " where files.id = " + tag.get_node("name").text + ".file_id"
+	elif path_id:
+		query += ",paths where  files.path_id = " + path_id.name
+	print("query ", query)
 	db.query(query)
 	return db.query_result
+
+func add_tag_to_file(tag, file_id):
+	print(tag, " ", file_id)
+	var table = {"file_id" : int(str(file_id))}
+	db.insert_row(tag, table)

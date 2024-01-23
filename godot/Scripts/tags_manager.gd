@@ -9,6 +9,7 @@ var tag_pre
 var group
 
 var selected
+
 func _ready():
 	container = get_node("tags scroll/tags")
 	add = get_node("top tags container/add tag")

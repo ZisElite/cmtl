@@ -14,6 +14,8 @@ var new_tag
 var remove_tag
 var apply_filter
 var clear_filter
+var apply_tag_to_files
+var remove_tag_from_files
 
 var entry_pre
 
@@ -54,6 +56,11 @@ func _ready():
 	clear_filter = get_node("master container/library view/data container/VBoxContainer2/HBoxContainer/clear")
 	apply_filter.pressed.connect(self._apply_filters)
 	clear_filter.pressed.connect(self._clear_filters)
+	
+	apply_tag_to_files = get_node("master container/library view/data container/VBoxContainer/buttons/apply tags")
+	remove_tag_from_files = get_node("master container/library view/data container/VBoxContainer/buttons/remove tags")
+	apply_tag_to_files.pressed.connect(self._apply_tag_to_files)
+	remove_tag_from_files.pressed.connect(self._remove_tag_from_files)
 
 func setup(lib):
 	entries_node.reset_container()
@@ -132,9 +139,33 @@ func _remove_tag_confirmed():
 #-------------------------------------
 
 func _apply_filters():
+	print("applying filters")
 	var path = paths_node.selected
 	var tag = tags_node.selected
-	sqlite.retrieve_files(tag, path)
+	var result = sqlite.retrieve_files(tag, path)
+	entries_node.reset_container()
+	if result:
+		print(result)
+		entries_node.populate_files(result)
 	
 func _clear_filters():
+	if paths_node.selected:
+		paths_node.selected.get_node("name").button_pressed = false
+		paths_node.selected = null
+	if tags_node.selected:
+		tags_node.selected.get_node("name").button_pressed = false
+		tags_node.selected = null
+	var result = sqlite.retrieve_files()
+	entries_node.reset_container()
+	entries_node.populate_files(result)
+
+#-------------------------------------
+
+func _apply_tag_to_files():
+	if tags_node.selected:
+		var tag = tags_node.selected.get_node("name").text
+		var files = entries_node.selected
+		for file in files:
+			sqlite.add_tag_to_file(tag, file.name)
+func _remove_tag_from_files():
 	pass
