@@ -23,6 +23,7 @@ func add_single_file(file):
 	container.add_child(temp)
 
 func reset_container():
+	selected = []
 	if container:
 		container.queue_free()
 	container = container_pre.instantiate()

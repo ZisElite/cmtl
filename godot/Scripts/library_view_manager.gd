@@ -140,6 +140,8 @@ func _remove_tag_confirmed():
 
 func _apply_filters():
 	print("applying filters")
+	active_path = paths_node.selected
+	active_tag = tags_node.selected
 	var path = paths_node.selected
 	var tag = tags_node.selected
 	var result = sqlite.retrieve_files(tag, path)
@@ -150,9 +152,11 @@ func _apply_filters():
 	
 func _clear_filters():
 	if paths_node.selected:
+		active_path = null
 		paths_node.selected.get_node("name").button_pressed = false
 		paths_node.selected = null
 	if tags_node.selected:
+		active_tag = null
 		tags_node.selected.get_node("name").button_pressed = false
 		tags_node.selected = null
 	var result = sqlite.retrieve_files()
@@ -165,7 +169,21 @@ func _apply_tag_to_files():
 	if tags_node.selected:
 		var tag = tags_node.selected.get_node("name").text
 		var files = entries_node.selected
-		for file in files:
-			sqlite.add_tag_to_file(tag, file.name)
+		if files:
+			for file in files:
+				sqlite.add_tag_to_file(tag, file.name)
+			
 func _remove_tag_from_files():
-	pass
+	if tags_node.selected:
+		var tag = tags_node.selected.get_node("name").text
+		var files = entries_node.selected
+		if files:
+			for file in files:
+				print(file)
+				sqlite.remove_tag_from_files(tag, file.name)
+			if active_tag.get_node("name").text == tag:
+				var result = sqlite.retrieve_files(active_tag, active_path)
+				entries_node.reset_container()
+				if result:
+					print(result)
+					entries_node.populate_files(result)

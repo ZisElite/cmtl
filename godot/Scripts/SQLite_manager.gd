@@ -118,3 +118,7 @@ func add_tag_to_file(tag, file_id):
 	print(tag, " ", file_id)
 	var table = {"file_id" : int(str(file_id))}
 	db.insert_row(tag, table)
+
+func remove_tag_from_files(tag, file_id):
+	print(tag, " ", file_id)
+	db.delete_rows(tag, "file_id = " + file_id)
