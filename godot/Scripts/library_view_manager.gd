@@ -2,6 +2,8 @@ extends Control
 
 signal update_loading_text
 signal toggle_loading
+signal disable_esc
+signal free_esc
 
 var entries_node
 var tags_node
@@ -34,6 +36,7 @@ func _ready():
 	tags_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/tags overall")
 	paths_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/paths overall")
 	controller = get_parent()
+	disable_esc.connect(controller._disable_esc)
 	loading = controller.get_node("loading")
 	update_loading_text.connect(loading._update_text)
 	toggle_loading.connect(loading._toggle_visible)
@@ -41,12 +44,15 @@ func _ready():
 	new_files = get_node("new_files")
 	new_files.file_selected.connect(self._add_path.bind(true))
 	new_files.dir_selected.connect(self._add_path.bind(false))
+	new_files.canceled.connect(controller._free_esc)
 	new_tag = get_node("new tag dialogue")
 	new_tag.register_text_enter(new_tag.get_node("tag"))
 	new_tag.confirmed.connect(self._new_tag_confirmed)
+	new_tag.canceled.connect(controller._free_esc)
 	remove_tag = get_node("remove tag dialogue")
 	remove_tag.register_text_enter(remove_tag.get_node("tag"))
 	remove_tag.confirmed.connect(self._remove_tag_confirmed)
+	remove_tag.canceled.connect(controller._free_esc)
 	entry_pre = preload("res://Scenes/entry.tscn")
 	
 	paths_node.connect_buttons_to_master(self)
@@ -76,9 +82,11 @@ func setup(lib):
 #-------------------------------------
 
 func _open_files_dialogue():
+	disable_esc.emit()
 	new_files.visible = true
 
 func _add_path(path, type):
+	free_esc.emit()
 	if path not in paths_list:
 		if type and path.get_extension() not in formats:
 			return
@@ -114,9 +122,11 @@ func scan_single_path(path):
 #-------------------------------------
 
 func _add_tag():
+	disable_esc.emit()
 	new_tag.visible = true
 
 func _new_tag_confirmed():
+	free_esc.emit()
 	var new_tag_name = new_tag.get_node("tag").text
 	print(new_tag_name)
 	if new_tag_name:
@@ -127,9 +137,11 @@ func _new_tag_confirmed():
 			
 
 func _remove_tag():
+	disable_esc.emit()
 	remove_tag.visible = true
 
 func _remove_tag_confirmed():
+	free_esc.emit()
 	var remove_tag_name = remove_tag.get_node("tag").text
 	if remove_tag_name:
 		var id = sqlite.remove_tag(remove_tag_name)

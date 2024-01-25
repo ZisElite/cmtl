@@ -1,5 +1,10 @@
 extends Control
 
+var disable_esc = false
+var free_esc = false
+var esc_is_pressed = false
+var esc_previous_state = false
+
 var main
 var new_lib
 var open_lib
@@ -50,6 +55,24 @@ func _remove_lib(lib):
 	sqlite.remove_lib(lib)
 	open_lib.remove_lib(lib)
 
+func _disable_esc():
+	disable_esc = true
+
+func _free_esc():
+	free_esc = true
+
 func _input(event):
-	if event is InputEventKey and OS.get_keycode_string(event.keycode) == "Escape":
-		get_tree().quit()
+	if event is InputEventKey and event.pressed and OS.get_keycode_string(event.keycode) == "Escape":
+		esc_is_pressed = true
+	elif event is InputEventKey and !event.pressed and OS.get_keycode_string(event.keycode) == "Escape":
+		if free_esc:
+			disable_esc = false
+			free_esc = false
+		else:
+			get_tree().quit()
+
+#func _process(_delta):
+#	if esc_previous_state and !esc_is_pressed:
+#		if !disable_esc:
+#			get_tree().quit()
+#	esc_previous_state = esc_is_pressed
