@@ -11,3 +11,6 @@ res://Scenes/path.tscn
 res://Scenes/tag.tscn
 res://Scenes/entries_container.tscn
 res://Scripts/library_view_manager.gd
+res://Scripts/paths_manager.gd
+res://Scripts/tags_manager.gd
+res://Scripts/SQLite_manager.gd

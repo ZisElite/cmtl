@@ -25,6 +25,11 @@ func _ready():
 	path_pre = preload("res://Scenes/path.tscn")
 	group = preload("res://resources/paths.tres")
 
+func reset_container():
+	for child in container.get_children():
+		container.remove_child(child)
+		child.queue_free()
+
 func get_path_nodes():
 	return container.get_children()
 

@@ -52,6 +52,9 @@ func open_library(lib):
 	db.foreign_keys = true
 	db.open_db()
 
+func close_library():
+	db.close_db()
+
 func remove_lib(lib):
 	dir.remove(lib+".db")
 

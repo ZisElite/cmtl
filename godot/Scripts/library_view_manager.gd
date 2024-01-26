@@ -4,6 +4,7 @@ signal update_loading_text
 signal toggle_loading
 signal disable_esc
 signal free_esc
+signal go_back
 
 var entries_node
 var tags_node
@@ -18,6 +19,7 @@ var apply_filter
 var clear_filter
 var apply_tag_to_files
 var remove_tag_from_files
+var back_button
 
 var entry_pre
 
@@ -67,6 +69,10 @@ func _ready():
 	remove_tag_from_files = get_node("master container/library view/data container/VBoxContainer/buttons/remove tags")
 	apply_tag_to_files.pressed.connect(self._apply_tag_to_files)
 	remove_tag_from_files.pressed.connect(self._remove_tag_from_files)
+	
+	back_button = get_node("master container/library view/data container/VBoxContainer/buttons/back")
+	back_button.pressed.connect(self._main_menu)
+	go_back.connect(controller._main_menu)
 
 func setup(lib):
 	entries_node.reset_container()
@@ -78,6 +84,15 @@ func setup(lib):
 	tags_node.populate_tags(result)
 	result = sqlite.read_table("files")
 	entries_node.populate_files(result)
+
+func _main_menu():
+	entries_node.reset_container()
+	tags_node.reset_container()
+	paths_node.reset_container()
+	sqlite.close_library()
+	active_path = null
+	active_tag = null
+	go_back.emit()
 	
 #-------------------------------------
 
@@ -123,6 +138,7 @@ func _scan_paths():
 func scan_single_path(path):
 	print(path)
 	var temp = paths_node.scan_for_files(path.get_node("name").text)
+	print(temp)
 	for file in temp:
 		var path_id = path.name
 		var result =  sqlite.add_file(file, path_id)
