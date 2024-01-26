@@ -86,7 +86,6 @@ func scan_for_files(path):
 	for file in files:
 		if file.get_extension() in formats:
 			found.append(file)
-	print("found ", found)
 	return (found)
 
 

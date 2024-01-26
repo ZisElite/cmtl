@@ -38,26 +38,38 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+[node name="scanning" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="scan" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="scan" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/scanning"]
 layout_mode = 2
 text = "Scanning for files on: "
 
-[node name="loc" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer"]
+[node name="location" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/scanning"]
 layout_mode = 2
 text = "path"
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+[node name="subfolders cont" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="number" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+[node name="number" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/subfolders cont"]
 layout_mode = 2
-text = "0/10"
+text = "0"
 
-[node name="scanned" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/HBoxContainer2"]
+[node name="subfolders" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/subfolders cont"]
 layout_mode = 2
-text = "locations scanned"
+text = "subfolders found"
+
+[node name="files cont" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="number" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/files cont"]
+layout_mode = 2
+text = "0"
+
+[node name="files" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/files cont"]
+layout_mode = 2
+text = "files found"

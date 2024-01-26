@@ -5,6 +5,8 @@ signal toggle_loading
 signal disable_esc
 signal free_esc
 signal go_back
+signal prepare_for_update
+signal continue_scan
 
 var entries_node
 var tags_node
@@ -74,6 +76,7 @@ func _ready():
 	back_button.pressed.connect(self._main_menu)
 	go_back.connect(controller._main_menu)
 
+			
 func setup(lib):
 	entries_node.reset_container()
 	sqlite.open_library(lib)
@@ -122,28 +125,30 @@ func _remove_path(id, nam):
 		_apply_filters()
 	else:
 		_clear_filters()
+		
 
 func _scan_paths():
-	var paths = paths_node.get_path_nodes()
-	var leng = paths.size()
-	var i = 1
-	update_loading_text.emit(paths[0].get_node("name").text, str(i) + "/" + str(leng))
-	toggle_loading.emit(true)
-	for path in paths:
-		update_loading_text.emit(path.get_node("name").text, str(i) + "/" + str(leng))
-		scan_single_path(path)
-		i += 1
-	toggle_loading.emit(false)
+	if paths_list:
+		var paths = paths_node.get_path_nodes()
+		var leng = paths.size()
+		var i = 1
+		update_loading_text.emit(paths[0].get_node("name").text, str(i) + "/" + str(leng))
+		toggle_loading.emit(true)
+		for path in paths:
+			update_loading_text.emit(path.get_node("name").text, str(i) + "/" + str(leng))
+			prepare_for_update.emit()
+			await draw
+			scan_single_path(path)
+			i += 1
+		toggle_loading.emit(false)
 
 func scan_single_path(path):
-	print(path)
 	var temp = paths_node.scan_for_files(path.get_node("name").text)
-	print(temp)
 	for file in temp:
 		var path_id = path.name
 		var result =  sqlite.add_file(file, path_id)
 		if result:
-			print("scan result", result)
+			#print("scan result", result)
 			entries_node.add_single_file(result)
 #-------------------------------------
 

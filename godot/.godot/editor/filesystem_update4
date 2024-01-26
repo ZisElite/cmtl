@@ -14,3 +14,4 @@ res://Scripts/library_view_manager.gd
 res://Scripts/paths_manager.gd
 res://Scripts/tags_manager.gd
 res://Scripts/SQLite_manager.gd
+res://Scripts/loading_screen.gd
