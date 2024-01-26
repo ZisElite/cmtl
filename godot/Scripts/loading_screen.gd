@@ -13,7 +13,7 @@ func _ready():
 func _toggle_visible(vis):
 	visible = vis
 
-func _update_text(text, sub_num, file_num):
+func _update_text(text, sub_num, file_num = ""):
 	location.text = text
 	sub_number.text = sub_num
 	file_number.text = file_num

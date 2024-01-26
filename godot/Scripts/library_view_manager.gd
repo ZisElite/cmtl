@@ -26,10 +26,12 @@ var back_button
 var entry_pre
 
 var paths_list = null
-var tags_list = null
 var active_tag = null
 var active_path = null
 var filters_active = false
+
+var paths = {}
+var tags = {}
 
 var formats = ["3gp", "aa", "aax", "act", "aiff", "alac", "amr", "ape", "au", "awb", "dss", "dvf",
 "flac", "gsm", "iklax", "ivs", "m4b", "m4p", "mmf", "movpkg", "mp3", "mpc", "msv", "nmf", "ogg",
@@ -81,12 +83,26 @@ func setup(lib):
 	entries_node.reset_container()
 	sqlite.open_library(lib)
 	var result = sqlite.read_table("paths")
+	create_path_dict(result)
 	paths_list = paths_node.populate_paths(result, true)
-	print(paths_list)
 	result = sqlite.read_table("tags")
+	create_tag_dict(result)
 	tags_node.populate_tags(result)
 	result = sqlite.read_table("files")
-	entries_node.populate_files(result)
+	entries_node.populate_files(result, paths)
+	entries_node.filter_files()
+
+func create_path_dict(results):
+	for result in results:
+		paths[result["id"]] = []
+
+func create_tag_dict(results):
+	for result in results:
+		tags[result["name"]] = []
+		var temp = sqlite.read_table(result["name"])
+		for entry in temp:
+			tags[result["name"]].append(entry["file_id"])
+	print(tags)
 
 func _main_menu():
 	entries_node.reset_container()
@@ -108,36 +124,40 @@ func _add_path(path, type):
 		if type and path.get_extension() not in formats:
 			return
 		var result = sqlite.add_path(path, type)
-		var temp = paths_node.add_single_path(result[0], true)
-		paths_list.append(path)
-		scan_single_path(temp)
-		entries_node.reset_container()
+		if result:
+			var temp = paths_node.add_single_path(result[0], true)
+			print(result[0])
+			paths[result[0]["id"]] = []
+			paths_list.append(path)
+			scan_single_path(temp)
+			print(paths)
+			if filters_active:
+				_apply_filters()
+			else:
+				_clear_filters()
+
+func _remove_path(id, nam):
+	if sqlite.remove_path(id):
+		paths_list.erase(nam)
+		paths.erase(int(str(id)))
+		entries_node.remove_entries(id)
+		print(paths)
 		if filters_active:
 			_apply_filters()
 		else:
 			_clear_filters()
-
-func _remove_path(id, nam):
-	sqlite.remove_path(id)
-	paths_list.erase(nam)
-	entries_node.reset_container()
-	if filters_active:
-		_apply_filters()
-	else:
-		_clear_filters()
 		
 
 func _scan_paths():
 	if paths_list:
-		var paths = paths_node.get_path_nodes()
-		var leng = paths.size()
+		var pathss = paths_node.get_path_nodes()
+		var leng = pathss.size()
 		var i = 1
-		update_loading_text.emit(paths[0].get_node("name").text, str(i) + "/" + str(leng))
+		update_loading_text.emit(pathss[0].get_node("name").text, str(i) + "/" + str(leng))
 		toggle_loading.emit(true)
-		for path in paths:
+		for path in pathss:
 			update_loading_text.emit(path.get_node("name").text, str(i) + "/" + str(leng))
 			prepare_for_update.emit()
-			await draw
 			scan_single_path(path)
 			i += 1
 		toggle_loading.emit(false)
@@ -148,8 +168,7 @@ func scan_single_path(path):
 		var path_id = path.name
 		var result =  sqlite.add_file(file, path_id)
 		if result:
-			#print("scan result", result)
-			entries_node.add_single_file(result)
+			entries_node.add_single_file(result, paths)
 #-------------------------------------
 
 func _add_tag():
@@ -164,7 +183,8 @@ func _new_tag_confirmed():
 		if result:
 			print(result)
 			tags_node.add_tag(result)
-			
+			tags[result["id"]] = []
+			print(tags)
 
 func _remove_tag():
 	remove_tag.visible = true
@@ -174,8 +194,10 @@ func _remove_tag_confirmed():
 	var remove_tag_name = remove_tag.get_node("tag").text
 	if remove_tag_name:
 		var id = sqlite.remove_tag(remove_tag_name)
-		if id:
+		if id and sqlite.drop_tag_table(remove_tag_name):
+			tags.erase(remove_tag_name)
 			tags_node.remove_tag(id)
+			print(tags)
 
 #-------------------------------------
 
@@ -184,13 +206,22 @@ func _apply_filters():
 	print("applying filters")
 	active_path = paths_node.selected
 	active_tag = tags_node.selected
-	var path = paths_node.selected
-	var tag = tags_node.selected
-	var result = sqlite.retrieve_files(tag, path)
-	entries_node.reset_container()
-	if result:
-		print(result)
-		entries_node.populate_files(result)
+	var filtered_files = []
+	if active_path:
+		for id in paths[int(str(active_tag.name))]:
+			if id not in filtered_files:
+				filtered_files.append(id)
+	if active_tag:
+		for id in tags[active_tag.get_node("name").text]:
+			if id not in filtered_files:
+				filtered_files.append(id)
+			print(filtered_files)
+		entries_node.filter_files(filtered_files, "filter")
+#	var result = sqlite.retrieve_files(tag, path)
+#	entries_node.reset_container()
+#	if result:
+#		print(result)
+#		entries_node.populate_files(result)
 	
 func _clear_filters():
 	filters_active = false
@@ -202,9 +233,10 @@ func _clear_filters():
 		active_tag = null
 		tags_node.selected.get_node("name").button_pressed = false
 		tags_node.selected = null
-	var result = sqlite.retrieve_files()
-	entries_node.reset_container()
-	entries_node.populate_files(result)
+	entries_node.filter_files()
+#	var result = sqlite.retrieve_files()
+#	entries_node.reset_container()
+#	entries_node.populate_files(result)
 
 #-------------------------------------
 
@@ -214,7 +246,9 @@ func _apply_tag_to_files():
 		var files = entries_node.selected
 		if files:
 			for file in files:
-				sqlite.add_tag_to_file(tag, file.name)
+				if sqlite.add_tag_to_file(tag, file.name):
+					tags[tag].append(int(str(file.name)))
+					print(tags)
 			
 func _remove_tag_from_files():
 	if tags_node.selected:
@@ -223,7 +257,9 @@ func _remove_tag_from_files():
 		if files:
 			for file in files:
 				print(file)
-				sqlite.remove_tag_from_files(tag, file.name)
+				if sqlite.remove_tag_from_files(tag, file.name):
+					tags[tag].erase(int(str(file.name)))
+					print(tags)
 			if active_tag.get_node("name").text == tag:
 				var result = sqlite.retrieve_files(active_tag, active_path)
 				entries_node.reset_container()

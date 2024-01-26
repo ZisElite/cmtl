@@ -72,7 +72,7 @@ func add_path(path, type):
 		return db.query_result
 
 func remove_path(path_id):
-	print(db.delete_rows("paths", "id = " + path_id))
+	return db.delete_rows("paths", "id = " + path_id)
 
 #-------------------------------------
 
@@ -95,6 +95,9 @@ func remove_tag(tag_name):
 		id = db.query_result[0]["id"]
 		db.delete_rows("tags", "name = \"" + tag_name + "\"")
 	return id
+
+func drop_tag_table(tag_name):
+	return db.drop_table(tag_name)
 
 #-------------------------------------
 
@@ -121,8 +124,8 @@ func retrieve_files(tag=null, path_id=null):
 func add_tag_to_file(tag, file_id):
 	print(tag, " ", file_id)
 	var table = {"file_id" : int(str(file_id))}
-	db.insert_row(tag, table)
+	return(db.insert_row(tag, table))
 
 func remove_tag_from_files(tag, file_id):
 	print(tag, " ", file_id)
-	db.delete_rows(tag, "file_id = " + file_id)
+	return(db.delete_rows(tag, "file_id = " + file_id))
