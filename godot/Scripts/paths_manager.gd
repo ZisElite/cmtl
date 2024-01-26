@@ -87,7 +87,10 @@ func scan_for_files(path):
 
 func _remove_path():
 	if selected:
-		remove_path.emit(selected)
-		remove_child(selected)
+		print(selected.get_node("name").text)
+		var temp_id = selected.name
+		var temp_name = selected.get_node("name").text
+		container.remove_child(selected)
 		selected.queue_free()
 		selected = null
+		remove_path.emit(temp_id, temp_name)

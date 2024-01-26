@@ -55,18 +55,12 @@ func _remove_lib(lib):
 	sqlite.remove_lib(lib)
 	open_lib.remove_lib(lib)
 
-func _disable_esc():
-	disable_esc = true
-
 func _free_esc():
 	free_esc = true
 
 func _input(event):
-	if event is InputEventKey and event.pressed and OS.get_keycode_string(event.keycode) == "Escape":
-		esc_is_pressed = true
-	elif event is InputEventKey and !event.pressed and OS.get_keycode_string(event.keycode) == "Escape":
+	if event is InputEventKey and !event.pressed and OS.get_keycode_string(event.keycode) == "Escape":
 		if free_esc:
-			disable_esc = false
 			free_esc = false
 		else:
 			get_tree().quit()

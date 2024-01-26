@@ -35,8 +35,9 @@ func create_new_library(lib):
 	query = "CREATE TABLE files (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 	path_id INTEGER NOT NULL REFERENCES paths (id) ON DELETE CASCADE,
-	name TEXT UNIQUE NOT NULL,
-	format TEXT
+	name TEXT NOT NULL,
+	format TEXT,
+	UNIQUE (name, format)
 	)"
 	db.query(query)
 	

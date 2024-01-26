@@ -25,6 +25,7 @@ var paths_list = null
 var tags_list = null
 var active_tag = null
 var active_path = null
+var filters_active = false
 
 var formats = ["3gp", "aa", "aax", "act", "aiff", "alac", "amr", "ape", "au", "awb", "dss", "dvf",
 "flac", "gsm", "iklax", "ivs", "m4b", "m4p", "mmf", "movpkg", "mp3", "mpc", "msv", "nmf", "ogg",
@@ -36,7 +37,6 @@ func _ready():
 	tags_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/tags overall")
 	paths_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/paths overall")
 	controller = get_parent()
-	disable_esc.connect(controller._disable_esc)
 	loading = controller.get_node("loading")
 	update_loading_text.connect(loading._update_text)
 	toggle_loading.connect(loading._toggle_visible)
@@ -82,7 +82,6 @@ func setup(lib):
 #-------------------------------------
 
 func _open_files_dialogue():
-	disable_esc.emit()
 	new_files.visible = true
 
 func _add_path(path, type):
@@ -94,10 +93,20 @@ func _add_path(path, type):
 		var temp = paths_node.add_single_path(result[0], true)
 		paths_list.append(path)
 		scan_single_path(temp)
-		
-func _remove_path(selected):
-	sqlite.remove_path(selected.name)
-	paths_list.erase(selected.get_node("name").text)
+		entries_node.reset_container()
+		if filters_active:
+			_apply_filters()
+		else:
+			_clear_filters()
+
+func _remove_path(id, nam):
+	sqlite.remove_path(id)
+	paths_list.erase(nam)
+	entries_node.reset_container()
+	if filters_active:
+		_apply_filters()
+	else:
+		_clear_filters()
 
 func _scan_paths():
 	var paths = paths_node.get_path_nodes()
@@ -112,17 +121,17 @@ func _scan_paths():
 	toggle_loading.emit(false)
 
 func scan_single_path(path):
+	print(path)
 	var temp = paths_node.scan_for_files(path.get_node("name").text)
 	for file in temp:
 		var path_id = path.name
 		var result =  sqlite.add_file(file, path_id)
 		if result:
-			print("sca nresult", result)
+			print("scan result", result)
 			entries_node.add_single_file(result)
 #-------------------------------------
 
 func _add_tag():
-	disable_esc.emit()
 	new_tag.visible = true
 
 func _new_tag_confirmed():
@@ -137,7 +146,6 @@ func _new_tag_confirmed():
 			
 
 func _remove_tag():
-	disable_esc.emit()
 	remove_tag.visible = true
 
 func _remove_tag_confirmed():
@@ -151,6 +159,7 @@ func _remove_tag_confirmed():
 #-------------------------------------
 
 func _apply_filters():
+	filters_active = true
 	print("applying filters")
 	active_path = paths_node.selected
 	active_tag = tags_node.selected
@@ -163,6 +172,7 @@ func _apply_filters():
 		entries_node.populate_files(result)
 	
 func _clear_filters():
+	filters_active = false
 	if paths_node.selected:
 		active_path = null
 		paths_node.selected.get_node("name").button_pressed = false
