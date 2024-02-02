@@ -10,11 +10,14 @@ func _ready():
 	file_number = get_node("PanelContainer/CenterContainer/VBoxContainer/files cont/number")
 
 
-func _toggle_visible(vis):
+func toggle_visible(vis):
 	visible = vis
 
-func _update_text(text, sub_num, file_num = ""):
-	location.text = text
-	sub_number.text = sub_num
-	file_number.text = file_num
+func update_loc(loc=""):
+	location.text = loc
 
+func update_sub(sub_num="0"):
+	sub_number.text = sub_num
+
+func update_files(file_num="0"):
+	file_number.text = file_num 

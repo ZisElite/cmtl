@@ -1,6 +1,7 @@
 extends VBoxContainer
 
 signal remove_path
+signal update_scanning_screen
 
 var container
 var add
@@ -58,7 +59,8 @@ func connect_buttons_to_master(node):
 	add.pressed.connect(master._open_files_dialogue)
 	remove.pressed.connect(self._remove_path)
 	remove_path.connect(master._remove_path)
-	scan.pressed.connect(master._scan_paths)
+	scan.pressed.connect(master._start_scanning)
+	update_scanning_screen.connect(master._update_scanning_screen)
 
 func _select_path(button):
 	if button.get_node("name").button_pressed:
@@ -77,12 +79,16 @@ func scan_for_files(path):
 	var found = []
 	var dir = DirAccess.open(path)
 	var dirs = dir.get_directories()
+	if dirs:
+		update_scanning_screen.emit("sub", dirs.size())
 	for dire in dirs:
 		print(dire)
 		var result = scan_for_files(path + "/" + dire)
 		if result:
 			found.append_array(result)
 	var files = dir.get_files()
+	if files:
+		update_scanning_screen.emit("files", files.size())
 	for file in files:
 		if file.get_extension() in formats:
 			found.append(file)

@@ -27,8 +27,10 @@ func create_new_library(lib):
 	db.open_db()
 	var query = "CREATE TABLE paths (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-	path TEXT NOT NULL UNIQUE,
-	file BOOLEAN NOT NULL
+	path TEXT UNIQUE NOT NULL,
+	file BOOLEAN NOT NULL,
+	subdirectories INTEGER,
+	files_count    INTEGER
 	)"
 	db.query(query)
 	

@@ -41,7 +41,7 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
-[node name="loading" parent="." instance=ExtResource("6_4gcx7")]
+[node name="scanning" parent="." instance=ExtResource("6_4gcx7")]
 visible = false
 layout_mode = 1
 script = ExtResource("7_yk1rf")

@@ -1,18 +1,16 @@
 extends Control
 
-signal update_loading_text
-signal toggle_loading
+signal _scan_finished
 signal disable_esc
 signal free_esc
 signal go_back
-signal prepare_for_update
 signal continue_scan
 
 var entries_node
 var tags_node
 var paths_node
 var controller
-var loading
+var scanning
 var sqlite
 var new_files
 var new_tag
@@ -33,19 +31,22 @@ var filters_active = false
 var paths = {}
 var tags = {}
 
+var total_scanned_subs = 0
+var total_scanned_files = 0
+
 var formats = ["3gp", "aa", "aax", "act", "aiff", "alac", "amr", "ape", "au", "awb", "dss", "dvf",
 "flac", "gsm", "iklax", "ivs", "m4b", "m4p", "mmf", "movpkg", "mp3", "mpc", "msv", "nmf", "ogg",
 "oga", "mogg", "opus", "ra", "rm", "raw", "rf64", "sln", "tta", "voc", "vox", "wav", "wma", "wv",
 "webm", "8svx", "cda"]
+
+var thread: Thread
 
 func _ready():
 	entries_node = get_node("master container/library view/data container/VBoxContainer/table")
 	tags_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/tags overall")
 	paths_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/paths overall")
 	controller = get_parent()
-	loading = controller.get_node("loading")
-	update_loading_text.connect(loading._update_text)
-	toggle_loading.connect(loading._toggle_visible)
+	scanning = controller.get_node("scanning")
 	sqlite = controller.get_node("SQLite manager")
 	new_files = get_node("new_files")
 	new_files.file_selected.connect(self._add_path.bind(true))
@@ -77,6 +78,8 @@ func _ready():
 	back_button = get_node("master container/library view/data container/VBoxContainer/buttons/back")
 	back_button.pressed.connect(self._main_menu)
 	go_back.connect(controller._main_menu)
+	
+	_scan_finished.connect(self._scan_complete)
 
 			
 func setup(lib):
@@ -129,12 +132,8 @@ func _add_path(path, type):
 			print(result[0])
 			paths[result[0]["id"]] = []
 			paths_list.append(path)
-			scan_single_path(temp)
+			_start_scanning("single", temp)
 			print(paths)
-			if filters_active:
-				_apply_filters()
-			else:
-				_clear_filters()
 
 func _remove_path(id, nam):
 	if sqlite.remove_path(id):
@@ -148,19 +147,28 @@ func _remove_path(id, nam):
 			_clear_filters()
 		
 
-func _scan_paths():
-	if paths_list:
-		var pathss = paths_node.get_path_nodes()
-		var leng = pathss.size()
-		var i = 1
-		update_loading_text.emit(pathss[0].get_node("name").text, str(i) + "/" + str(leng))
-		toggle_loading.emit(true)
-		for path in pathss:
-			update_loading_text.emit(path.get_node("name").text, str(i) + "/" + str(leng))
-			prepare_for_update.emit()
-			scan_single_path(path)
-			i += 1
-		toggle_loading.emit(false)
+func _start_scanning(mode="all", path=null):
+	thread = Thread.new()
+	thread.start(scan_paths.bind(mode, path))
+
+func scan_paths(mode="all", single_path=null):
+	Thread.set_thread_safety_checks_enabled(false)
+	total_scanned_files = 0
+	total_scanned_subs = 0
+	scanning.toggle_visible(true)
+	if mode == "all":
+		if paths_list:
+			var pathss = paths_node.get_path_nodes()
+			var leng = pathss.size()
+			for path in pathss:
+				scanning.update_loc(path.get_node("name").text)
+				scan_single_path(path)
+	elif mode == "single":
+		scanning.update_loc(single_path.get_node("name").text)
+		scan_single_path(single_path)
+	else:
+		print("scanning mode was wrong: " + str(mode))
+	_scan_finished.emit()
 
 func scan_single_path(path):
 	var temp = paths_node.scan_for_files(path.get_node("name").text)
@@ -168,7 +176,22 @@ func scan_single_path(path):
 		var path_id = path.name
 		var result =  sqlite.add_file(file, path_id)
 		if result:
-			entries_node.add_single_file(result, paths)
+			entries_node.call_deferred("add_single_file", result, paths)
+			
+func _scan_complete():
+	filters()
+	scanning.toggle_visible(false)
+
+func _update_scanning_screen(which, numbers):
+	if which == "sub":
+		total_scanned_subs += numbers
+		scanning.update_sub(str(total_scanned_subs))
+	elif which == "files":
+		total_scanned_files += numbers
+		scanning.update_files(str(total_scanned_files))
+	else:
+		print("WHICH parameter in update_scanning_screen was somehow wrong: " + str(which))
+
 #-------------------------------------
 
 func _add_tag():
@@ -266,3 +289,15 @@ func _remove_tag_from_files():
 				if result:
 					print(result)
 					entries_node.populate_files(result)
+
+func filters():
+	if filters_active:
+		_apply_filters()
+	else:
+		_clear_filters()
+
+#-------------------------------------
+
+func _exit_tree():
+	if thread:
+		thread.wait_to_finish()
