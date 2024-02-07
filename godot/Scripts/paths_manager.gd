@@ -1,6 +1,7 @@
 extends VBoxContainer
 
 signal remove_path
+signal update_scanning_screen
 
 var container
 var add
@@ -24,6 +25,11 @@ func _ready():
 	scan = get_node("top tags container2/scan")
 	path_pre = preload("res://Scenes/path.tscn")
 	group = preload("res://resources/paths.tres")
+
+func reset_container():
+	for child in container.get_children():
+		container.remove_child(child)
+		child.queue_free()
 
 func get_path_nodes():
 	return container.get_children()
@@ -53,7 +59,8 @@ func connect_buttons_to_master(node):
 	add.pressed.connect(master._open_files_dialogue)
 	remove.pressed.connect(self._remove_path)
 	remove_path.connect(master._remove_path)
-	scan.pressed.connect(master._scan_paths)
+	scan.pressed.connect(master._start_scanning)
+	update_scanning_screen.connect(master._update_scanning_screen)
 
 func _select_path(button):
 	if button.get_node("name").button_pressed:
@@ -72,22 +79,28 @@ func scan_for_files(path):
 	var found = []
 	var dir = DirAccess.open(path)
 	var dirs = dir.get_directories()
+	if dirs:
+		update_scanning_screen.emit("sub", dirs.size())
 	for dire in dirs:
 		print(dire)
 		var result = scan_for_files(path + "/" + dire)
 		if result:
 			found.append_array(result)
 	var files = dir.get_files()
+	if files:
+		update_scanning_screen.emit("files", files.size())
 	for file in files:
 		if file.get_extension() in formats:
 			found.append(file)
-	print("found ", found)
 	return (found)
 
 
 func _remove_path():
 	if selected:
-		remove_path.emit(selected)
-		remove_child(selected)
+		print(selected.get_node("name").text)
+		var temp_id = selected.name
+		var temp_name = selected.get_node("name").text
+		container.remove_child(selected)
 		selected.queue_free()
 		selected = null
+		remove_path.emit(temp_id, temp_name)

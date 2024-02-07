@@ -27,16 +27,19 @@ func create_new_library(lib):
 	db.open_db()
 	var query = "CREATE TABLE paths (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-	path TEXT NOT NULL UNIQUE,
-	file BOOLEAN NOT NULL
+	path TEXT UNIQUE NOT NULL,
+	file BOOLEAN NOT NULL,
+	subdirectories INTEGER,
+	files_count    INTEGER
 	)"
 	db.query(query)
 	
 	query = "CREATE TABLE files (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 	path_id INTEGER NOT NULL REFERENCES paths (id) ON DELETE CASCADE,
-	name TEXT UNIQUE NOT NULL,
-	format TEXT
+	name TEXT NOT NULL,
+	format TEXT,
+	UNIQUE (name, format)
 	)"
 	db.query(query)
 	
@@ -50,6 +53,9 @@ func open_library(lib):
 	db.path = libs_path+lib+".db"
 	db.foreign_keys = true
 	db.open_db()
+
+func close_library():
+	db.close_db()
 
 func remove_lib(lib):
 	dir.remove(lib+".db")
@@ -68,7 +74,7 @@ func add_path(path, type):
 		return db.query_result
 
 func remove_path(path_id):
-	print(db.delete_rows("paths", "id = " + path_id))
+	return db.delete_rows("paths", "id = " + path_id)
 
 #-------------------------------------
 
@@ -91,6 +97,9 @@ func remove_tag(tag_name):
 		id = db.query_result[0]["id"]
 		db.delete_rows("tags", "name = \"" + tag_name + "\"")
 	return id
+
+func drop_tag_table(tag_name):
+	return db.drop_table(tag_name)
 
 #-------------------------------------
 
@@ -117,8 +126,8 @@ func retrieve_files(tag=null, path_id=null):
 func add_tag_to_file(tag, file_id):
 	print(tag, " ", file_id)
 	var table = {"file_id" : int(str(file_id))}
-	db.insert_row(tag, table)
+	return(db.insert_row(tag, table))
 
 func remove_tag_from_files(tag, file_id):
 	print(tag, " ", file_id)
-	db.delete_rows(tag, "file_id = " + file_id)
+	return(db.delete_rows(tag, "file_id = " + file_id))

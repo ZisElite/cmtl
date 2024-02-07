@@ -17,6 +17,11 @@ func _ready():
 	tag_pre = preload("res://Scenes/tag.tscn")
 	group = preload("res://resources/tags.tres")
 
+func reset_container():
+	for child in container.get_children():
+		container.remove_child(child)
+		child.queue_free()
+
 func connect_buttons_to_master(node):
 	master = node
 	add.pressed.connect(master._add_tag)
