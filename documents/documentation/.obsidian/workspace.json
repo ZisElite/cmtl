@@ -13,7 +13,19 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "scripts/SQLite_manager.gd.md",
+                "file": "scripts/entries_manager.gd.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "747a2cc19f2afbb1",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Scripts.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +97,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "scripts/SQLite_manager.gd.md",
+                "file": "scripts/entries_manager.gd.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +114,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "scripts/SQLite_manager.gd.md",
+                "file": "scripts/entries_manager.gd.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +137,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "scripts/SQLite_manager.gd.md"
+                "file": "scripts/entries_manager.gd.md"
               }
             }
           }
@@ -148,11 +160,14 @@
   },
   "active": "9a015eae66f6e1a9",
   "lastOpenFiles": [
+    "scripts/tags_manager.gd.md",
     "Scripts.md",
+    "scripts/paths_manager.gd.md",
+    "scripts/open_library_manager.gd.md",
+    "scripts/library_view_manager.gd.md",
+    "scripts/SQLite_manager.gd.md",
     "scripts/control.gd.md",
     "scripts/loading_screen.gd.md",
-    "scripts/open_library_manager.gd.md",
-    "scripts/SQLite_manager.gd.md",
     "scripts/accept_dialogue_clear.gd.md",
     "scripts/main_menu_manager.gd.md",
     "scripts/new_library_manager.gd.md",
@@ -170,11 +185,8 @@
     "Scenes/main.tscn.md",
     "Scenes.md",
     "Scenes",
-    "scripts/paths_manager.gd.md",
-    "scripts/tags_manager.gd.md",
     "scripts",
     "scripts/entries_manager.gd.md",
-    "scripts/library_view_manager.gd.md",
     "Welcome.md"
   ]
 }

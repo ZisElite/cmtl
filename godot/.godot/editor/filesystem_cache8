@@ -1,12 +1,12 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1707319425
+::res://::1707332510
 ::res://addons/::1705177713
 ::res://addons/godot-sqlite/::1705177714
 gdsqlite.gdextension::GDExtension::-1::1705177714::0::1::::<><>::
 godot-sqlite.gd::GDScript::-1::1705177714::0::1::::<>EditorPlugin<>::
 LICENSE.md::TextFile::-1::1705177714::0::1::::<><>::
 plugin.cfg::TextFile::-1::1705177714::0::1::::<><>::
-::res://addons/godot-sqlite/bin/::1705177714
+::res://addons/godot-sqlite/bin/::1707332500
 ::res://addons/godot-sqlite/bin/libgdsqlite.macos.template_debug.framework/::1705177714
 ::res://addons/godot-sqlite/bin/libgdsqlite.macos.template_release.framework/::1705177714
 ::res://libraries/::1705440243

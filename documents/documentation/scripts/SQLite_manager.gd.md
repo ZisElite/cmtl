@@ -42,3 +42,13 @@ remove_tag(tag_name):
 Deletes the provided entry from the *tags* table of the active database
 
 add_file(file, path_id):
+Insert a new entry to the *files* table of the active database
+
+retireve_files(tag=null, path=null):
+Returns the files that much tag AND path parameters
+
+add_tag_to_file(tag, file_id):
+Insert the *file_id* to the *tag* table of the active database
+
+remove_tag_from_files(tag, file_id):
+Delete the entry woth *file_id* of the *tag* table of the active database
