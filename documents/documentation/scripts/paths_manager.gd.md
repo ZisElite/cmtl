@@ -20,6 +20,9 @@ A list with all the possible music file formats
 
 
 ### functions
+reset_container:
+clears the container of all children
+
 get_path_nodes:
 Returns all the *path* nodes
 

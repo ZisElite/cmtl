@@ -10,11 +10,10 @@ selected:
 Holds the last selected *library*
 
 ### functions
-populate_list:
-Has a list *files* as parameter. 
+populate_list(files):
 Populates the *scroll* container by calling the *add_single_lib* function for each file found in the user data.
 
-add_single_lib:
+add_single_lib(title):
 Has a string *title* as a parameter.
 Creates a new *lib_pre* instance, gives it the appropriate text and connects its signal to *self* function *\_select*
 
@@ -26,6 +25,9 @@ Clears the *selected* variable
 
 \_check_pressed:
 If there is a selected *library*, send signal to *control* to load that library
+
+\_send_for_deletion:
+Check if there is a selected library and send it for deletion
 
 remove_lib(lib):
 Delete the selected *library* (lib) from the scene and from the user data

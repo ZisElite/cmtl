@@ -1,46 +1,46 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1707242661
+::res://::1707345453
 ::res://addons/::1705177713
 ::res://addons/godot-sqlite/::1705177714
 gdsqlite.gdextension::GDExtension::-1::1705177714::0::1::::<><>::
 godot-sqlite.gd::GDScript::-1::1705177714::0::1::::<>EditorPlugin<>::
 LICENSE.md::TextFile::-1::1705177714::0::1::::<><>::
 plugin.cfg::TextFile::-1::1705177714::0::1::::<><>::
-::res://addons/godot-sqlite/bin/::1705177714
+::res://addons/godot-sqlite/bin/::1707345449
 ::res://addons/godot-sqlite/bin/libgdsqlite.macos.template_debug.framework/::1705177714
 ::res://addons/godot-sqlite/bin/libgdsqlite.macos.template_release.framework/::1705177714
 ::res://libraries/::1705440243
-::res://resources/::1706060207
-font.tres::SystemFont::7620303811281253680::1705628557::0::1::::<><>::
-icon.svg::CompressedTexture2D::2551804130726257496::1705628557::1705628693::1::::<><>::
-libraries.tres::ButtonGroup::1229831814616666634::1706060207::0::1::::<><>::
-menu labels.tres::LabelSettings::4365445928069295145::1705628557::0::1::::<><>::
-menu theme.tres::Theme::4718432340222379608::1705628557::0::1::::<><>::uid://dgtlj40ebr44k
-paths.tres::ButtonGroup::7810702317157417599::1705628557::0::1::::<><>::
-tags.tres::ButtonGroup::2670360155707420432::1705628557::0::1::::<><>::
-top labels.tres::LabelSettings::8979743303535950397::1705628557::0::1::::<><>::uid://dgtlj40ebr44k
-::res://Scenes/::1706917050
-entries_container.tscn::PackedScene::258003967157012008::1706917050::0::1::::<><>::
-entry.tscn::PackedScene::8111710985736924217::1706917050::0::1::::<><>::
-library view.tscn::PackedScene::4256691669101647448::1706917050::0::1::::<><>::res://Scripts/library_view_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b3gwiyw2qo8n2::::res://resources/menu labels.tres<>res://Scripts/tags_manager.gd<>res://Scripts/paths_manager.gd<>res://Scripts/entries_manager.gd<>res://Scripts/accept_dialogue_clear.gd
-library.tscn::PackedScene::8256814128524303314::1706917050::0::1::::<><>::uid://rr0fd0vns0ks::::res://resources/libraries.tres
-loading_screen.tscn::PackedScene::4909783296197267538::1706917050::0::1::::<><>::uid://dgtlj40ebr44k::::res://resources/font.tres
-main menu.tscn::PackedScene::9099493684812922471::1706917050::0::1::::<><>::res://Scripts/main_menu_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b8hv5kksxk64c::::res://resources/menu theme.tres
-main.tscn::PackedScene::8152782854185962970::1706917049::0::1::::<><>::res://Scripts/Control.gd<>uid://d2v4ljix08bkx::::res://Scenes/main menu.tscn<>uid://bckxsuw6k70xo::::res://Scenes/new library.tscn<>uid://4xushpiwxg2w::::res://Scenes/open library.tscn<>uid://b1v8db5vo3ev5::::res://Scenes/library view.tscn<>uid://cb7locctgkxv3::::res://Scenes/loading_screen.tscn<>uid://ctvrd8v6bweud::::res://Scenes/sqlite_manager.tscn<>res://Scripts/loading_screen.gd
-new library.tscn::PackedScene::2548871869509529344::1706917050::0::1::::<><>::res://Scripts/new_library_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b8hv5kksxk64c::::res://resources/menu theme.tres
-open library.tscn::PackedScene::2084204029221243292::1706917050::0::1::::<><>::res://Scripts/open_library_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b8hv5kksxk64c::::res://resources/menu theme.tres
-path.tscn::PackedScene::7342565525849117023::1706917050::0::1::::<><>::uid://djjtejwr7cjfb::::res://resources/paths.tres
-sqlite_manager.tscn::PackedScene::6150820642724969243::1705628557::0::1::::<><>::res://Scripts/SQLite_manager.gd
-tag.tscn::PackedScene::7381462686142026158::1706917050::0::1::::<><>::uid://bebsparox65my::::res://resources/tags.tres
-::res://Scripts/::1706917048
-accept_dialogue_clear.gd::GDScript::-1::1706060207::0::1::::<>ConfirmationDialog<>::
-Control.gd::GDScript::-1::1706308960::0::1::::<>Control<>::
-entries_manager.gd::GDScript::-1::1706310617::0::1::::<>ScrollContainer<>::
-library_view_manager.gd::GDScript::-1::1706917048::0::1::::<>Control<>::
-loading_screen.gd::GDScript::-1::1706915929::0::1::::<>Control<>::
-main_menu_manager.gd::GDScript::-1::1705628557::0::1::::<>Control<>::
-new_library_manager.gd::GDScript::-1::1705628557::0::1::::<>Control<>::
-open_library_manager.gd::GDScript::-1::1706060207::0::1::::<>Control<>::
-paths_manager.gd::GDScript::-1::1706915662::0::1::::<>VBoxContainer<>::
-SQLite_manager.gd::GDScript::-1::1706911364::0::1::::<>Node<>::
-tags_manager.gd::GDScript::-1::1706301151::0::1::::<>VBoxContainer<>::
+::res://resources/::1707345378
+font.tres::SystemFont::7620303811281253680::1707345378::0::1::::<><>::
+icon.svg::CompressedTexture2D::2551804130726257496::1707345378::1705628693::1::::<><>::
+libraries.tres::ButtonGroup::1229831814616666634::1707345378::0::1::::<><>::
+menu labels.tres::LabelSettings::4365445928069295145::1707345378::0::1::::<><>::
+menu theme.tres::Theme::4718432340222379608::1707345378::0::1::::<><>::uid://dgtlj40ebr44k::::res://resources/font.tres
+paths.tres::ButtonGroup::7810702317157417599::1707345378::0::1::::<><>::
+tags.tres::ButtonGroup::2670360155707420432::1707345378::0::1::::<><>::
+top labels.tres::LabelSettings::8979743303535950397::1707345378::0::1::::<><>::uid://dgtlj40ebr44k::::res://resources/font.tres
+::res://Scenes/::1707345388
+entries_container.tscn::PackedScene::258003967157012008::1707313932::0::1::::<><>::
+entry.tscn::PackedScene::8111710985736924217::1707313932::0::1::::<><>::
+library view.tscn::PackedScene::4256691669101647448::1707345388::0::1::::<><>::res://Scripts/library_view_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b3gwiyw2qo8n2::::res://resources/menu labels.tres<>res://Scripts/tags_manager.gd<>res://Scripts/paths_manager.gd<>res://Scripts/entries_manager.gd<>res://Scripts/accept_dialogue_clear.gd
+library.tscn::PackedScene::8256814128524303314::1707313932::0::1::::<><>::uid://rr0fd0vns0ks::::res://resources/libraries.tres
+loading_screen.tscn::PackedScene::4909783296197267538::1707345388::0::1::::<><>::uid://dgtlj40ebr44k::::res://resources/font.tres
+main menu.tscn::PackedScene::9099493684812922471::1707345378::0::1::::<><>::res://Scripts/main_menu_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b8hv5kksxk64c::::res://resources/menu theme.tres
+main.tscn::PackedScene::8152782854185962970::1707345388::0::1::::<><>::res://Scripts/Control.gd<>uid://d2v4ljix08bkx::::res://Scenes/main menu.tscn<>uid://bckxsuw6k70xo::::res://Scenes/new library.tscn<>uid://4xushpiwxg2w::::res://Scenes/open library.tscn<>uid://b1v8db5vo3ev5::::res://Scenes/library view.tscn<>uid://cb7locctgkxv3::::res://Scenes/loading_screen.tscn<>uid://ctvrd8v6bweud::::res://Scenes/sqlite_manager.tscn<>res://Scripts/loading_screen.gd
+new library.tscn::PackedScene::2548871869509529344::1707345388::0::1::::<><>::res://Scripts/new_library_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b8hv5kksxk64c::::res://resources/menu theme.tres
+open library.tscn::PackedScene::2084204029221243292::1707345378::0::1::::<><>::res://Scripts/open_library_manager.gd<>uid://d064cbwfl1ber::::res://resources/top labels.tres<>uid://b8hv5kksxk64c::::res://resources/menu theme.tres
+path.tscn::PackedScene::7342565525849117023::1707313932::0::1::::<><>::uid://djjtejwr7cjfb::::res://resources/paths.tres
+sqlite_manager.tscn::PackedScene::6150820642724969243::1707345378::0::1::::<><>::res://Scripts/SQLite_manager.gd
+tag.tscn::PackedScene::7381462686142026158::1707313932::0::1::::<><>::uid://bebsparox65my::::res://resources/tags.tres
+::res://Scripts/::1707345429
+accept_dialogue_clear.gd::GDScript::-1::1707345378::0::1::::<>ConfirmationDialog<>::
+Control.gd::GDScript::-1::1707345429::0::1::::<>Control<>::
+entries_manager.gd::GDScript::-1::1707345429::0::1::::<>ScrollContainer<>::
+library_view_manager.gd::GDScript::-1::1707345429::0::1::::<>Control<>::
+loading_screen.gd::GDScript::-1::1707345429::0::1::::<>Control<>::
+main_menu_manager.gd::GDScript::-1::1707345378::0::1::::<>Control<>::
+new_library_manager.gd::GDScript::-1::1707345378::0::1::::<>Control<>::
+open_library_manager.gd::GDScript::-1::1707345378::0::1::::<>Control<>::
+paths_manager.gd::GDScript::-1::1707345428::0::1::::<>VBoxContainer<>::
+SQLite_manager.gd::GDScript::-1::1707345428::0::1::::<>Node<>::
+tags_manager.gd::GDScript::-1::1707345428::0::1::::<>VBoxContainer<>::

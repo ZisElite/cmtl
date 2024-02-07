@@ -1,9 +1,6 @@
 extends Control
 
-var disable_esc = false
 var free_esc = false
-var esc_is_pressed = false
-var esc_previous_state = false
 
 var main
 var new_lib
@@ -64,9 +61,3 @@ func _input(event):
 			free_esc = false
 		else:
 			get_tree().quit()
-
-#func _process(_delta):
-#	if esc_previous_state and !esc_is_pressed:
-#		if !disable_esc:
-#			get_tree().quit()
-#	esc_previous_state = esc_is_pressed

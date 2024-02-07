@@ -7,7 +7,7 @@
 - [x] [[loading_screen.gd]]
 - [x] [[accept_dialogue_clear.gd]]
   
-- [ ] [[library_view_manager.gd]]
+- [x] [[library_view_manager.gd]]
 - [x] [[paths_manager.gd]]
 - [x] [[tags_manager.gd]]
-- [ ] [[entries_manager.gd]]
+- [x] [[entries_manager.gd]]

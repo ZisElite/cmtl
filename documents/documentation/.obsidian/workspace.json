@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "scripts/entries_manager.gd.md",
+                "file": "scripts/library_view_manager.gd.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,13 +25,14 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Scripts.md",
+                "file": "Scenes.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -97,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "scripts/entries_manager.gd.md",
+                "file": "Scenes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "scripts/entries_manager.gd.md",
+                "file": "Scenes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -137,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "scripts/entries_manager.gd.md"
+                "file": "Scenes.md"
               }
             }
           }
@@ -158,19 +159,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9a015eae66f6e1a9",
+  "active": "747a2cc19f2afbb1",
   "lastOpenFiles": [
-    "scripts/tags_manager.gd.md",
     "Scripts.md",
-    "scripts/paths_manager.gd.md",
-    "scripts/open_library_manager.gd.md",
     "scripts/library_view_manager.gd.md",
+    "scripts/paths_manager.gd.md",
     "scripts/SQLite_manager.gd.md",
     "scripts/control.gd.md",
+    "scripts/tags_manager.gd.md",
+    "scripts/entries_manager.gd.md",
+    "scripts/open_library_manager.gd.md",
+    "scripts/new_library_manager.gd.md",
+    "scripts/main_menu_manager.gd.md",
     "scripts/loading_screen.gd.md",
     "scripts/accept_dialogue_clear.gd.md",
-    "scripts/main_menu_manager.gd.md",
-    "scripts/new_library_manager.gd.md",
     "Scenes/loaing_screen.tscn.md",
     "Scenes/entries_container.tscn.md",
     "Scenes/sqlite_manager.tscn.md",
@@ -186,7 +188,6 @@
     "Scenes.md",
     "Scenes",
     "scripts",
-    "scripts/entries_manager.gd.md",
     "Welcome.md"
   ]
 }

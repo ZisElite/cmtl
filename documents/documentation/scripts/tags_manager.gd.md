@@ -16,11 +16,17 @@ Holdes the currenty selected *tags* node
 
 
 ### functions
+reset_container:
+Clears the container of all its children
+
 connect_buttons_to_master(node):
 Connect the buttons for adding/removing tags with the *library manager*
 
 \_select_tag(button):
 Toggles whether the button is selected or not
+
+populate_tags(tags):
+Call *add_tag* for each tag in tags
 
 add_tag(tag):
 Create new *tag* node, configure it and add it to the scene

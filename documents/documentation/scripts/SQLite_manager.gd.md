@@ -5,6 +5,9 @@ The sqlite object that performs all the sql stuff
 dir:
 Acceses the file system
 
+libs_path:
+The path to the user data folder
+
 
 
 ### functions
@@ -19,6 +22,9 @@ Creates a new *.db* file using the lib parameter, then execute queries to create
 
 open_lib(lib):
 Sets the active working *.db* 
+
+close_library:
+Closes the open database connection
 
 remove_lib(lib):
 Deletes the provided *.db* file
@@ -40,6 +46,9 @@ Creates a new table on the active database
 
 remove_tag(tag_name):
 Deletes the provided entry from the *tags* table of the active database
+
+drop_tag_table(tag_name):
+Deletes the provided table from the active database
 
 add_file(file, path_id):
 Insert a new entry to the *files* table of the active database
