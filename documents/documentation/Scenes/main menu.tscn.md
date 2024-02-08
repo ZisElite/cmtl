@@ -1,0 +1,1 @@
+The initial screen of the application, has three buttons to create a new library, open an existing one or exit the application

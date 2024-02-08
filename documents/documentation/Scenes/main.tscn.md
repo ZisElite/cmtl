@@ -1,0 +1,1 @@
+The main node of the application, holds all the different UI screens, nothing more

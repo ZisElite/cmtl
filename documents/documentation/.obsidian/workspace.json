@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "9a015eae66f6e1a9",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "scripts/library_view_manager.gd.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "747a2cc19f2afbb1",
             "type": "leaf",
             "state": {
@@ -31,8 +19,7 @@
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -161,8 +148,21 @@
   },
   "active": "747a2cc19f2afbb1",
   "lastOpenFiles": [
-    "Scripts.md",
+    "Scenes/library view.tscn.md",
+    "Scenes.md",
+    "Scenes/sqlite_manager.tscn.md",
+    "Scenes/entries_container.tscn.md",
+    "Scenes/tag.tscn.md",
+    "Scenes/path.tscn.md",
+    "Scenes/library.tscn.md",
+    "Scenes/entry.tscn.md",
+    "Scenes/loaing_screen.tscn.md",
+    "Scenes/open library.tscn.md",
+    "Scenes/new library.tscn.md",
+    "Scenes/main menu.tscn.md",
+    "Scenes/main.tscn.md",
     "scripts/library_view_manager.gd.md",
+    "Scripts.md",
     "scripts/paths_manager.gd.md",
     "scripts/SQLite_manager.gd.md",
     "scripts/control.gd.md",
@@ -173,19 +173,6 @@
     "scripts/main_menu_manager.gd.md",
     "scripts/loading_screen.gd.md",
     "scripts/accept_dialogue_clear.gd.md",
-    "Scenes/loaing_screen.tscn.md",
-    "Scenes/entries_container.tscn.md",
-    "Scenes/sqlite_manager.tscn.md",
-    "Scenes/tag.tscn.md",
-    "Scenes/path.tscn.md",
-    "Scenes/library.tscn.md",
-    "Scenes/entry.tscn.md",
-    "Scenes/library view.tscn.md",
-    "Scenes/open library.tscn.md",
-    "Scenes/new library.tscn.md",
-    "Scenes/main menu.tscn.md",
-    "Scenes/main.tscn.md",
-    "Scenes.md",
     "Scenes",
     "scripts",
     "Welcome.md"

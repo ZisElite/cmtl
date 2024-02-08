@@ -1,0 +1,1 @@
+It is used to populate the files scroll area. It is split in three areas. One has the name of the file and is a button, the other has the path it belongs to and the third the file's extension
