@@ -72,8 +72,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 theme = ExtResource("3_wb6it")
-text = "Confirm
-"
+text = "Confirm"
 
 [node name="VSeparator" type="VSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)

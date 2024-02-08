@@ -10,6 +10,7 @@ var scroll
 var lib_pre
 
 var selected = null
+var group = null
 
 func _ready():
 	confirm = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/confirm")
@@ -17,6 +18,7 @@ func _ready():
 	cancel = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/cancel")
 	scroll = get_node("ScrollContainer/HBoxContainer/VBoxContainer/libraries container/libraries")
 	lib_pre = preload("res://Scenes/library.tscn")
+	group = preload("res://resources/libraries.tres")
 	confirm.pressed.connect(self._check_pressed)
 	confirm_selected.connect(get_parent()._view_library)
 	delete.pressed.connect(self._send_for_deletion)
@@ -35,6 +37,7 @@ func add_single_lib(title):
 	temp.name = title
 	temp.get_node("name").text = title
 	temp.get_node("name").pressed.connect(self._select.bind(title))
+	temp.get_node("name").button_group = group
 	scroll.add_child(temp)
 
 func _select(nam):

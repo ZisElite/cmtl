@@ -1,2 +1,13 @@
 res://Scenes/open library.tscn
-res://Scripts/Control.gd
+res://Scenes/library.tscn
+res://Scenes/main.tscn
+res://Scenes/loading_screen.tscn
+res://Scenes/main menu.tscn
+res://Scenes/new library.tscn
+res://Scenes/library view.tscn
+res://Scenes/entry.tscn
+res://Scenes/path.tscn
+res://Scenes/tag.tscn
+res://Scenes/entries_container.tscn
+res://Scripts/open_library_manager.gd
+res://Scripts/library_view_manager.gd

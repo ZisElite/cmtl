@@ -156,7 +156,6 @@ func scan_paths(mode="all", single_path=null):
 	if mode == "all":
 		if paths_list:
 			var pathss = paths_node.get_path_nodes()
-			var leng = pathss.size()
 			for path in pathss:
 				scanning.update_loc(path.get_node("name").text)
 				scan_single_path(path)

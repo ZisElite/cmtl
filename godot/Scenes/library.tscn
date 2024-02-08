@@ -11,14 +11,11 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="name" type="Button" parent="."]
-custom_minimum_size = Vector2(250, 0)
+[node name="name" type="CheckButton" parent="."]
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
-toggle_mode = true
 button_group = ExtResource("1_8c0fn")
-alignment = 0
+text_overrun_behavior = 1
 
 [node name="HSeparator" type="HSeparator" parent="."]
 layout_mode = 2
