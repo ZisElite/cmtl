@@ -277,10 +277,10 @@ func _remove_tag_from_files():
 					print(tags)
 			if active_tag.get_node("name").text == tag:
 				var result = sqlite.retrieve_files(active_tag, active_path)
-				entries_node.reset_container()
 				if result:
 					print(result)
 					entries_node.populate_files(result)
+					filters()
 
 func filters():
 	if filters_active:
