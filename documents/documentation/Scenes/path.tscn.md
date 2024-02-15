@@ -1,1 +1,1 @@
-It is used to populate the paths scroll area. It has a button with the name of the path
+It is used to populate the paths scroll area. It has a button with the name of the path.

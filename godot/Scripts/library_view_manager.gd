@@ -11,6 +11,7 @@ var tags_node
 var paths_node
 var controller
 var scanning
+var message
 var sqlite
 var new_files
 var new_tag
@@ -23,7 +24,7 @@ var back_button
 
 var entry_pre
 
-var paths_list = null
+var paths_list = []
 var active_tag = null
 var active_path = null
 var filters_active = false
@@ -48,6 +49,8 @@ func _ready():
 	controller = get_parent()
 	scanning = controller.get_node("scanning")
 	sqlite = controller.get_node("SQLite manager")
+	message = get_node("master container/library view/data container/VBoxContainer/message")
+	message.text = ""
 	new_files = get_node("new_files")
 	new_files.file_selected.connect(self._add_path.bind(true))
 	new_files.dir_selected.connect(self._add_path.bind(false))
@@ -84,16 +87,26 @@ func _ready():
 			
 func setup(lib):
 	entries_node.reset_container()
-	sqlite.open_library(lib)
+	if !sqlite.open_library(lib):
+		message.text = "Error opening the library file."
+		return
 	var result = sqlite.read_table("paths")
+	if !result:
+		message.text = "Error reading the PATHS table."
+		return
 	create_path_dict(result)
 	paths_list = paths_node.populate_paths(result, true)
 	result = sqlite.read_table("tags")
+	if !result:
+		message.text = "Error reading the TAGS table."
 	create_tag_dict(result)
 	tags_node.populate_tags(result)
 	result = sqlite.read_table("files")
+	if !result:
+		message.text = "Error reading the FILES table."
 	entries_node.populate_files(result, paths)
-	entries_node.filter_files()
+	#entries_node.filter_files()
+	message.text = "Library loaded successfully."
 
 func create_path_dict(results):
 	for result in results:
@@ -123,25 +136,33 @@ func _open_files_dialogue():
 
 func _add_path(path, type):
 	free_esc.emit()
-	if path not in paths_list:
-		if type and path.get_extension() not in formats:
-			return
-		var result = sqlite.add_path(path, type)
-		if result:
-			var temp = paths_node.add_single_path(result[0], true)
-			print(result[0])
-			paths[result[0]["id"]] = []
-			paths_list.append(path)
-			_start_scanning("single", temp)
-			print(paths)
+	if path in paths_list:
+		message.text = "This path is already in use."
+		return
+	if type and path.get_extension() not in formats:
+		message.text = "The selected file has an unsupported extension."
+		return
+	var result = sqlite.add_path(path, type)
+	if !result:
+		message.text = "There was an error adding the path to the database."
+		return
+	var temp = paths_node.add_single_path(result[0], true)
+	print(result[0])
+	paths[result[0]["id"]] = []
+	paths_list.append(path)
+	message.text = "New path was added successfully."
+	_start_scanning("single", temp)
+	print(paths)
 
 func _remove_path(id, nam):
-	if sqlite.remove_path(id):
-		paths_list.erase(nam)
-		paths.erase(int(str(id)))
-		entries_node.remove_entries(id)
-		print(paths)
-		filters()
+	if !sqlite.remove_path(id):
+		message.text = "There was an error removing the path."
+		return
+	paths_list.erase(nam)
+	paths.erase(int(str(id)))
+	entries_node.remove_entries(id)
+	print(paths)
+	filters()
 		
 
 func _start_scanning(mode="all", path=null):
@@ -177,6 +198,7 @@ func scan_single_path(path):
 func _scan_complete():
 	filters()
 	scanning.toggle_visible(false)
+	message.text = "Finished scanning for files."
 
 func _update_scanning_screen(which, numbers):
 	if which == "sub":
@@ -197,13 +219,21 @@ func _new_tag_confirmed():
 	free_esc.emit()
 	var new_tag_name = new_tag.get_node("tag").text
 	print(new_tag_name)
-	if new_tag_name:
-		var result = sqlite.add_new_tag(new_tag_name)
-		if result:
-			print(result)
-			tags_node.add_tag(result)
-			tags[result["name"]] = []
-			print(tags)
+	if !new_tag_name:
+		message.text = "Please entrer a tag name before pressing the CONFIRM button."
+		return
+	var result = sqlite.add_new_tag(new_tag_name)
+	if result == "exists":
+		message.text = "There is already a tag with that name."
+		return
+	elif !result:
+		message.text = "There was an error trying to create the new tag."
+		return
+	print(result)
+	tags_node.add_tag(result)
+	tags[result["name"]] = []
+	message.text = "New tag " + new_tag_name + " was created successfully."
+	print(tags)
 
 func _remove_tag():
 	remove_tag.visible = true
@@ -211,12 +241,21 @@ func _remove_tag():
 func _remove_tag_confirmed():
 	free_esc.emit()
 	var remove_tag_name = remove_tag.get_node("tag").text
-	if remove_tag_name:
-		var id = sqlite.remove_tag(remove_tag_name)
-		if id and sqlite.drop_tag_table(remove_tag_name):
-			tags.erase(remove_tag_name)
-			tags_node.remove_tag(id)
-			print(tags)
+	if remove_tag_name not in tags.keys():
+		message.text = "Please provide an existing tag before pressing the CONFIRM button."
+		return
+	var id = sqlite.remove_tag(remove_tag_name)
+	if !id:
+		message.text = "There was an error removing the tag from the database."
+		return
+	elif !sqlite.drop_tag_table(remove_tag_name):
+		message.text = "There was an error deleting the tag's table."
+		return
+	else:
+		message.text = "Tag was removed successfully."
+		tags.erase(remove_tag_name)
+		tags_node.remove_tag(id)
+		print(tags)
 
 #-------------------------------------
 
@@ -253,40 +292,64 @@ func _clear_filters():
 		tags_node.selected = null
 	entries_node.filter_files()
 
-#-------------------------------------
-
-func _apply_tag_to_files():
-	if tags_node.selected:
-		var tag = tags_node.selected.get_node("name").text
-		var files = entries_node.selected
-		if files:
-			for file in files:
-				if sqlite.add_tag_to_file(tag, file.name):
-					tags[tag].append(int(str(file.name)))
-					print(tags)
-			
-func _remove_tag_from_files():
-	if tags_node.selected:
-		var tag = tags_node.selected.get_node("name").text
-		var files = entries_node.selected
-		if files:
-			for file in files:
-				print(file)
-				if sqlite.remove_tag_from_files(tag, file.name):
-					tags[tag].erase(int(str(file.name)))
-					print(tags)
-			if active_tag.get_node("name").text == tag:
-				var result = sqlite.retrieve_files(active_tag, active_path)
-				if result:
-					print(result)
-					entries_node.populate_files(result)
-					filters()
-
 func filters():
 	if filters_active:
 		_apply_filters()
+		message.text = "Filters applied."
 	else:
 		_clear_filters()
+		message.text = "Filters cleared."
+
+#-------------------------------------
+
+func _apply_tag_to_files():
+	if !tags_node.selected:
+		message.text = "Please select a tag first."
+		return
+	var tag = tags_node.selected.get_node("name").text
+	var files = entries_node.selected
+	if !files:
+		message.text = "Please select at least one file first."
+		return
+	var errors = 0
+	for file in files:
+		if sqlite.add_tag_to_file(tag, file.name):
+			tags[tag].append(int(str(file.name)))
+			print(tags)
+		else:
+			errors += 1
+	if errors:
+		message.text = "Some files did not get tagged correctly."
+	else:
+		message.text = "Tag applied to selected files successfully."
+			
+func _remove_tag_from_files():
+	if !tags_node.selected:
+		message.text = "Please select a tag first."
+		return
+	var tag = tags_node.selected.get_node("name").text
+	var files = entries_node.selected
+	if !files:
+		message.text = "Please select at least one file first."
+		return
+	var errors = 0
+	for file in files:
+		print(file)
+		if sqlite.remove_tag_from_files(tag, file.name):
+			tags[tag].erase(int(str(file.name)))
+			print(tags)
+		else:
+			errors += 1
+	if errors:
+		message.text = "Some files did not get untagged correctly."
+	else:
+		message.text = "Tag removed from all selected files."
+	if active_tag.get_node("name").text == tag:
+		var result = sqlite.retrieve_files(active_tag, active_path)
+		if result:
+			print(result)
+			entries_node.populate_files(result)
+			filters()
 
 #-------------------------------------
 

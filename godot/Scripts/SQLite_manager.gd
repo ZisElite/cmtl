@@ -3,21 +3,20 @@ extends Node
 var db : SQLite
 var dir : DirAccess
 var libs_path
+
 func _ready():
 	libs_path = "user://libraries/"
 	db = SQLite.new()
 	dir = DirAccess.open("user://")
 	dir.make_dir("libraries")
 	dir = DirAccess.open(libs_path)
-	var files = dir.get_files()
-	print(files)
 
 func get_libs():
 	return(dir.get_files())
 	
 func check_new(lib):
 	var files = dir.get_files()
-	if (lib+".db" not in files or files.is_empty()) and lib != "":
+	if lib+".db" not in files  and lib != "":
 		return true
 	return false
 
@@ -32,7 +31,9 @@ func create_new_library(lib):
 	subdirectories INTEGER,
 	files_count    INTEGER
 	)"
-	db.query(query)
+	if !db.query(query):
+		print("Failed to create table paths")
+		return false
 	
 	query = "CREATE TABLE files (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -41,24 +42,31 @@ func create_new_library(lib):
 	format TEXT,
 	UNIQUE (name, format)
 	)"
-	db.query(query)
+	if !db.query(query):
+		print("Failed to create table files")
+		return false
 	
 	query = "CREATE TABLE tags (
 	id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 	name TEXT NOT NULL UNIQUE
 	)"
-	db.query(query)
-
+	if !db.query(query):
+		print("Failed to create table tags")
+		return false
+	db.close_db()
+	return true
+	
 func open_library(lib):
 	db.path = libs_path+lib+".db"
 	db.foreign_keys = true
-	db.open_db()
+	return(db.open_db())
 
 func close_library():
 	db.close_db()
 
 func remove_lib(lib):
-	dir.remove(lib+".db")
+	print(lib + ".db")
+	return(dir.remove(lib+".db"))
 
 func read_table(table):
 	db.query("select * from "+table)
@@ -79,11 +87,15 @@ func remove_path(path_id):
 #-------------------------------------
 
 func add_new_tag(tag_name):
+	db.query("select * from tags where name = \"" + tag_name + "\"")
+	if db.query_result:
+		return "exists"
 	var table = {"name" : tag_name}
 	if db.insert_row("tags", table):
 		create_tag_table(tag_name)
 		db.query("select * from tags where name = \"" + tag_name + "\"")
 		return db.query_result[0]
+	return "error"
 
 func create_tag_table(title):
 	var query = "CREATE TABLE " + title +" (

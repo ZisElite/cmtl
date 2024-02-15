@@ -7,6 +7,7 @@ var new_lib
 var open_lib
 var view_lib
 var sqlite
+var logger
 
 func _ready():
 	main = get_node("main menu")
@@ -14,6 +15,7 @@ func _ready():
 	open_lib = get_node("open library")
 	view_lib = get_node("library view")
 	sqlite = get_node("SQLite manager")
+	logger = get_node("logger")
 	var files = sqlite.get_libs()
 	open_lib.populate_list(files)
 
@@ -42,15 +44,9 @@ func _view_library(lib):
 	open_lib.visible = false
 	view_lib.visible = true
 	
-func _check_new(lib):
-	if sqlite.check_new(lib):
-		sqlite.create_new_library(lib)
-		open_lib.add_single_lib(lib)
-		_view_library(lib)
-
-func _remove_lib(lib):
-	sqlite.remove_lib(lib)
-	open_lib.remove_lib(lib)
+func _prepare_new(lib):
+	open_lib.add_single_lib(lib)
+	_view_library(lib)
 
 func _free_esc():
 	free_esc = true

@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://b86j1a848pq5"]
+
+[ext_resource type="SystemFont" uid="uid://dgtlj40ebr44k" path="res://resources/font.tres" id="1_nby47"]
+
+[resource]
+font = ExtResource("1_nby47")
+font_size = 24

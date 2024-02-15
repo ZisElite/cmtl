@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bckxsuw6k70xo"]
+[gd_scene load_steps=5 format=3 uid="uid://bckxsuw6k70xo"]
 
 [ext_resource type="Script" path="res://Scripts/new_library_manager.gd" id="1_olarf"]
 [ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://resources/top labels.tres" id="2_6c3tq"]
 [ext_resource type="Theme" uid="uid://b8hv5kksxk64c" path="res://resources/menu theme.tres" id="3_2a7u1"]
+[ext_resource type="LabelSettings" uid="uid://b86j1a848pq5" path="res://resources/message.tres" id="4_5447y"]
 
 [node name="new library" type="Control"]
 layout_mode = 3
@@ -50,8 +51,9 @@ custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
 [node name="name" type="LineEdit" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 35)
+custom_minimum_size = Vector2(350, 35)
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("3_2a7u1")
 placeholder_text = "Library name..."
 context_menu_enabled = false
@@ -59,11 +61,26 @@ shortcut_keys_enabled = false
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 30)
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="message" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Placeholder"
+label_settings = ExtResource("4_5447y")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator4" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="confirm" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 35)

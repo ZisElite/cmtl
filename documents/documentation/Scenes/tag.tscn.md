@@ -1,1 +1,1 @@
-It is used to populate the tags scroll area. It has a button with the name of the tag
+It is used to populate the tags scroll area. It has a button with the name of the tag.

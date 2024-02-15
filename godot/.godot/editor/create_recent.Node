@@ -1,14 +1,14 @@
+Label
+Node
 CheckButton
 LineEdit
 VSeparator
 Button
 HBoxContainer
 VBoxContainer
-Label
 CenterContainer
 PanelContainer
 ConfirmationDialog
 PopupPanel
 Popup
 FileDialog
-VSplitContainer

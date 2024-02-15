@@ -1,5 +1,6 @@
 - [x] [[control.gd]]
 - [x] [[SQLite_manager.gd]]
+- [ ] [[logging.gd]]
   
 - [x] [[main_menu_manager.gd]]
 - [x] [[new_library_manager.gd]]

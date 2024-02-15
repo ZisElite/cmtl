@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b1v8db5vo3ev5"]
+[gd_scene load_steps=9 format=3 uid="uid://b1v8db5vo3ev5"]
 
 [ext_resource type="Script" path="res://Scripts/library_view_manager.gd" id="1_1ynmf"]
 [ext_resource type="LabelSettings" uid="uid://d064cbwfl1ber" path="res://resources/top labels.tres" id="2_ut12b"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scripts/tags_manager.gd" id="4_ff56t"]
 [ext_resource type="Script" path="res://Scripts/paths_manager.gd" id="5_qvomi"]
 [ext_resource type="Script" path="res://Scripts/entries_manager.gd" id="6_pevw0"]
+[ext_resource type="LabelSettings" uid="uid://b86j1a848pq5" path="res://resources/message.tres" id="7_p4hov"]
 [ext_resource type="Script" path="res://Scripts/accept_dialogue_clear.gd" id="7_phvvj"]
 
 [node name="library view" type="Control"]
@@ -162,6 +163,11 @@ script = ExtResource("6_pevw0")
 [node name="buttons separator" type="HSeparator" parent="master container/library view/data container/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
+
+[node name="message" type="Label" parent="master container/library view/data container/VBoxContainer"]
+layout_mode = 2
+text = "Placeholder"
+label_settings = ExtResource("7_p4hov")
 
 [node name="buttons" type="HBoxContainer" parent="master container/library view/data container/VBoxContainer"]
 layout_mode = 2

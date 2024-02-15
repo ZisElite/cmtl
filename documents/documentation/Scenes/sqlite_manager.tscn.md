@@ -1,1 +1,1 @@
-An empty node with a the script that controls the sql functionality
+An empty node with a the script that controls the sql functionality.

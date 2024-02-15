@@ -1,1 +1,3 @@
-This screen is visible after pressing the *open library* button in main menu. In the middle there is a scroll area with all the existing libraries. If a library is selected and click confirm, it loads in the *library view*. If delete is clicked, it deletes the library and removes it from the list. Cancel returns to the main menu
+This screen is visible after pressing the *open library* button in main menu. In the middle there is a scroll area with all the existing libraries. If a library is selected and click confirm, it loads in the *library view*. If delete is clicked, it deletes the library and removes it from the list. Cancel returns to the main menu.
+
+#v0-6 Added a text display to show if the deletion/open of the library was successful or not and why.

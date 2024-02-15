@@ -1,1 +1,1 @@
-It is used to populate the library scroll area. It has a button with the name of the library
+It is used to populate the library scroll area. It has a button with the name of the library.

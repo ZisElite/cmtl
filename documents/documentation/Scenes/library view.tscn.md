@@ -1,1 +1,3 @@
-the main part of the application. It is split in two areas. On the left are the tags and paths, with buttons to control them. There are also the button to apply/clear the filters on the bottom left. The other area on the right, is the scroll area that holds all the file entries. At the bottom there are two buttons to apply/remove the selected tag to the selected files
+the main part of the application. It is split in two areas. On the left are the tags and paths, with buttons to control them. There are also the button to apply/clear the filters on the bottom left. The other area on the right, is the scroll area that holds all the file entries. At the bottom there are two buttons to apply/remove the selected tag to the selected files.
+
+#v0-6 Added a text display to show messages about the different operations.
