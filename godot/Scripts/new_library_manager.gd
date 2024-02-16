@@ -10,10 +10,10 @@ var sqlite
 var logger
 
 func _ready():
-	text_field = get_node("ScrollContainer/HBoxContainer/VBoxContainer/name")
-	confirm = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/confirm")
-	cancel = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/cancel")
-	message = get_node("ScrollContainer/HBoxContainer/VBoxContainer/message")
+	text_field = get_node("HBoxContainer/VBoxContainer/name")
+	confirm = get_node("HBoxContainer/VBoxContainer/HBoxContainer/confirm")
+	cancel = get_node("HBoxContainer/VBoxContainer/HBoxContainer/cancel")
+	message = get_node("HBoxContainer/VBoxContainer/message")
 	sqlite = get_parent().get_node("SQLite manager")
 	message.text = ""
 	confirm.pressed.connect(self._confirm)

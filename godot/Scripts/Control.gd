@@ -3,6 +3,7 @@ extends Control
 var free_esc = false
 
 var main
+var guide
 var new_lib
 var open_lib
 var view_lib
@@ -11,6 +12,7 @@ var logger
 
 func _ready():
 	main = get_node("main menu")
+	guide = get_node("guide")
 	new_lib = get_node("new library")
 	open_lib = get_node("open library")
 	view_lib = get_node("library view")
@@ -24,18 +26,21 @@ func _main_menu():
 	new_lib.visible = false
 	open_lib.visible = false
 	view_lib.visible = false
+	guide.visible = false
 
 func _new_library():
 	main.visible = false
 	new_lib.visible = true
 	open_lib.visible = false
 	view_lib.visible = false
+	guide.visible = false
 	
 func _open_library():
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = true
 	view_lib.visible = false
+	guide.visible = false
 
 func _view_library(lib):
 	view_lib.setup(lib)
@@ -43,6 +48,14 @@ func _view_library(lib):
 	new_lib.visible = false
 	open_lib.visible = false
 	view_lib.visible = true
+	guide.visible = false
+
+func _guide():
+	main.visible = false
+	new_lib.visible = false
+	open_lib.visible = false
+	view_lib.visible = false
+	guide.visible = true
 	
 func _prepare_new(lib):
 	open_lib.add_single_lib(lib)

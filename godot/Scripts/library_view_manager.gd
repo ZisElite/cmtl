@@ -84,14 +84,13 @@ func _ready():
 	
 	_scan_finished.connect(self._scan_complete)
 
-			
 func setup(lib):
 	entries_node.reset_container()
 	if !sqlite.open_library(lib):
 		message.text = "Error opening the library file."
 		return
 	var result = sqlite.read_table("paths")
-	if !result:
+	if typeof(result) != typeof([]):
 		message.text = "Error reading the PATHS table."
 		return
 	create_path_dict(result)
@@ -223,10 +222,10 @@ func _new_tag_confirmed():
 		message.text = "Please entrer a tag name before pressing the CONFIRM button."
 		return
 	var result = sqlite.add_new_tag(new_tag_name)
-	if result == "exists":
+	if typeof(result) == typeof("") and result == "exists":
 		message.text = "There is already a tag with that name."
 		return
-	elif !result:
+	elif !result or typeof(result) == typeof("") and result == "error":
 		message.text = "There was an error trying to create the new tag."
 		return
 	print(result)

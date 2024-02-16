@@ -14,29 +14,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_olarf")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+offset_right = 1280.0
+offset_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="VSeparator2" type="VSeparator" parent="ScrollContainer/HBoxContainer"]
+[node name="VSeparator2" type="VSeparator" parent="HBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
 alignment = 1
 
-[node name="Label" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -45,12 +41,12 @@ label_settings = ExtResource("2_6c3tq")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator5" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="HSeparator5" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
 
-[node name="name" type="LineEdit" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="name" type="LineEdit" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(350, 35)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -59,12 +55,12 @@ placeholder_text = "Library name..."
 context_menu_enabled = false
 shortcut_keys_enabled = false
 
-[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="message" type="Label" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="message" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -73,38 +69,38 @@ label_settings = ExtResource("4_5447y")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSeparator4" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="confirm" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="confirm" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 theme = ExtResource("3_2a7u1")
 text = "Confirm"
 
-[node name="VSeparator" type="VSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="cancel" type="Button" parent="ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="cancel" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 theme = ExtResource("3_2a7u1")
 text = "Cancel"
 
-[node name="HSeparator3" type="HSeparator" parent="ScrollContainer/HBoxContainer/VBoxContainer"]
+[node name="HSeparator3" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VSeparator" type="VSeparator" parent="ScrollContainer/HBoxContainer"]
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3

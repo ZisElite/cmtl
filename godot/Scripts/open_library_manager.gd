@@ -14,12 +14,12 @@ var selected = null
 var group = null
 
 func _ready():
-	confirm = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/confirm")
-	delete = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/delete")
-	cancel = get_node("ScrollContainer/HBoxContainer/VBoxContainer/HBoxContainer/cancel")
+	confirm = get_node("HBoxContainer/VBoxContainer/HBoxContainer/confirm")
+	delete = get_node("HBoxContainer/VBoxContainer/HBoxContainer/delete")
+	cancel = get_node("HBoxContainer/VBoxContainer/HBoxContainer/cancel")
 	sqlite = get_parent().get_node("SQLite manager")
-	scroll = get_node("ScrollContainer/HBoxContainer/VBoxContainer/libraries container/libraries")
-	message = get_node("ScrollContainer/HBoxContainer/VBoxContainer/message")
+	scroll = get_node("HBoxContainer/VBoxContainer/libraries container/libraries")
+	message = get_node("HBoxContainer/VBoxContainer/message")
 	message.text = ""
 	lib_pre = preload("res://Scenes/library.tscn")
 	group = preload("res://resources/libraries.tres")

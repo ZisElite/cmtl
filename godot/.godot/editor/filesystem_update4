@@ -1,15 +1,20 @@
-res://Scenes/library view.tscn
-res://resources/message.tres
-res://Scripts/library_view_manager.gd
-res://Scripts/open_library_manager.gd
 res://Scenes/main.tscn
+res://resources/message.tres
 res://Scenes/loading_screen.tscn
 res://Scenes/main menu.tscn
 res://Scenes/new library.tscn
 res://Scenes/open library.tscn
+res://Scenes/library view.tscn
 res://Scenes/entry.tscn
 res://Scenes/library.tscn
 res://Scenes/path.tscn
 res://Scenes/tag.tscn
 res://Scenes/entries_container.tscn
+res://Scripts/library_view_manager.gd
 res://Scripts/SQLite_manager.gd
+res://Scenes/guide.tscn
+res://Scripts/guide.gd
+res://Scripts/Control.gd
+res://Scripts/main_menu_manager.gd
+res://Scripts/new_library_manager.gd
+res://Scripts/open_library_manager.gd
