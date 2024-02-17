@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dofje3xyn7dne"]
+[gd_scene load_steps=11 format=3 uid="uid://dofje3xyn7dne"]
 
 [ext_resource type="Script" path="res://Scripts/Control.gd" id="1_xmm6q"]
 [ext_resource type="PackedScene" uid="uid://d2v4ljix08bkx" path="res://Scenes/main menu.tscn" id="2_orct6"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cb7locctgkxv3" path="res://Scenes/loading_screen.tscn" id="6_4gcx7"]
 [ext_resource type="PackedScene" uid="uid://ctvrd8v6bweud" path="res://Scenes/sqlite_manager.tscn" id="6_51ynp"]
 [ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="7_yk1rf"]
-[ext_resource type="Script" path="res://Scripts/logging.gd" id="9_pa0ad"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -55,6 +54,3 @@ layout_mode = 1
 script = ExtResource("7_yk1rf")
 
 [node name="SQLite manager" parent="." instance=ExtResource("6_51ynp")]
-
-[node name="logger" type="Node" parent="."]
-script = ExtResource("9_pa0ad")

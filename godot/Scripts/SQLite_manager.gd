@@ -65,7 +65,6 @@ func close_library():
 	db.close_db()
 
 func remove_lib(lib):
-	print(lib + ".db")
 	return(dir.remove(lib+".db"))
 
 func read_table(table):
@@ -131,15 +130,12 @@ func retrieve_files(tag=null, path_id=null):
 		query += ", " + tag.get_node("name").text + " where files.id = " + tag.get_node("name").text + ".file_id"
 	elif path_id:
 		query += ",paths where  files.path_id = " + path_id.name
-	print("query ", query)
 	db.query(query)
 	return db.query_result
 
 func add_tag_to_file(tag, file_id):
-	print(tag, " ", file_id)
 	var table = {"file_id" : int(str(file_id))}
 	return(db.insert_row(tag, table))
 
 func remove_tag_from_files(tag, file_id):
-	print(tag, " ", file_id)
 	return(db.delete_rows(tag, "file_id = " + file_id))

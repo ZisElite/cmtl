@@ -7,7 +7,6 @@ var confirm
 var cancel
 var message
 var sqlite
-var logger
 
 func _ready():
 	text_field = get_node("HBoxContainer/VBoxContainer/name")
@@ -23,20 +22,21 @@ func _ready():
 
 func _confirm():
 	if !text_field.text:
-		update_message("Plese provide a name for the new library")
+		print("D" + Time.get_datetime_string_from_system() + ": No name was provided for the mew library.")
+		message.text = "Plese provide a name for the new library"
 		return
 	if !sqlite.check_new(text_field.text):
-		update_message("There is already a library with this name.")
+		print("D" + Time.get_datetime_string_from_system() + ": The provided library already exists.")
+		message.text = "There is already a library with this name."
 		return
 	if !sqlite.create_new_library(text_field.text):
-		update_message("There was an error during the creation of the library.\n
-		Please check the logs and contact the creator.")
+		print("D" + Time.get_datetime_string_from_system() + ": Error with creating new library.")
+		message.text = "There was an error during the creation of the library.\n
+		Please check the logs and contact the creator."
 		return
+	print("D" + Time.get_datetime_string_from_system() + ": New library succesfully created.")
 	new_pressed.emit(text_field.text)
 
 func _clear_text():
 	text_field.text = ""
 	message.text = ""
-	
-func update_message(text):
-	message.text = text

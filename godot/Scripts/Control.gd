@@ -8,7 +8,6 @@ var new_lib
 var open_lib
 var view_lib
 var sqlite
-var logger
 
 func _ready():
 	main = get_node("main menu")
@@ -17,11 +16,11 @@ func _ready():
 	open_lib = get_node("open library")
 	view_lib = get_node("library view")
 	sqlite = get_node("SQLite manager")
-	logger = get_node("logger")
 	var files = sqlite.get_libs()
 	open_lib.populate_list(files)
 
 func _main_menu():
+	print("D" + Time.get_datetime_string_from_system() + ": Switching to main menu screen.")
 	main.visible = true
 	new_lib.visible = false
 	open_lib.visible = false
@@ -29,6 +28,7 @@ func _main_menu():
 	guide.visible = false
 
 func _new_library():
+	print("D" + Time.get_datetime_string_from_system() + ": Switching to new library screen.")
 	main.visible = false
 	new_lib.visible = true
 	open_lib.visible = false
@@ -36,6 +36,7 @@ func _new_library():
 	guide.visible = false
 	
 func _open_library():
+	print("D" + Time.get_datetime_string_from_system() + ": Switching to open library screen.")
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = true
@@ -43,6 +44,7 @@ func _open_library():
 	guide.visible = false
 
 func _view_library(lib):
+	print("D" + Time.get_datetime_string_from_system() + ": Switching to library view screen.")
 	view_lib.setup(lib)
 	main.visible = false
 	new_lib.visible = false
@@ -51,6 +53,7 @@ func _view_library(lib):
 	guide.visible = false
 
 func _guide():
+	print("D" + Time.get_datetime_string_from_system() + ": Switching to guide screen.")
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = false
@@ -58,6 +61,7 @@ func _guide():
 	guide.visible = true
 	
 func _prepare_new(lib):
+	print("D" + Time.get_datetime_string_from_system() + ": Adding new library to the list.")
 	open_lib.add_single_lib(lib)
 	_view_library(lib)
 

@@ -85,27 +85,37 @@ func _ready():
 	_scan_finished.connect(self._scan_complete)
 
 func setup(lib):
+	print("D" + Time.get_datetime_string_from_system() + ": Started setting up library.")
 	entries_node.reset_container()
 	if !sqlite.open_library(lib):
+		print("D" + Time.get_datetime_string_from_system() + ": Could not open the library file.")
 		message.text = "Error opening the library file."
 		return
+	print("D" + Time.get_datetime_string_from_system() + ": Library file opened succesfully.")
 	var result = sqlite.read_table("paths")
 	if typeof(result) != typeof([]):
+		print("D" + Time.get_datetime_string_from_system() + ": Could not read the paths table.")
 		message.text = "Error reading the PATHS table."
 		return
+	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the paths table.")
 	create_path_dict(result)
 	paths_list = paths_node.populate_paths(result, true)
 	result = sqlite.read_table("tags")
 	if !result:
+		print("D" + Time.get_datetime_string_from_system() + ": Could not read the tags table.")
 		message.text = "Error reading the TAGS table."
+	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the tags table.")
 	create_tag_dict(result)
 	tags_node.populate_tags(result)
 	result = sqlite.read_table("files")
 	if !result:
+		print("D" + Time.get_datetime_string_from_system() + ": Could not read the files table.")
 		message.text = "Error reading the FILES table."
+	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the files table.")
 	entries_node.populate_files(result, paths)
 	#entries_node.filter_files()
 	message.text = "Library loaded successfully."
+	print("D" + Time.get_datetime_string_from_system() + ": Library successfully loaded.")
 
 func create_path_dict(results):
 	for result in results:
@@ -117,9 +127,9 @@ func create_tag_dict(results):
 		var temp = sqlite.read_table(result["name"])
 		for entry in temp:
 			tags[result["name"]].append(entry["file_id"])
-	print(tags)
 
 func _main_menu():
+	print("D" + Time.get_datetime_string_from_system() + ": Reseting the library view.")
 	entries_node.reset_container()
 	tags_node.reset_container()
 	paths_node.reset_container()
@@ -135,32 +145,37 @@ func _open_files_dialogue():
 
 func _add_path(path, type):
 	free_esc.emit()
+	print("D" + Time.get_datetime_string_from_system() + ": Adding new path.")
 	if path in paths_list:
+		print("D" + Time.get_datetime_string_from_system() + ": The path aleady exists.")
 		message.text = "This path is already in use."
 		return
 	if type and path.get_extension() not in formats:
+		print("D" + Time.get_datetime_string_from_system() + ": The file extension is not supported.")
 		message.text = "The selected file has an unsupported extension."
 		return
 	var result = sqlite.add_path(path, type)
 	if !result:
+		print("D" + Time.get_datetime_string_from_system() + ": SQL error adding the path.")
 		message.text = "There was an error adding the path to the database."
 		return
 	var temp = paths_node.add_single_path(result[0], true)
-	print(result[0])
 	paths[result[0]["id"]] = []
 	paths_list.append(path)
 	message.text = "New path was added successfully."
+	print("D" + Time.get_datetime_string_from_system() + ": New path was added successfully.")
 	_start_scanning("single", temp)
-	print(paths)
 
 func _remove_path(id, nam):
+	print("D" + Time.get_datetime_string_from_system() + ": Removing path.")
 	if !sqlite.remove_path(id):
+		print("D" + Time.get_datetime_string_from_system() + ": SQL error removing the path.")
 		message.text = "There was an error removing the path."
 		return
 	paths_list.erase(nam)
 	paths.erase(int(str(id)))
 	entries_node.remove_entries(id)
-	print(paths)
+	print("D" + Time.get_datetime_string_from_system() + ": Path removed successfully.")
 	filters()
 		
 
@@ -174,12 +189,14 @@ func scan_paths(mode="all", single_path=null):
 	total_scanned_subs = 0
 	scanning.toggle_visible(true)
 	if mode == "all":
+		print("D" + Time.get_datetime_string_from_system() + ": Started scanning all paths.")
 		if paths_list:
 			var pathss = paths_node.get_path_nodes()
 			for path in pathss:
 				scanning.update_loc(path.get_node("name").text)
 				scan_single_path(path)
 	elif mode == "single":
+		print("D" + Time.get_datetime_string_from_system() + ": Started scanning single path.")
 		scanning.update_loc(single_path.get_node("name").text)
 		scan_single_path(single_path)
 	else:
@@ -197,6 +214,7 @@ func scan_single_path(path):
 func _scan_complete():
 	filters()
 	scanning.toggle_visible(false)
+	print("D" + Time.get_datetime_string_from_system() + ": Scan finished.")
 	message.text = "Finished scanning for files."
 
 func _update_scanning_screen(which, numbers):
@@ -216,52 +234,58 @@ func _add_tag():
 
 func _new_tag_confirmed():
 	free_esc.emit()
+	print("D" + Time.get_datetime_string_from_system() + ": Adding new tag.")
 	var new_tag_name = new_tag.get_node("tag").text
-	print(new_tag_name)
 	if !new_tag_name:
+		print("D" + Time.get_datetime_string_from_system() + ": No name was given for the new tag.")
 		message.text = "Please entrer a tag name before pressing the CONFIRM button."
 		return
 	var result = sqlite.add_new_tag(new_tag_name)
 	if typeof(result) == typeof("") and result == "exists":
+		print("D" + Time.get_datetime_string_from_system() + ": There is already a tag with this name.")
 		message.text = "There is already a tag with that name."
 		return
 	elif !result or typeof(result) == typeof("") and result == "error":
+		print("D" + Time.get_datetime_string_from_system() + ": SQL error adding the tag.")
 		message.text = "There was an error trying to create the new tag."
 		return
-	print(result)
 	tags_node.add_tag(result)
 	tags[result["name"]] = []
+	print("D" + Time.get_datetime_string_from_system() + ": New tag added successfully.")
 	message.text = "New tag " + new_tag_name + " was created successfully."
-	print(tags)
 
 func _remove_tag():
 	remove_tag.visible = true
 
 func _remove_tag_confirmed():
 	free_esc.emit()
+	print("D" + Time.get_datetime_string_from_system() + ": Started tag removal.")
 	var remove_tag_name = remove_tag.get_node("tag").text
 	if remove_tag_name not in tags.keys():
+		print("D" + Time.get_datetime_string_from_system() + ": No name was provided for tag.")
 		message.text = "Please provide an existing tag before pressing the CONFIRM button."
 		return
 	var id = sqlite.remove_tag(remove_tag_name)
 	if !id:
+		print("D" + Time.get_datetime_string_from_system() + ": SQL error removing the tag from list.")
 		message.text = "There was an error removing the tag from the database."
 		return
 	elif !sqlite.drop_tag_table(remove_tag_name):
+		print("D" + Time.get_datetime_string_from_system() + ": SQL error removing the tag table.")
 		message.text = "There was an error deleting the tag's table."
 		return
 	else:
+		print("D" + Time.get_datetime_string_from_system() + ": Tag removed successfully.")
 		message.text = "Tag was removed successfully."
 		tags.erase(remove_tag_name)
 		tags_node.remove_tag(id)
-		print(tags)
 
 #-------------------------------------
 
 func _apply_filters():
+	print("D" + Time.get_datetime_string_from_system() + ": Applying filters.")
 	filters_active = false
 	var mode = "unhide"
-	print("applying filters")
 	active_path = paths_node.selected
 	active_tag = tags_node.selected
 	var filtered_files = []
@@ -280,6 +304,7 @@ func _apply_filters():
 	entries_node.filter_files(filtered_files, mode)
 	
 func _clear_filters():
+	print("D" + Time.get_datetime_string_from_system() + ": Clearing filters.")
 	filters_active = false
 	if paths_node.selected:
 		active_path = null
@@ -302,51 +327,57 @@ func filters():
 #-------------------------------------
 
 func _apply_tag_to_files():
+	print("D" + Time.get_datetime_string_from_system() + ": Applying tag to files.")
 	if !tags_node.selected:
+		print("D" + Time.get_datetime_string_from_system() + ": No tag was selected.")
 		message.text = "Please select a tag first."
 		return
 	var tag = tags_node.selected.get_node("name").text
 	var files = entries_node.selected
 	if !files:
+		print("D" + Time.get_datetime_string_from_system() + ": No files were selected.")
 		message.text = "Please select at least one file first."
 		return
 	var errors = 0
 	for file in files:
 		if sqlite.add_tag_to_file(tag, file.name):
 			tags[tag].append(int(str(file.name)))
-			print(tags)
 		else:
 			errors += 1
 	if errors:
+		print("D" + Time.get_datetime_string_from_system() + ": Files tagged with some errors.")
 		message.text = "Some files did not get tagged correctly."
 	else:
+		print("D" + Time.get_datetime_string_from_system() + ": Files tagged successfully.")
 		message.text = "Tag applied to selected files successfully."
 			
 func _remove_tag_from_files():
+	print("D" + Time.get_datetime_string_from_system() + ": Removing tag from files.")
 	if !tags_node.selected:
+		print("D" + Time.get_datetime_string_from_system() + ": No tag was selected.")
 		message.text = "Please select a tag first."
 		return
 	var tag = tags_node.selected.get_node("name").text
 	var files = entries_node.selected
 	if !files:
+		print("D" + Time.get_datetime_string_from_system() + ": No file was selected.")
 		message.text = "Please select at least one file first."
 		return
 	var errors = 0
 	for file in files:
-		print(file)
 		if sqlite.remove_tag_from_files(tag, file.name):
 			tags[tag].erase(int(str(file.name)))
-			print(tags)
 		else:
 			errors += 1
 	if errors:
+		print("D" + Time.get_datetime_string_from_system() + ": Tag removed from files with some errors.")
 		message.text = "Some files did not get untagged correctly."
 	else:
+		print("D" + Time.get_datetime_string_from_system() + ": Tag removed from files successfully.")
 		message.text = "Tag removed from all selected files."
 	if active_tag.get_node("name").text == tag:
 		var result = sqlite.retrieve_files(active_tag, active_path)
 		if result:
-			print(result)
 			entries_node.populate_files(result)
 			filters()
 
