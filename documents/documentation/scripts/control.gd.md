@@ -1,5 +1,5 @@
 ### variables
-**main, new_lib, open_lib, view_lib, sqlite, #v0-7 logger** :
+**main, new_lib, open_lib, view_lib, sqlite :
 They hold the corresponding node of the application.
 
 
