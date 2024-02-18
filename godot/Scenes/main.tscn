@@ -7,9 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://4xushpiwxg2w" path="res://Scenes/open library.tscn" id="4_85s5m"]
 [ext_resource type="Script" path="res://Scripts/guide.gd" id="4_umq24"]
 [ext_resource type="PackedScene" uid="uid://b1v8db5vo3ev5" path="res://Scenes/library view.tscn" id="5_f3of3"]
-[ext_resource type="PackedScene" uid="uid://cb7locctgkxv3" path="res://Scenes/loading_screen.tscn" id="6_4gcx7"]
+[ext_resource type="PackedScene" uid="uid://cb7locctgkxv3" path="res://Scenes/scanning_screen.tscn" id="6_4gcx7"]
 [ext_resource type="PackedScene" uid="uid://ctvrd8v6bweud" path="res://Scenes/sqlite_manager.tscn" id="6_51ynp"]
-[ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="7_yk1rf"]
+[ext_resource type="PackedScene" uid="uid://cvdvngl0ku3vs" path="res://Scenes/loading_screen.tscn" id="9_80lcy"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -51,6 +51,9 @@ layout_mode = 1
 [node name="scanning" parent="." instance=ExtResource("6_4gcx7")]
 visible = false
 layout_mode = 1
-script = ExtResource("7_yk1rf")
+
+[node name="loading" parent="." instance=ExtResource("9_80lcy")]
+visible = false
+layout_mode = 1
 
 [node name="SQLite manager" parent="." instance=ExtResource("6_51ynp")]

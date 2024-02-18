@@ -1,5 +1,8 @@
 extends ScrollContainer
 
+signal files_read
+signal continue_setup
+
 var entry_pre
 var container_pre
 var master_container = null
@@ -16,6 +19,7 @@ func populate_files(files, paths=null):
 	print("D" + Time.get_datetime_string_from_system() + ": Started populating files container.")
 	for file in files:
 		add_single_file(file, paths)
+	files_read.emit()
 
 func add_single_file(file, paths=null):
 	var temp = entry_pre.instantiate()
@@ -44,6 +48,7 @@ func reset_container():
 	container2 = container_pre.instantiate()
 	master_container.add_child(container2)
 	container2.visible = false
+	continue_setup.emit()
 
 func filter_files(ids=null, mode="unhide"):
 	if mode == "unhide":

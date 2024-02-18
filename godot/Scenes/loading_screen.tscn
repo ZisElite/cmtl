@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cb7locctgkxv3"]
+[gd_scene load_steps=6 format=3 uid="uid://cvdvngl0ku3vs"]
 
+[ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="1_cnbvv"]
 [ext_resource type="SystemFont" uid="uid://dgtlj40ebr44k" path="res://resources/font.tres" id="1_ri2md"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_26iwn"]
@@ -20,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_cnbvv")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -38,38 +40,6 @@ layout_mode = 2
 layout_mode = 2
 alignment = 1
 
-[node name="scanning" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
+[node name="message" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer"]
 layout_mode = 2
-alignment = 1
-
-[node name="scan" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/scanning"]
-layout_mode = 2
-text = "Scanning for files on: "
-
-[node name="location" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/scanning"]
-layout_mode = 2
-text = "path"
-
-[node name="subfolders cont" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="number" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/subfolders cont"]
-layout_mode = 2
-text = "0"
-
-[node name="subfolders" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/subfolders cont"]
-layout_mode = 2
-text = "subfolders found"
-
-[node name="files cont" type="HBoxContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="number" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/files cont"]
-layout_mode = 2
-text = "0"
-
-[node name="files" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/files cont"]
-layout_mode = 2
-text = "files found"
+text = "Loading library, please wait..."

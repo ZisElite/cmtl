@@ -2,6 +2,7 @@ extends VBoxContainer
 
 signal remove_path
 signal update_scanning_screen
+signal paths_read
 
 var container
 var add
@@ -35,13 +36,15 @@ func reset_container():
 func get_path_nodes():
 	return container.get_children()
 
-func populate_paths(paths, initial=false):
+func populate_paths(paths, initial=false, emit_sig=false):
 	print("D" + Time.get_datetime_string_from_system() + ": Started populating the paths container.")
 	var paths_list =[]
 	for path in paths:
 		add_single_path(path)
 		if initial:
 			paths_list.append(path["path"])
+	if emit_sig:
+		paths_read.emit(paths_list)
 	if initial:
 		return paths_list
 
@@ -63,6 +66,7 @@ func connect_buttons_to_master(node):
 	remove_path.connect(master._remove_path)
 	scan.pressed.connect(master._start_scanning)
 	update_scanning_screen.connect(master._update_scanning_screen)
+	paths_read.connect(master.set_paths_list)
 
 func _select_path(button):
 	if button.get_node("name").button_pressed:

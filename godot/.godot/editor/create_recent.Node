@@ -1,3 +1,4 @@
+Node
 TextureRect
 VBoxContainer
 Button
@@ -5,11 +6,9 @@ HBoxContainer
 HSeparator
 ScrollContainer
 Label
-Node
 CheckButton
 LineEdit
 VSeparator
 CenterContainer
 PanelContainer
 ConfirmationDialog
-PopupPanel

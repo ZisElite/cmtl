@@ -1,5 +1,7 @@
 extends VBoxContainer
 
+signal tags_read
+
 var container
 var add
 var remove
@@ -38,6 +40,7 @@ func populate_tags(tags):
 	print("D" + Time.get_datetime_string_from_system() + ": Started populating tags container.")
 	for tag in tags:
 		add_tag(tag)
+	tags_read.emit()
 
 func add_tag(tag):
 	var temp = tag_pre.instantiate()

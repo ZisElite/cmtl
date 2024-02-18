@@ -24,7 +24,7 @@ func _ready():
 	lib_pre = preload("res://Scenes/library.tscn")
 	group = preload("res://resources/libraries.tres")
 	confirm.pressed.connect(self._check_pressed)
-	confirm_selected.connect(get_parent()._view_library)
+	confirm_selected.connect(get_parent()._prepare_library_view)
 	delete.pressed.connect(self._remove_lib)
 	cancel.pressed.connect(get_parent()._main_menu)
 	visibility_changed.connect(self._reset)

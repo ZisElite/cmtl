@@ -43,9 +43,8 @@ func _open_library():
 	view_lib.visible = false
 	guide.visible = false
 
-func _view_library(lib):
+func _view_library():
 	print("D" + Time.get_datetime_string_from_system() + ": Switching to library view screen.")
-	view_lib.setup(lib)
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = false
@@ -63,7 +62,10 @@ func _guide():
 func _prepare_new(lib):
 	print("D" + Time.get_datetime_string_from_system() + ": Adding new library to the list.")
 	open_lib.add_single_lib(lib)
-	_view_library(lib)
+	_prepare_library_view(lib)
+
+func _prepare_library_view(lib):
+	view_lib.setup_start(lib)
 
 func _free_esc():
 	free_esc = true

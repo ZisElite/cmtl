@@ -1,16 +1,18 @@
 extends Control
 
-signal _scan_finished
+signal loading_finished
 signal disable_esc
 signal free_esc
 signal go_back
 signal continue_scan
+signal continue_setup
 
 var entries_node
 var tags_node
 var paths_node
 var controller
 var scanning
+var loading
 var message
 var sqlite
 var new_files
@@ -48,6 +50,7 @@ func _ready():
 	paths_node = get_node("master container/library view/data container/VBoxContainer2/tags-path container/paths overall")
 	controller = get_parent()
 	scanning = controller.get_node("scanning")
+	loading = controller.get_node("loading")
 	sqlite = controller.get_node("SQLite manager")
 	message = get_node("master container/library view/data container/VBoxContainer/message")
 	message.text = ""
@@ -82,41 +85,70 @@ func _ready():
 	back_button.pressed.connect(self._main_menu)
 	go_back.connect(controller._main_menu)
 	
-	_scan_finished.connect(self._scan_complete)
+	loading_finished.connect(controller._view_library)
+
+func setup_start(lib):
+	thread = Thread.new()
+	thread.start(setup.bind(lib))
 
 func setup(lib):
+	Thread.set_thread_safety_checks_enabled(false)
+	loading.call_deferred("toggle_visible", true)
+	await loading.continue_setup
+	await get_tree().process_frame
 	print("D" + Time.get_datetime_string_from_system() + ": Started setting up library.")
-	entries_node.reset_container()
+	entries_node.call_deferred("reset_container")
+	await entries_node.continue_setup
 	if !sqlite.open_library(lib):
 		print("D" + Time.get_datetime_string_from_system() + ": Could not open the library file.")
 		message.text = "Error opening the library file."
+		loading.call_deferred("toggle_visible", false)
 		return
 	print("D" + Time.get_datetime_string_from_system() + ": Library file opened succesfully.")
 	var result = sqlite.read_table("paths")
 	if typeof(result) != typeof([]):
 		print("D" + Time.get_datetime_string_from_system() + ": Could not read the paths table.")
 		message.text = "Error reading the PATHS table."
+		loading.call_deferred("toggle_visible", false)
 		return
 	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the paths table.")
-	create_path_dict(result)
-	paths_list = paths_node.populate_paths(result, true)
+	call_deferred("create_path_dict", result)
+	result = paths_node.call_deferred("populate_paths", result, true, true)
+	await continue_setup
 	result = sqlite.read_table("tags")
 	if !result:
 		print("D" + Time.get_datetime_string_from_system() + ": Could not read the tags table.")
 		message.text = "Error reading the TAGS table."
+		loading.call_deferred("toggle_visible", false)
+		return
 	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the tags table.")
-	create_tag_dict(result)
-	tags_node.populate_tags(result)
+	call_deferred("create_tag_dict", result)
+	tags_node.call_deferred("populate_tags", result)
+	await tags_node.tags_read
 	result = sqlite.read_table("files")
 	if !result:
 		print("D" + Time.get_datetime_string_from_system() + ": Could not read the files table.")
 		message.text = "Error reading the FILES table."
+		loading.call_deferred("toggle_visible", false)
+		return
 	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the files table.")
-	entries_node.populate_files(result, paths)
+	entries_node.call_deferred("populate_files", result, paths)
+	await entries_node.files_read
 	#entries_node.filter_files()
 	message.text = "Library loaded successfully."
 	print("D" + Time.get_datetime_string_from_system() + ": Library successfully loaded.")
+	loading.call_deferred("toggle_visible", false)
+	loading_finished.emit()
+	call_deferred("clean_thread")
 
+func clean_thread():
+	if thread:
+		thread.wait_to_finish()
+
+func set_paths_list(paths_result):
+	paths_list = paths_result
+	continue_setup.emit()
+	
 func create_path_dict(results):
 	for result in results:
 		paths[result["id"]] = []
@@ -134,6 +166,8 @@ func _main_menu():
 	tags_node.reset_container()
 	paths_node.reset_container()
 	sqlite.close_library()
+	paths = {}
+	tags = {}
 	active_path = null
 	active_tag = null
 	go_back.emit()
@@ -201,7 +235,7 @@ func scan_paths(mode="all", single_path=null):
 		scan_single_path(single_path)
 	else:
 		print("scanning mode was wrong: " + str(mode))
-	_scan_finished.emit()
+	call_deferred("scan_complete")
 
 func scan_single_path(path):
 	var temp = paths_node.scan_for_files(path.get_node("name").text)
@@ -211,11 +245,13 @@ func scan_single_path(path):
 		if result:
 			entries_node.call_deferred("add_single_file", result, paths)
 			
-func _scan_complete():
+func scan_complete():
 	filters()
 	scanning.toggle_visible(false)
 	print("D" + Time.get_datetime_string_from_system() + ": Scan finished.")
 	message.text = "Finished scanning for files."
+	if thread:
+		thread.wait_to_finish()
 
 func _update_scanning_screen(which, numbers):
 	if which == "sub":
