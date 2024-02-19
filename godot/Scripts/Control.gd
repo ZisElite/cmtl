@@ -20,7 +20,7 @@ func _ready():
 	open_lib.populate_list(files)
 
 func _main_menu():
-	print("D" + Time.get_datetime_string_from_system() + ": Switching to main menu screen.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Switching to main menu screen.")
 	main.visible = true
 	new_lib.visible = false
 	open_lib.visible = false
@@ -28,7 +28,7 @@ func _main_menu():
 	guide.visible = false
 
 func _new_library():
-	print("D" + Time.get_datetime_string_from_system() + ": Switching to new library screen.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Switching to new library screen.")
 	main.visible = false
 	new_lib.visible = true
 	open_lib.visible = false
@@ -36,7 +36,7 @@ func _new_library():
 	guide.visible = false
 	
 func _open_library():
-	print("D" + Time.get_datetime_string_from_system() + ": Switching to open library screen.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Switching to open library screen.")
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = true
@@ -44,7 +44,7 @@ func _open_library():
 	guide.visible = false
 
 func _view_library():
-	print("D" + Time.get_datetime_string_from_system() + ": Switching to library view screen.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Switching to library view screen.")
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = false
@@ -52,7 +52,7 @@ func _view_library():
 	guide.visible = false
 
 func _guide():
-	print("D" + Time.get_datetime_string_from_system() + ": Switching to guide screen.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Switching to guide screen.")
 	main.visible = false
 	new_lib.visible = false
 	open_lib.visible = false
@@ -60,7 +60,7 @@ func _guide():
 	guide.visible = true
 	
 func _prepare_new(lib):
-	print("D" + Time.get_datetime_string_from_system() + ": Adding new library to the list.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Adding new library to the list.")
 	open_lib.add_single_lib(lib)
 	_prepare_library_view(lib)
 

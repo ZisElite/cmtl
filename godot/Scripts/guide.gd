@@ -9,5 +9,5 @@ func _ready():
 	
 func _reset():
 	if !visible:
-		print("D" + Time.get_datetime_string_from_system() + ": Reseting guide scroll area to 0 vertical.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting guide scroll area to 0 vertical.")
 		get_node("ScrollContainer/VBoxContainer/ScrollContainer").scroll_vertical = 0

@@ -5,7 +5,7 @@ signal continue_setup
 var message
 
 func _ready():
-	message = get_node("PanelContainer/CenterContainer/VBoxContainer/message")
+	message = get_node("PanelContainer/CenterContainer/message")
 
 
 func toggle_visible(vis):

@@ -28,7 +28,7 @@ func _ready():
 	group = preload("res://resources/paths.tres")
 
 func reset_container():
-	print("D" + Time.get_datetime_string_from_system() + ": Reseting the paths container.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting the paths container.")
 	for child in container.get_children():
 		container.remove_child(child)
 		child.queue_free()
@@ -37,7 +37,7 @@ func get_path_nodes():
 	return container.get_children()
 
 func populate_paths(paths, initial=false, emit_sig=false):
-	print("D" + Time.get_datetime_string_from_system() + ": Started populating the paths container.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started populating the paths container.")
 	var paths_list =[]
 	for path in paths:
 		add_single_path(path)
@@ -75,7 +75,7 @@ func _select_path(button):
 		selected = null
 
 func scan_for_files(path):
-	print("D" + Time.get_datetime_string_from_system() + ": Scanning for files on path " + path + ".")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Scanning for files on path " + path + ".")
 	if FileAccess.file_exists(path):
 		if path.get_extension() in formats:
 			var temp = path.split("/")
@@ -97,13 +97,13 @@ func scan_for_files(path):
 	for file in files:
 		if file.get_extension() in formats:
 			found.append(file)
-	print("D" + Time.get_datetime_string_from_system() + ": Finished file scanning.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Finished file scanning.")
 	return (found)
 
 
 func _remove_path():
 	if !selected:
-		print("D" + Time.get_datetime_string_from_system() + ": No path was selected before pressing the - button.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No path was selected before pressing the - button.")
 		master.message.text = "Please select a path before pressing the - button."
 	var temp_id = selected.name
 	var temp_name = selected.get_node("name").text

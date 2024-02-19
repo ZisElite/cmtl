@@ -1,10 +1,7 @@
 res://Scenes/main.tscn
 res://resources/message.tres
-res://Scenes/loading_screen.tscn
 res://Scenes/scanning_screen.tscn
-res://Scripts/loading_screen.gd
-res://Scripts/Control.gd
-res://Scripts/library_view_manager.gd
+res://Scenes/loading_screen.tscn
 res://Scenes/main menu.tscn
 res://Scenes/guide.tscn
 res://Scenes/new library.tscn
@@ -15,7 +12,5 @@ res://Scenes/library.tscn
 res://Scenes/path.tscn
 res://Scenes/tag.tscn
 res://Scenes/entries_container.tscn
-res://Scripts/open_library_manager.gd
-res://Scripts/paths_manager.gd
-res://Scripts/tags_manager.gd
 res://Scripts/entries_manager.gd
+res://Scripts/library_view_manager.gd

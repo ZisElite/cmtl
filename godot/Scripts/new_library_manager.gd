@@ -22,19 +22,19 @@ func _ready():
 
 func _confirm():
 	if !text_field.text:
-		print("D" + Time.get_datetime_string_from_system() + ": No name was provided for the mew library.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No name was provided for the mew library.")
 		message.text = "Plese provide a name for the new library"
 		return
 	if !sqlite.check_new(text_field.text):
-		print("D" + Time.get_datetime_string_from_system() + ": The provided library already exists.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: The provided library already exists.")
 		message.text = "There is already a library with this name."
 		return
 	if !sqlite.create_new_library(text_field.text):
-		print("D" + Time.get_datetime_string_from_system() + ": Error with creating new library.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Error with creating new library.")
 		message.text = "There was an error during the creation of the library.\n
 		Please check the logs and contact the creator."
 		return
-	print("D" + Time.get_datetime_string_from_system() + ": New library succesfully created.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: New library succesfully created.")
 	new_pressed.emit(text_field.text)
 
 func _clear_text():

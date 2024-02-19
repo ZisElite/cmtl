@@ -6,6 +6,7 @@ signal free_esc
 signal go_back
 signal continue_scan
 signal continue_setup
+signal continue_filtering
 
 var entries_node
 var tags_node
@@ -13,6 +14,7 @@ var paths_node
 var controller
 var scanning
 var loading
+var filtering
 var message
 var sqlite
 var new_files
@@ -51,6 +53,8 @@ func _ready():
 	controller = get_parent()
 	scanning = controller.get_node("scanning")
 	loading = controller.get_node("loading")
+	filtering = controller.get_node("filtering")
+	filtering.get_node("PanelContainer/CenterContainer/message").text = "Please wait..."
 	sqlite = controller.get_node("SQLite manager")
 	message = get_node("master container/library view/data container/VBoxContainer/message")
 	message.text = ""
@@ -73,8 +77,8 @@ func _ready():
 	
 	apply_filter = get_node("master container/library view/data container/VBoxContainer2/HBoxContainer/apply")
 	clear_filter = get_node("master container/library view/data container/VBoxContainer2/HBoxContainer/clear")
-	apply_filter.pressed.connect(self._apply_filters)
-	clear_filter.pressed.connect(self._clear_filters)
+	apply_filter.pressed.connect(self.filters.bind("filtering"))
+	clear_filter.pressed.connect(self.filters.bind("clearing"))
 	
 	apply_tag_to_files = get_node("master container/library view/data container/VBoxContainer/buttons/apply tags")
 	remove_tag_from_files = get_node("master container/library view/data container/VBoxContainer/buttons/remove tags")
@@ -96,47 +100,47 @@ func setup(lib):
 	loading.call_deferred("toggle_visible", true)
 	await loading.continue_setup
 	await get_tree().process_frame
-	print("D" + Time.get_datetime_string_from_system() + ": Started setting up library.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started setting up library.")
 	entries_node.call_deferred("reset_container")
 	await entries_node.continue_setup
 	if !sqlite.open_library(lib):
-		print("D" + Time.get_datetime_string_from_system() + ": Could not open the library file.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Could not open the library file.")
 		message.text = "Error opening the library file."
 		loading.call_deferred("toggle_visible", false)
 		return
-	print("D" + Time.get_datetime_string_from_system() + ": Library file opened succesfully.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Library file opened succesfully.")
 	var result = sqlite.read_table("paths")
 	if typeof(result) != typeof([]):
-		print("D" + Time.get_datetime_string_from_system() + ": Could not read the paths table.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Could not read the paths table.")
 		message.text = "Error reading the PATHS table."
 		loading.call_deferred("toggle_visible", false)
 		return
-	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the paths table.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Successfully read the paths table.")
 	call_deferred("create_path_dict", result)
 	result = paths_node.call_deferred("populate_paths", result, true, true)
 	await continue_setup
 	result = sqlite.read_table("tags")
 	if !result:
-		print("D" + Time.get_datetime_string_from_system() + ": Could not read the tags table.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Could not read the tags table.")
 		message.text = "Error reading the TAGS table."
 		loading.call_deferred("toggle_visible", false)
 		return
-	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the tags table.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Successfully read the tags table.")
 	call_deferred("create_tag_dict", result)
 	tags_node.call_deferred("populate_tags", result)
 	await tags_node.tags_read
 	result = sqlite.read_table("files")
 	if !result:
-		print("D" + Time.get_datetime_string_from_system() + ": Could not read the files table.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Could not read the files table.")
 		message.text = "Error reading the FILES table."
 		loading.call_deferred("toggle_visible", false)
 		return
-	print("D" + Time.get_datetime_string_from_system() + ": Successfully read the files table.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Successfully read the files table.")
 	entries_node.call_deferred("populate_files", result, paths)
 	await entries_node.files_read
 	#entries_node.filter_files()
 	message.text = "Library loaded successfully."
-	print("D" + Time.get_datetime_string_from_system() + ": Library successfully loaded.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Library successfully loaded.")
 	loading.call_deferred("toggle_visible", false)
 	loading_finished.emit()
 	call_deferred("clean_thread")
@@ -161,7 +165,7 @@ func create_tag_dict(results):
 			tags[result["name"]].append(entry["file_id"])
 
 func _main_menu():
-	print("D" + Time.get_datetime_string_from_system() + ": Reseting the library view.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting the library view.")
 	entries_node.reset_container()
 	tags_node.reset_container()
 	paths_node.reset_container()
@@ -179,37 +183,37 @@ func _open_files_dialogue():
 
 func _add_path(path, type):
 	free_esc.emit()
-	print("D" + Time.get_datetime_string_from_system() + ": Adding new path.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Adding new path.")
 	if path in paths_list:
-		print("D" + Time.get_datetime_string_from_system() + ": The path aleady exists.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: The path aleady exists.")
 		message.text = "This path is already in use."
 		return
 	if type and path.get_extension() not in formats:
-		print("D" + Time.get_datetime_string_from_system() + ": The file extension is not supported.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: The file extension is not supported.")
 		message.text = "The selected file has an unsupported extension."
 		return
 	var result = sqlite.add_path(path, type)
 	if !result:
-		print("D" + Time.get_datetime_string_from_system() + ": SQL error adding the path.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: SQL error adding the path.")
 		message.text = "There was an error adding the path to the database."
 		return
 	var temp = paths_node.add_single_path(result[0], true)
 	paths[result[0]["id"]] = []
 	paths_list.append(path)
 	message.text = "New path was added successfully."
-	print("D" + Time.get_datetime_string_from_system() + ": New path was added successfully.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: New path was added successfully.")
 	_start_scanning("single", temp)
 
 func _remove_path(id, nam):
-	print("D" + Time.get_datetime_string_from_system() + ": Removing path.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Removing path.")
 	if !sqlite.remove_path(id):
-		print("D" + Time.get_datetime_string_from_system() + ": SQL error removing the path.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: SQL error removing the path.")
 		message.text = "There was an error removing the path."
 		return
 	paths_list.erase(nam)
 	paths.erase(int(str(id)))
 	entries_node.remove_entries(id)
-	print("D" + Time.get_datetime_string_from_system() + ": Path removed successfully.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Path removed successfully.")
 	filters()
 		
 
@@ -223,14 +227,14 @@ func scan_paths(mode="all", single_path=null):
 	total_scanned_subs = 0
 	scanning.toggle_visible(true)
 	if mode == "all":
-		print("D" + Time.get_datetime_string_from_system() + ": Started scanning all paths.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started scanning all paths.")
 		if paths_list:
 			var pathss = paths_node.get_path_nodes()
 			for path in pathss:
 				scanning.update_loc(path.get_node("name").text)
 				scan_single_path(path)
 	elif mode == "single":
-		print("D" + Time.get_datetime_string_from_system() + ": Started scanning single path.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started scanning single path.")
 		scanning.update_loc(single_path.get_node("name").text)
 		scan_single_path(single_path)
 	else:
@@ -248,7 +252,7 @@ func scan_single_path(path):
 func scan_complete():
 	filters()
 	scanning.toggle_visible(false)
-	print("D" + Time.get_datetime_string_from_system() + ": Scan finished.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Scan finished.")
 	message.text = "Finished scanning for files."
 	if thread:
 		thread.wait_to_finish()
@@ -270,24 +274,24 @@ func _add_tag():
 
 func _new_tag_confirmed():
 	free_esc.emit()
-	print("D" + Time.get_datetime_string_from_system() + ": Adding new tag.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Adding new tag.")
 	var new_tag_name = new_tag.get_node("tag").text
 	if !new_tag_name:
-		print("D" + Time.get_datetime_string_from_system() + ": No name was given for the new tag.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No name was given for the new tag.")
 		message.text = "Please entrer a tag name before pressing the CONFIRM button."
 		return
 	var result = sqlite.add_new_tag(new_tag_name)
 	if typeof(result) == typeof("") and result == "exists":
-		print("D" + Time.get_datetime_string_from_system() + ": There is already a tag with this name.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: There is already a tag with this name.")
 		message.text = "There is already a tag with that name."
 		return
 	elif !result or typeof(result) == typeof("") and result == "error":
-		print("D" + Time.get_datetime_string_from_system() + ": SQL error adding the tag.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: SQL error adding the tag.")
 		message.text = "There was an error trying to create the new tag."
 		return
 	tags_node.add_tag(result)
 	tags[result["name"]] = []
-	print("D" + Time.get_datetime_string_from_system() + ": New tag added successfully.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: New tag added successfully.")
 	message.text = "New tag " + new_tag_name + " was created successfully."
 
 func _remove_tag():
@@ -295,23 +299,23 @@ func _remove_tag():
 
 func _remove_tag_confirmed():
 	free_esc.emit()
-	print("D" + Time.get_datetime_string_from_system() + ": Started tag removal.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started tag removal.")
 	var remove_tag_name = remove_tag.get_node("tag").text
 	if remove_tag_name not in tags.keys():
-		print("D" + Time.get_datetime_string_from_system() + ": No name was provided for tag.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No name was provided for tag.")
 		message.text = "Please provide an existing tag before pressing the CONFIRM button."
 		return
 	var id = sqlite.remove_tag(remove_tag_name)
 	if !id:
-		print("D" + Time.get_datetime_string_from_system() + ": SQL error removing the tag from list.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: SQL error removing the tag from list.")
 		message.text = "There was an error removing the tag from the database."
 		return
 	elif !sqlite.drop_tag_table(remove_tag_name):
-		print("D" + Time.get_datetime_string_from_system() + ": SQL error removing the tag table.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: SQL error removing the tag table.")
 		message.text = "There was an error deleting the tag's table."
 		return
 	else:
-		print("D" + Time.get_datetime_string_from_system() + ": Tag removed successfully.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Tag removed successfully.")
 		message.text = "Tag was removed successfully."
 		tags.erase(remove_tag_name)
 		tags_node.remove_tag(id)
@@ -319,7 +323,8 @@ func _remove_tag_confirmed():
 #-------------------------------------
 
 func _apply_filters():
-	print("D" + Time.get_datetime_string_from_system() + ": Applying filters.")
+	Thread.set_thread_safety_checks_enabled(false)
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Applying filters.")
 	filters_active = false
 	var mode = "unhide"
 	active_path = paths_node.selected
@@ -328,19 +333,38 @@ func _apply_filters():
 	if active_path:
 		mode = "filter"
 		filters_active = true
-		for id in paths[int(str(active_tag.name))]:
-			if id not in filtered_files:
-				filtered_files.append(id)
+		call_deferred("add_id_to_list", filtered_files, "path")
+		await continue_filtering
 	if active_tag:
 		mode = "filter"
 		filters_active = true
-		for id in tags[active_tag.get_node("name").text]:
+		call_deferred("add_id_to_list", filtered_files, "tag")
+		await continue_filtering
+	entries_node.call_deferred("filter_files", filtered_files, mode)
+	await entries_node.finish_filtering
+	call_deferred("filtering_complete")
+
+
+func add_id_to_list(filtered_files, mode):
+	if mode == "path":
+		for id in paths[int(str(active_path.name))]:
 			if id not in filtered_files:
 				filtered_files.append(id)
-	entries_node.filter_files(filtered_files, mode)
-	
+	if mode == "tag":
+		if filtered_files.size() == 0:
+			for id in tags[active_tag.get_node("name").text]:
+					if id not in filtered_files:
+						filtered_files.append(id)
+		else:
+			var temp = filtered_files.duplicate()
+			for id in temp:
+				if id not in tags[active_tag.get_node("name").text]:
+					filtered_files.erase(id)
+	continue_filtering.emit()
+
 func _clear_filters():
-	print("D" + Time.get_datetime_string_from_system() + ": Clearing filters.")
+	Thread.set_thread_safety_checks_enabled(false)
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Clearing filters.")
 	filters_active = false
 	if paths_node.selected:
 		active_path = null
@@ -350,28 +374,41 @@ func _clear_filters():
 		active_tag = null
 		tags_node.selected.get_node("name").button_pressed = false
 		tags_node.selected = null
-	entries_node.filter_files()
+	entries_node.call_deferred("filter_files")
+	await entries_node.finish_filtering
+	call_deferred("filtering_complete")
 
-func filters():
+func filters(mode=""):
+	thread = Thread.new()
+	filtering.toggle_visible(true)
+	await get_tree().process_frame
+	if mode == "filtering":
+		filters_active = true
+		thread.start(_apply_filters)
+	elif mode == "clearing":
+		filters_active = false
+		thread.start(_clear_filters)
+
+func filtering_complete():
+	filtering.toggle_visible(false)
+	if thread:
+		thread.wait_to_finish()
 	if filters_active:
-		_apply_filters()
 		message.text = "Filters applied."
 	else:
-		_clear_filters()
 		message.text = "Filters cleared."
-
 #-------------------------------------
 
 func _apply_tag_to_files():
-	print("D" + Time.get_datetime_string_from_system() + ": Applying tag to files.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Applying tag to files.")
 	if !tags_node.selected:
-		print("D" + Time.get_datetime_string_from_system() + ": No tag was selected.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No tag was selected.")
 		message.text = "Please select a tag first."
 		return
 	var tag = tags_node.selected.get_node("name").text
 	var files = entries_node.selected
 	if !files:
-		print("D" + Time.get_datetime_string_from_system() + ": No files were selected.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No files were selected.")
 		message.text = "Please select at least one file first."
 		return
 	var errors = 0
@@ -381,22 +418,22 @@ func _apply_tag_to_files():
 		else:
 			errors += 1
 	if errors:
-		print("D" + Time.get_datetime_string_from_system() + ": Files tagged with some errors.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Files tagged with some errors.")
 		message.text = "Some files did not get tagged correctly."
 	else:
-		print("D" + Time.get_datetime_string_from_system() + ": Files tagged successfully.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Files tagged successfully.")
 		message.text = "Tag applied to selected files successfully."
 			
 func _remove_tag_from_files():
-	print("D" + Time.get_datetime_string_from_system() + ": Removing tag from files.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Removing tag from files.")
 	if !tags_node.selected:
-		print("D" + Time.get_datetime_string_from_system() + ": No tag was selected.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No tag was selected.")
 		message.text = "Please select a tag first."
 		return
 	var tag = tags_node.selected.get_node("name").text
 	var files = entries_node.selected
 	if !files:
-		print("D" + Time.get_datetime_string_from_system() + ": No file was selected.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No file was selected.")
 		message.text = "Please select at least one file first."
 		return
 	var errors = 0
@@ -406,10 +443,10 @@ func _remove_tag_from_files():
 		else:
 			errors += 1
 	if errors:
-		print("D" + Time.get_datetime_string_from_system() + ": Tag removed from files with some errors.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Tag removed from files with some errors.")
 		message.text = "Some files did not get untagged correctly."
 	else:
-		print("D" + Time.get_datetime_string_from_system() + ": Tag removed from files successfully.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Tag removed from files successfully.")
 		message.text = "Tag removed from all selected files."
 	if active_tag.get_node("name").text == tag:
 		var result = sqlite.retrieve_files(active_tag, active_path)

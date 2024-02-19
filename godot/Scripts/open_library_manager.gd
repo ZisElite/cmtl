@@ -30,7 +30,7 @@ func _ready():
 	visibility_changed.connect(self._reset)
 
 func populate_list(files):
-	print("D" + Time.get_datetime_string_from_system() + ": Started populating library list.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started populating library list.")
 	for file in files:
 		if file.get_extension() == "db":
 			var nam = file.substr(0, file.length() - 3)
@@ -48,7 +48,7 @@ func _select(lib):
 	selected = lib
 
 func _reset():
-	print("D" + Time.get_datetime_string_from_system() + ": Reseting the pressed buttons.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting the pressed buttons.")
 	if selected:
 		selected.get_node("name").button_pressed = false
 		selected = null
@@ -56,24 +56,24 @@ func _reset():
 
 func _check_pressed():
 	if !selected:
-		print("D" + Time.get_datetime_string_from_system() + ": No library was selected before pressing confirm.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No library was selected before pressing confirm.")
 		message.text = "Please select a library to load before pressing the CONFIRM button."
 		return
 	confirm_selected.emit(selected.name)
 
 func _remove_lib():
 	if !selected:
-		print("D" + Time.get_datetime_string_from_system() + ": No library was selected before pressing delete.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: No library was selected before pressing delete.")
 		message.text = "Please select a library and then press the DELETE button."
 		return
 	var result = sqlite.remove_lib(selected.name)
 	if result:
-		print("D" + Time.get_datetime_string_from_system() + ": There was an error deleting the library.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: There was an error deleting the library.")
 		message.text = "There was an error during library deletion."
 		return
 	scroll.remove_child(selected)
 	message.text = "Library " + selected.name + " successfully removed."
 	selected.queue_free()
 	selected = null
-	print("D" + Time.get_datetime_string_from_system() + ": Library deleted successfully.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Library deleted successfully.")
 	

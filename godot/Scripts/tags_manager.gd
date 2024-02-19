@@ -20,7 +20,7 @@ func _ready():
 	group = preload("res://resources/tags.tres")
 
 func reset_container():
-	print("D" + Time.get_datetime_string_from_system() + ": Reseting the tags container.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting the tags container.")
 	for child in container.get_children():
 		container.remove_child(child)
 		child.queue_free()
@@ -37,7 +37,7 @@ func _select_tag(button):
 		selected = null
 
 func populate_tags(tags):
-	print("D" + Time.get_datetime_string_from_system() + ": Started populating tags container.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started populating tags container.")
 	for tag in tags:
 		add_tag(tag)
 	tags_read.emit()

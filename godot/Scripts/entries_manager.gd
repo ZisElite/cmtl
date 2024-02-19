@@ -2,6 +2,7 @@ extends ScrollContainer
 
 signal files_read
 signal continue_setup
+signal finish_filtering
 
 var entry_pre
 var container_pre
@@ -16,7 +17,7 @@ func _ready():
 	container_pre = preload("res://Scenes/entries_container.tscn")
 
 func populate_files(files, paths=null):
-	print("D" + Time.get_datetime_string_from_system() + ": Started populating files container.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Started populating files container.")
 	for file in files:
 		add_single_file(file, paths)
 	files_read.emit()
@@ -33,7 +34,7 @@ func add_single_file(file, paths=null):
 		paths[file["path_id"]].append(file["id"])
 
 func reset_container():
-	print("D" + Time.get_datetime_string_from_system() + ": Reseting files containers.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting files containers.")
 	selected = []
 	if master_container:
 		master_container.queue_free()
@@ -51,16 +52,17 @@ func reset_container():
 	continue_setup.emit()
 
 func filter_files(ids=null, mode="unhide"):
+	await get_tree().process_frame
 	if mode == "unhide":
-		print("D" + Time.get_datetime_string_from_system() + ": Moving all files to visible container.")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Moving all files to visible container.")
 		for file in container2.get_children():
 			container2.remove_child(file)
 			container1.add_child(file)
 		container1.visible = true
 		container2.visible = false
 		filters_on = false
-	elif ids and mode == "filter":
-		print("D" + Time.get_datetime_string_from_system() + ": Moving filtered files to the appropriate container.")
+	elif typeof(ids) != typeof(null) and mode == "filter":
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Moving filtered files to the appropriate container.")
 		container1.visible = false
 		container2.visible = true
 		if filters_on:
@@ -76,11 +78,12 @@ func filter_files(ids=null, mode="unhide"):
 			container2.add_child(file)
 		filters_on = true
 	else:
-		print("D" + Time.get_datetime_string_from_system() + ": Wrong use of filter_files in entries_manager")
+		print(str(float(Time.get_ticks_msec()) / 1000) + "s: Wrong use of filter_files in entries_manager")
+	finish_filtering.emit()
 
 func remove_entries(path_id):
 	filter_files()
-	print("D" + Time.get_datetime_string_from_system() + ": Removing files.")
+	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Removing files.")
 	for node in container1.get_children():
 		if node.get_node("container/path").text == path_id:
 			container1.remove_child(node)
