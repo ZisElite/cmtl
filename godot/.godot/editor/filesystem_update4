@@ -12,5 +12,5 @@ res://Scenes/library.tscn
 res://Scenes/path.tscn
 res://Scenes/tag.tscn
 res://Scenes/entries_container.tscn
-res://Scripts/entries_manager.gd
+res://Scripts/open_library_manager.gd
 res://Scripts/library_view_manager.gd

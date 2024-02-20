@@ -1,5 +1,5 @@
 ### variables
-confirm, delete, cancel, scroll:
+confirm, delete, cancel, scroll, #v0-6 sqlite, message:
 They hold the corresponding node of *open library* menu
 scroll is the container with all the libraries.
 
@@ -17,11 +17,12 @@ add_single_lib(title):
 Has a string *title* as a parameter.
 Creates a new *lib_pre* instance, gives it the appropriate text and connects its signal to *self* function *\_select*.
 
-\_select(nam):
-It is called when a *library* is selected and it saves it.
+#v0-7 **Updated** \_select(lib):
+If the selected button is already selected, deselect it otherwise save the newly selected button.
 
-\_clear_buttons:
-Clears the *selected* variable.
+#v0-6 **removed**
+~~\_clear_buttons:
+Clears the *selected* variable.~~
 
 \_check_pressed:
 If there is a selected *library*, send signal to *control* to load that library.

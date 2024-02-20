@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Scenes/library view.tscn.md",
+                "file": "Changelog.md",
                 "mode": "source",
                 "source": false
               }
@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Changelog.md",
+                "file": "Scripts.md",
                 "mode": "source",
                 "source": false
               }
@@ -39,8 +39,7 @@
               "state": {}
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -69,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#v0-7  ",
+                "query": "tag:#v0-7",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -167,34 +166,34 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "089f5be730c5f763",
+  "active": "69f4a6cf2ab9d879",
   "lastOpenFiles": [
-    "scripts/control.gd.md",
-    "scripts/logging.gd.md",
-    "Changelog.md",
-    "Scenes/library view.tscn.md",
-    "scripts/open_library_manager.gd.md",
-    "Scenes/open library.tscn.md",
-    "Scenes/new library.tscn.md",
     "Scenes.md",
-    "scripts/new_library_manager.gd.md",
-    "scripts/main_menu_manager.gd.md",
-    "scripts/tags_manager.gd.md",
-    "scripts/SQLite_manager.gd.md",
-    "scripts/paths_manager.gd.md",
+    "Scenes/loaing_screen.tscn.md",
+    "Scenes/scanning_screen.tscn.md",
+    "Scenes/library view.tscn.md",
+    "Scripts.md",
     "scripts/loading_screen.gd.md",
     "scripts/library_view_manager.gd.md",
+    "scripts/tags_manager.gd.md",
+    "scripts/scanning_screen.gd.md",
+    "scripts/paths_manager.gd.md",
     "scripts/entries_manager.gd.md",
+    "scripts/open_library_manager.gd.md",
+    "scripts/new_library_manager.gd.md",
+    "scripts/main_menu_manager.gd.md",
+    "scripts/guide.gd.md",
+    "scripts/control.gd.md",
     "scripts/accept_dialogue_clear.gd.md",
+    "Scenes/entries_container.tscn.md",
+    "Changelog.md",
+    "scripts/logging.gd.md",
+    "Scenes/open library.tscn.md",
+    "Scenes/new library.tscn.md",
+    "scripts/SQLite_manager.gd.md",
     "Scenes/tag.tscn.md",
     "Scenes/sqlite_manager.tscn.md",
     "Scenes/path.tscn.md",
-    "Scenes/main.tscn.md",
-    "Scenes/main menu.tscn.md",
-    "Scenes/loaing_screen.tscn.md",
-    "Scenes/library.tscn.md",
-    "Scenes/entry.tscn.md",
-    "Scenes/entries_container.tscn.md",
     "Scenes",
     "scripts"
   ]

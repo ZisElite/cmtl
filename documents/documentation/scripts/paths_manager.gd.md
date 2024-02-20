@@ -1,3 +1,7 @@
+### signals
+#v0-6 remove_path, update_scanning_screen
+#v0-7 paths_read
+
 ### variables
 container, add, remove, scan, master:
 They hold the corresponding nodes.
@@ -7,9 +11,6 @@ scan is the scanning UI.
 
 path_pre:
 Preloads the *path.tscn* scene for later use.
-
-group:
-Holds all the created *paths* nodes.
 
 selected:
 Holdes the currenty selected *path* node.

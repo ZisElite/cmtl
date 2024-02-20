@@ -1,12 +1,13 @@
 - [x] [[control.gd]]
 - [x] [[SQLite_manager.gd]]
-- [ ] [[logging.gd]]
   
 - [x] [[main_menu_manager.gd]]
 - [x] [[new_library_manager.gd]]
 - [x] [[open_library_manager.gd]]
 - [x] [[loading_screen.gd]]
+- [x] #v0-7 [[scanning_screen.gd]]
 - [x] [[accept_dialogue_clear.gd]]
+- [x] #v0-6 [[guide.gd]]
   
 - [x] [[library_view_manager.gd]]
 - [x] [[paths_manager.gd]]

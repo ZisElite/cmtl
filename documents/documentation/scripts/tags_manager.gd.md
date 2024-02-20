@@ -1,3 +1,6 @@
+### singals
+#v0-7 tags_read
+
 ### variables
 container, add, remove, master:
 They hold the corresponding nodes.
@@ -6,9 +9,6 @@ master is the library_view node.
 
 tag_pre:
 Preloads the *tag.tscn* scene for later use.
-
-group:
-Holds all the created *tags* nodes.
 
 selected:
 Holdes the currenty selected *tags* node.

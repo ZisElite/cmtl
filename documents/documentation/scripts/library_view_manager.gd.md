@@ -1,5 +1,10 @@
+### signals
+#v0-7 continue_setup, continue_filtering
+loading_finished, disable_esc, free_esc, go_back, continue_scan
+
+
 ### variables
-entries_node, tags_node, paths_node, controller, scanning, sqlite:
+entries_node, tags_node, paths_node, controller, scanning, sqlite, #v0-6 message, #v0-7 loading, filtering:
 They hold the corresponding node of the application.
 
 new_files, new_tag, remove_tag, apply_filter, clear_filter, clear_filter, apply_tag_to_files, remove_tag_from_files, back_button:
@@ -30,8 +35,14 @@ Holds the thread object.
 
 
 ### functions
+#v0-7 setup_start(lib):
+Start a thread that runs setup(lib).
+
 setup(lib):
-Take the appropriate steps to load the *library view* with the data of the selected library.
+Take the appropriate steps to load the *library view* with the data of the selected library. #v0-7 Since it is a separate thread, it has to wait for signals that the data retieving functions are finished.
+
+#v0-7 clean_thread:
+Cleans the thread after it finishes.
 
 create_path_dict(results):
 Create the *paths* dictionary's keys.
@@ -81,17 +92,23 @@ If a tag is provided, remove it from the *library view*.
 \_apply_filters:
 Checks if tag/path is selected, add the corresponding file ids in a list and send it to the *entries manager*.
 
+#v0-7 add_id_to_list(filtered_files, mode):
+Select which files ids should be in the filtered_files array and and/remove them appropriately. 
+
 \_clear_filters:
 Remove all filters.
+
+#v0-7 filtering_complete:
+Disable the loading screen and kill the finished thread.
+
+filters:
+Selectes how to apply the filters.
 
 \_apply_tag_to_files:
 If a tag is selected, apply it to all the selected files.
 
 \_remove_tag_from_files:
 If a tag is selected, remove it from al selected files.
-
-filters:
-Selectes how to apply the filters.
 
 \_exit_tree:
 clean up the completed threads.

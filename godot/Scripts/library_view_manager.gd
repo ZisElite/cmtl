@@ -148,10 +148,6 @@ func setup(lib):
 func clean_thread():
 	if thread:
 		thread.wait_to_finish()
-
-func set_paths_list(paths_result):
-	paths_list = paths_result
-	continue_setup.emit()
 	
 func create_path_dict(results):
 	for result in results:

@@ -1,3 +1,8 @@
+#v0-7
+-Added loading screens for when loading a library and when applying filters.
+-Fixed a bug where clearing filters did not work.
+-Fixed a bug where the library in the selection screen would appear deselected, but it would still be considered selected.
+
 #v0-6 
 -Added message fields to the various screens to display the success/failure of different operations.
 -Fixed a bug where newly created libraries couldn't be deleted without restarting the application

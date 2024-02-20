@@ -3,6 +3,7 @@
 - [x] [[new library.tscn]]
 - [x] [[open library.tscn]]
 - [x] [[loaing_screen.tscn]]
+- [x] #v0-7 [[scanning_screen.tscn]]
 - [x] [[library view.tscn]]
 - [x] [[entry.tscn]]
 - [x] [[library.tscn]]

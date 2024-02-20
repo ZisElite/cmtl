@@ -1,3 +1,6 @@
+### signals
+#v0-7 files_read, continue_setup, finish_filtering
+
 ### variables
 entry_pre, container_pre:
 They preload the *entry.tscn* and *entries_container.tscn*, respectively, for later use.

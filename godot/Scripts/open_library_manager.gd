@@ -45,7 +45,11 @@ func add_single_lib(title):
 	scroll.add_child(temp)
 
 func _select(lib):
-	selected = lib
+	if selected == lib:
+		selected.get_node("name").button_pressed = false
+		selected = null
+	else:
+		selected = lib
 
 func _reset():
 	print(str(float(Time.get_ticks_msec()) / 1000) + "s: Reseting the pressed buttons.")
