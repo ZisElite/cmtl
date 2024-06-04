@@ -166,13 +166,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "69f4a6cf2ab9d879",
+  "active": "3d600f2ddd86f2ed",
   "lastOpenFiles": [
     "Scenes.md",
+    "Scripts.md",
+    "Changelog.md",
     "Scenes/loaing_screen.tscn.md",
     "Scenes/scanning_screen.tscn.md",
     "Scenes/library view.tscn.md",
-    "Scripts.md",
     "scripts/loading_screen.gd.md",
     "scripts/library_view_manager.gd.md",
     "scripts/tags_manager.gd.md",
@@ -186,7 +187,6 @@
     "scripts/control.gd.md",
     "scripts/accept_dialogue_clear.gd.md",
     "Scenes/entries_container.tscn.md",
-    "Changelog.md",
     "scripts/logging.gd.md",
     "Scenes/open library.tscn.md",
     "Scenes/new library.tscn.md",
