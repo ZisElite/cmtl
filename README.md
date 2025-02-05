@@ -22,3 +22,6 @@ Just extract the files and run the "v0.1.exe", after that:
 You are now ready to start tagging your files.
 
 (I am planning on adding an in-app help section with more detailed instructions)
+
+## Contrybuting
+Feel free to mess around with the project.
